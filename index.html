@@ -1,343 +1,43 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>名字验证游戏</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalble=no">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+        body,head{
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+        }
+        #gameContainer{
+            position: relative;
+            width: 100vw;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
         }
-        
-        .game-container {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-            transform: translateY(0);
-            transition: all 0.3s ease;
-        }
-        
-        .game-container.shake {
-            animation: shake 0.5s ease-in-out;
-        }
-        
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-        
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: #e0e0e0;
-            border-radius: 3px;
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            border-radius: 3px;
-            transition: width 0.3s ease;
-        }
-        
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 28px;
-        }
-        
-        .page-info {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 16px;
-        }
-        
-        .input-container {
-            position: relative;
-            margin-bottom: 30px;
-        }
-        
-        .hint-container {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-left: 4px solid #667eea;
-            padding: 20px;
-            margin-bottom: 25px;
-            border-radius: 10px;
-            text-align: left;
-        }
-        
-        .hint-label {
-            font-weight: bold;
-            color: #667eea;
-            font-size: 16px;
-            margin-bottom: 8px;
-        }
-        
-        .hint-text {
-            color: #495057;
-            font-size: 18px;
-            font-weight: 500;
-        }
-        
-        input[type="text"] {
-            width: 100%;
-            padding: 15px 20px;
-            font-size: 18px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            box-sizing: border-box;
-            outline: none;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-        
-        input[type="text"]:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        
-        input[type="text"].error {
-            border-color: #ff4757;
-            box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.1);
-        }
-        
-        button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 18px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-        }
-        
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-        
-        button:active {
-            transform: translateY(0);
-        }
-        
-        .error-message {
-            color: #ff4757;
-            margin-top: 15px;
-            font-size: 14px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .error-message.show {
-            opacity: 1;
-        }
-        
-        .success-page {
-            display: none;
-        }
-        
-        .success-page.show {
+        #gameCanvas{
             display: block;
-        }
-        
-        .success-icon {
-            font-size: 80px;
-            margin-bottom: 20px;
-            animation: bounce 0.6s ease-in-out;
-        }
-        
-        @keyframes bounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #667eea;
-            animation: confetti-fall 3s linear infinite;
-        }
-        
-        .confetti:nth-child(odd) {
-            background: #764ba2;
-            animation-delay: -1s;
-        }
-        
-        .confetti:nth-child(3n) {
-            background: #ff6b6b;
-            animation-delay: -2s;
-        }
-        
-        @keyframes confetti-fall {
-            0% {
-                transform: translateY(-100vh) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
     </style>
+    <title>test
+    </title>
 </head>
 <body>
-    <div class="game-container" id="gameContainer">
-        <div class="progress-bar">
-            <div class="progress-fill" id="progressFill"></div>
-        </div>
-        
-        <div id="gamePage">
-            <h1>名字验证游戏</h1>
-            <div class="page-info">
-                第 <span id="currentPage">1</span> 页，共 4 页<br>
-                请输入正确的名字
-            </div>
-            
-            <div class="hint-container" id="hintContainer">
-                <div class="hint-label">💡 提示：</div>
-                <img src="./wyy7.png">
-                <div class="hint-text" id="hintText">梅西 镜 去</div>
-            </div>
-            
-            <div class="input-container">
-                <input type="text" id="nameInput" placeholder="请输入名字" autocomplete="off">
-            </div>
-            
-            <button onclick="checkName()">确认</button>
-            
-            <div class="error-message" id="errorMessage">
-                名字不正确，请重试！
-            </div>
-        </div>
-        
-        <div class="success-page" id="successPage">
-            <div class="success-icon">🎉</div>
-            <h1>恭喜通关！</h1>
-            <p style="color: #666; font-size: 18px; margin-bottom: 30px;">
-                你已经成功输入了所有正确的名字！
-            </p>
-            <button onclick="restartGame()">重新开始</button>
-        </div>
+    <div id="gameContainer">
+        <canvas id="gameCanvas">
+            <span style="color: red;">canvas error</span>
+        </canvas>
     </div>
-
-    <script>
-        const correctNames = ["赵欣然", "孟一航", "武星花", "刘天择"];
-        const hints = ["梅西 镜 去", "乒 金标 植物", "傻小子", "披萨 傻小子x2"];
-        let currentPageIndex = 0;
-        
-        function updateProgress() {
-            const progress = (currentPageIndex / correctNames.length) * 100;
-            document.getElementById('progressFill').style.width = progress + '%';
-        }
-        
-        function checkName() {
-            const input = document.getElementById('nameInput');
-            const inputValue = input.value.trim();
-            const errorMessage = document.getElementById('errorMessage');
-            const gameContainer = document.getElementById('gameContainer');
-            
-            if (inputValue === correctNames[currentPageIndex]) {
-                // 正确答案
-                input.classList.remove('error');
-                errorMessage.classList.remove('show');
-                
-                currentPageIndex++;
-                updateProgress();
-                
-                if (currentPageIndex >= correctNames.length) {
-                    // 游戏通关
-                    setTimeout(() => {
-                        showSuccessPage();
-                        createConfetti();
-                    }, 500);
-                } else {
-                    // 进入下一页
-                    setTimeout(() => {
-                        document.getElementById('currentPage').textContent = currentPageIndex + 1;
-                        document.getElementById('hintText').textContent = hints[currentPageIndex];
-                        input.value = '';
-                        input.focus();
-                    }, 500);
-                }
-            } else {
-                // 错误答案
-                input.classList.add('error');
-                errorMessage.classList.add('show');
-                gameContainer.classList.add('shake');
-                
-                setTimeout(() => {
-                    gameContainer.classList.remove('shake');
-                }, 500);
-                
-                setTimeout(() => {
-                    input.classList.remove('error');
-                    errorMessage.classList.remove('show');
-                }, 2000);
-            }
-        }
-        
-        function showSuccessPage() {
-            document.getElementById('gamePage').style.display = 'none';
-            document.getElementById('successPage').classList.add('show');
-        }
-        
-        function restartGame() {
-            currentPageIndex = 0;
-            document.getElementById('currentPage').textContent = '1';
-            document.getElementById('hintText').textContent = hints[0];
-            document.getElementById('nameInput').value = '';
-            document.getElementById('gamePage').style.display = 'block';
-            document.getElementById('successPage').classList.remove('show');
-            updateProgress();
-            
-            // 清除彩带
-            const confettis = document.querySelectorAll('.confetti');
-            confettis.forEach(confetti => confetti.remove());
-        }
-        
-        function createConfetti() {
-            for (let i = 0; i < 50; i++) {
-                setTimeout(() => {
-                    const confetti = document.createElement('div');
-                    confetti.className = 'confetti';
-                    confetti.style.left = Math.random() * 100 + '%';
-                    confetti.style.animationDuration = (Math.random() * 2 + 1) + 's';
-                    document.body.appendChild(confetti);
-                    
-                    setTimeout(() => {
-                        confetti.remove();
-                    }, 3000);
-                }, i * 100);
-            }
-        }
-        
-        // 回车键提交
-        document.getElementById('nameInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                checkName();
-            }
-        });
-        
-        // 初始化
-        updateProgress();
-        document.getElementById('nameInput').focus();
-    </script>
+    <!-- <script src="./game_core.js"></script> -->
+    <script src="./canvas.js"></script>
+    <script src="./button.js"></script>
+    <!-- <script src="./draggable.js"></script> -->
+    <script src="./app.js"></script>
 </body>
 </html>
