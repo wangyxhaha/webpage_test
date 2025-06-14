@@ -81,7 +81,7 @@ class Button{
         else this.status=0;
     }
     touchStartCallBack(evt){ //处理触摸屏按下事件
-        evt.preventDefault();
+        // evt.preventDefault();
         var pos=calculateTruePosition(this.canvas,evt);
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
             pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
@@ -91,7 +91,7 @@ class Button{
         }
     }
     touchEndCallBack(evt){ //处理触摸屏松开事件
-        evt.preventDefault();
+        // evt.preventDefault();
         var pos=calculateTruePosition(this.canvas,evt);
         console.log(pos);
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
