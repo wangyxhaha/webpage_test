@@ -27,9 +27,10 @@ class Button{
         // this.canvas.addEventListener("mouseup",this.mouseUpCallBack.bind(this)) //设置对鼠标松开的监听
         // this.canvas.addEventListener("touchstart",this.touchStartCallBack.bind(this)) //设置对触摸屏按下的监听
         // this.canvas.addEventListener("touchend",this.touchEndCallBack.bind(this)) //设置对触摸屏松开的监听
-        cvs.mouseMoveCallBackArray.push(this.mouseMoveCallBack.bind(this)); //设置对触摸屏松开的监听
+        cvs.mouseMoveCallBackArray.push(this.mouseMoveCallBack.bind(this)); //设置对鼠标移动的监听
         cvs.mouseDownCallBackArray.push(this.mouseDownCallBack.bind(this)); //设置对鼠标按下的监听
         cvs.mouseUpCallBackArray.push(this.mouseUpCallBack.bind(this)); //设置对鼠标松开的监听
+        cvs.touchMoveCallBackArray.push(this.touchMoveCallBack.bind(this)); //设置对触摸移动的监听
         cvs.touchStartCallBackArray.push(this.touchStartCallBack.bind(this)); //设置对触摸屏按下的监听
         cvs.touchEndCallBackArray.push(this.touchEndCallBack.bind(this)); //设置对触摸屏松开的监听
         this.status=0; //0=inital 1=mouseOver 2=mouseDown
@@ -80,9 +81,25 @@ class Button{
         }
         else this.status=0;
     }
+    mouseMoveCallBack(evt){ //处理鼠标移动事件
+        evt.preventDefault();
+        // console.log(this.canvas);
+        var pos=calculateTruePosition(this.canvas,evt.touches[0]);
+        if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
+            pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
+            if (this.status!=2) this.status=1;
+        }
+        else{
+            if (this.status!=2) this.status=0;
+        }
+        if (this.status==2 && this.draggable){ //如果可拖动且目前为摁下状态，更新位置
+            this.x=pos.x-this.mouseDownRelativeX;
+            this.y=pos.y-this.mouseDownRelativeY;
+        }
+    }
     touchStartCallBack(evt){ //处理触摸屏按下事件
         // evt.preventDefault();
-        var pos=calculateTruePosition(this.canvas,evt);
+        var pos=calculateTruePosition(this.canvas,evt.touches[0]);
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
             pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
             this.status=2;
@@ -92,7 +109,7 @@ class Button{
     }
     touchEndCallBack(evt){ //处理触摸屏松开事件
         // evt.preventDefault();
-        var pos=calculateTruePosition(this.canvas,evt);
+        var pos=calculateTruePosition(this.canvas,evt.changedTouches[0]);
         console.log(pos);
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
             pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
