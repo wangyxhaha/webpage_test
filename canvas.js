@@ -19,11 +19,13 @@ class Canvas{
         this.mouseMoveCallBackArray=new Array();
         this.mouseDownCallBackArray=new Array();
         this.mouseUpCallBackArray=new Array();
+        this.touchMoveCallBackArray=new Array();
         this.touchStartCallBackArray=new Array();
         this.touchEndCallBackArray=new Array();
         this.canvas.addEventListener("mousemove",this.mouseMoveCallBack.bind(this)) //设置对鼠标移动的监听
         this.canvas.addEventListener("mousedown",this.mouseDownCallBack.bind(this)) //设置对鼠标按下的监听
         this.canvas.addEventListener("mouseup",this.mouseUpCallBack.bind(this)) //设置对鼠标松开的监听
+        this.canvas.addEventListener("touchmove",this.touchMoveCallBack.bind(this)) //设置对触摸移动的监听
         this.canvas.addEventListener("touchstart",this.touchStartCallBack.bind(this)) //设置对触摸屏按下的监听
         this.canvas.addEventListener("touchend",this.touchEndCallBack.bind(this)) //设置对触摸屏松开的监听
     }
@@ -57,6 +59,11 @@ class Canvas{
     mouseUpCallBack(evt){
         for (var i in this.mouseUpCallBackArray){
             this.mouseUpCallBackArray[i](evt);
+        }
+    }
+    touchMoveCallBack(evt){
+        for (var i in this.mouseMoveCallBackArray){
+            this.touchMoveCallBackArray[i](evt);
         }
     }
     touchStartCallBack(evt){
