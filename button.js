@@ -81,7 +81,7 @@ class Button{
         }
         else this.status=0;
     }
-    mouseMoveCallBack(evt){ //处理鼠标移动事件
+    touchMoveCallBack(evt){ //处理触摸移动事件
         evt.preventDefault();
         // console.log(this.canvas);
         var pos=calculateTruePosition(this.canvas,evt.touches[0]);
