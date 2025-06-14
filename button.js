@@ -73,7 +73,7 @@ class Button{
     }
     mouseUpCallBack(evt){ //处理鼠标松开事件
         var pos=calculateTruePosition(this.canvas,evt);
-        console.log("mouse up",pos);
+        console.log("mouse up",pos,this.canvas.width,this.canvas.height);
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
             pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
             this.status=1;
