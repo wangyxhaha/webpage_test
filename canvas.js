@@ -3,6 +3,15 @@
 // var megumi=new Image();
 // megumi.src="./Megumi.jpg";
 
+function logicalEvtChange(cvs,e){
+    var rect=cvs.canvas.getBoundingClientRect();
+    var relativeX=(e.clientX-rect.left)/cvs.canvas.clientWidth*cvs.logicalWidth;
+    var relativeY=(e.clientY-rect.top)/cvs.canvas.clientHeight*cvs.logicalHeight;
+    // console.log(cvs.canvas.style.x,cvs.canvas.style.y,relativeX,relativeY);
+    // console.log("lec!",cvs.canvas.clientWidth,':',cvs.canvas.clientHeight,cvs.logicalWidth,':',cvs.logicalHeight);
+    return {x:relativeX,y:relativeY};
+}
+
 class Canvas{
     constructor(canvasid,height,width){
         this.canvas=document.getElementById(canvasid); //设置canvas和上下文
@@ -32,6 +41,15 @@ class Canvas{
     addObjectNeedToDraw(ly,obj){
         this.objectToDraw.push({layer:ly,object:obj});
     }
+    // logicalEvtChange(e){
+    //     var t=e;
+    //     var rect=this.canvas.getBoundingClientRect();
+    //     var relativeX=(e.clientX-rect.left)/this.canvas.style.x*this.logicalWidth;
+    //     var relativeY=(e.clientY-rect.top)/this.canvas.style.y*this.logicalHeight;
+    //     t.clientX=relativeX;
+    //     t.clientY=relativeY;
+    //     return t;
+    // }
     draw(){
         this.canvasContext.drawImage(megumi,0,0,600,600);
         this.objectToDraw.sort(function(a,b){
@@ -47,33 +65,39 @@ class Canvas{
         }
     }
     mouseMoveCallBack(evt){
+        var logicalPos=logicalEvtChange(this,evt);
         for (var i in this.mouseMoveCallBackArray){
-            this.mouseMoveCallBackArray[i](evt);
+            this.mouseMoveCallBackArray[i](logicalPos);
         }
     }
     mouseDownCallBack(evt){
+        var logicalPos=logicalEvtChange(this,evt);
         for (var i in this.mouseDownCallBackArray){
-            this.mouseDownCallBackArray[i](evt);
+            this.mouseDownCallBackArray[i](logicalPos);
         }
     }
     mouseUpCallBack(evt){
+        var logicalPos=logicalEvtChange(this,evt);
         for (var i in this.mouseUpCallBackArray){
-            this.mouseUpCallBackArray[i](evt);
+            this.mouseUpCallBackArray[i](logicalPos);
         }
     }
     touchMoveCallBack(evt){
+        var logicalPos=logicalEvtChange(this,evt.touches[0]);
         for (var i in this.mouseMoveCallBackArray){
-            this.touchMoveCallBackArray[i](evt);
+            this.touchMoveCallBackArray[i](evt,logicalPos);
         }
     }
     touchStartCallBack(evt){
+        var logicalPos=logicalEvtChange(this,evt.touches[0]);
         for (var i in this.touchStartCallBackArray){
-            this.touchStartCallBackArray[i](evt);
+            this.touchStartCallBackArray[i](evt,logicalPos);
         }
     }
     touchEndCallBack(evt){
+        var logicalPos=logicalEvtChange(this,evt.changedtouches[0]);
         for (var i in this.touchEndCallBackArray){
-            this.touchEndCallBackArray[i](evt);
+            this.touchEndCallBackArray[i](evt,logicalPos);
         }
     }
 }
