@@ -83,21 +83,24 @@ class Canvas{
         }
     }
     touchMoveCallBack(evt){
+        evt.preventDefault();
         var logicalPos=logicalEvtChange(this,evt.touches[0]);
         for (var i in this.mouseMoveCallBackArray){
-            this.touchMoveCallBackArray[i](evt,logicalPos);
+            this.touchMoveCallBackArray[i](logicalPos);
         }
     }
     touchStartCallBack(evt){
+        evt.preventDefault();
         var logicalPos=logicalEvtChange(this,evt.touches[0]);
         for (var i in this.touchStartCallBackArray){
-            this.touchStartCallBackArray[i](evt,logicalPos);
+            this.touchStartCallBackArray[i](logicalPos);
         }
     }
     touchEndCallBack(evt){
+        evt.preventDefault();
         var logicalPos=logicalEvtChange(this,evt.changedtouches[0]);
         for (var i in this.touchEndCallBackArray){
-            this.touchEndCallBackArray[i](evt,logicalPos);
+            this.touchEndCallBackArray[i](logicalPos);
         }
     }
 }
