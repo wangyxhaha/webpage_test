@@ -98,7 +98,7 @@ class Canvas{
     }
     touchEndCallBack(evt){
         evt.preventDefault();
-        var logicalPos=logicalEvtChange(this,evt.changedtouches[0]);
+        var logicalPos=logicalEvtChange(this,evt.changedTouches[0]);
         for (var i in this.touchEndCallBackArray){
             this.touchEndCallBackArray[i](logicalPos);
         }
