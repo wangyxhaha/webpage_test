@@ -1,14 +1,14 @@
 "use strict"
 
-function calculateTruePosition(canvas,evt){
-    //计算canvas内真实点击坐标
-    var trueX=evt.clientX;
-    var trueY=evt.clientY;
-    var rect=canvas.getBoundingClientRect();
-    trueX-=rect.left;
-    trueY-=rect.top;
-    return {x:trueX,y:trueY};
-}
+// function calculateTruePosition(canvas,evt){
+//     //计算canvas内真实点击坐标
+//     var trueX=evt.clientX;
+//     var trueY=evt.clientY;
+//     var rect=canvas.getBoundingClientRect();
+//     trueX-=rect.left;
+//     trueY-=rect.top;
+//     return {x:trueX,y:trueY};
+// }
 
 class Button{
     constructor(cvs,x,y,boxHeight,boxWidth,layer,img_initial,img_onMouseOver,img_onClick,buttonCallBack){
@@ -47,9 +47,12 @@ class Button{
     setDraggable(d){
         this.draggable=d;
     }
-    mouseMoveCallBack(evt){ //处理鼠标移动事件
+    mouseMoveCallBack(pos){ //处理鼠标移动事件
         // console.log(this.canvas);
-        var pos=calculateTruePosition(this.canvas,evt);
+        // var pos=calculateTruePosition(this.canvas,evt);
+        // var pos={x:evt.clientX,y:evt.clientY};
+        console.log(pos.x,pos.y,this.x,this.y,this.boxWidth,this.boxHeight);
+        console.log(pos.x>=this.x,pos.x<=this.x+this.boxWidth,pos.y>=this.y,pos.y<=this.y+this.boxHeight)
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
             pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
             if (this.status!=2) this.status=1;
@@ -62,8 +65,9 @@ class Button{
             this.y=pos.y-this.mouseDownRelativeY;
         }
     }
-    mouseDownCallBack(evt){ //处理鼠标按下事件
-        var pos=calculateTruePosition(this.canvas,evt);
+    mouseDownCallBack(pos){ //处理鼠标按下事件
+        // var pos=calculateTruePosition(this.canvas,evt);
+        // var pos={x:evt.clientX,y:evt.clientY};
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
             pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
             this.status=2;
@@ -71,9 +75,10 @@ class Button{
             this.mouseDownRelativeY=pos.y-this.y;
         }
     }
-    mouseUpCallBack(evt){ //处理鼠标松开事件
-        var pos=calculateTruePosition(this.canvas,evt);
-        console.log("mouse up",pos,this.canvas.width,this.canvas.height);
+    mouseUpCallBack(pos){ //处理鼠标松开事件
+        // var pos=calculateTruePosition(this.canvas,evt);
+        // var pos={x:evt.clientX,y:evt.clientY};
+        console.log("mouse up",pos);
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
             pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
             this.status=1;
@@ -81,10 +86,12 @@ class Button{
         }
         else this.status=0;
     }
-    touchMoveCallBack(evt){ //处理触摸移动事件
-        evt.preventDefault();
+    touchMoveCallBack(pos){ //处理触摸移动事件
+        // evt.preventDefault();
         // console.log(this.canvas);
-        var pos=calculateTruePosition(this.canvas,evt.touches[0]);
+        // var pos=calculateTruePosition(this.canvas,evt.touches[0]);
+        // var pos=calculateTruePosition(this.canvas,evt);
+        // var pos={x:evt.clientX,y:evt.clientY};
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
             pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
             if (this.status!=2) this.status=1;
@@ -97,9 +104,11 @@ class Button{
             this.y=pos.y-this.mouseDownRelativeY;
         }
     }
-    touchStartCallBack(evt){ //处理触摸屏按下事件
+    touchStartCallBack(pos){ //处理触摸屏按下事件
         // evt.preventDefault();
-        var pos=calculateTruePosition(this.canvas,evt.touches[0]);
+        // var pos=calculateTruePosition(this.canvas,evt.touches[0]);
+        // var pos=calculateTruePosition(this.canvas,evt);
+        // var pos={x:evt.clientX,y:evt.clientY};
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
             pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
             this.status=2;
@@ -107,9 +116,11 @@ class Button{
             this.mouseDownRelativeY=pos.y-this.y;
         }
     }
-    touchEndCallBack(evt){ //处理触摸屏松开事件
+    touchEndCallBack(pos){ //处理触摸屏松开事件
         // evt.preventDefault();
-        var pos=calculateTruePosition(this.canvas,evt.changedTouches[0]);
+        // var pos=calculateTruePosition(this.canvas,evt.changedTouches[0]);
+        // var pos=calculateTruePosition(this.canvas,evt);
+        // var pos={x:evt.clientX,y:evt.clientY};
         console.log(pos);
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
             pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
