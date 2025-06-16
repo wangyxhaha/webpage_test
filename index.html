@@ -28,10 +28,17 @@
             max-height: 100vh;
             object-fit: contain;
         }
+        #gameInput{
+            position: fixed;
+            top: -100px;
+            opacity: 0;
+            height: 0;
+        }
     </style>
     <title>test</title>
 </head>
 <body>
+    <input id="gameInput">
     <div id="gameContainer">
         <canvas id="gameCanvas">
             <span style="color: red;">你的浏览器不支持，换个浏览器试试？</span>
@@ -40,9 +47,8 @@
     </div>
     <!-- <script src="./game_core.js"></script> -->
     <script src="./canvas.js"></script>
-    <!-- <script src="./sprite.js"></script> -->
     <script src="./button.js"></script>
-    <!-- <script src="./draggable.js"></script> -->
+    <script src="./input.js"></script>
     <script src="./app.js"></script>
 </body>
 </html>
