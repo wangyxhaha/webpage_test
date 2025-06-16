@@ -21,8 +21,8 @@ class Canvas{
         this.canvas.height=this.logicalHeight;
         this.canvas.width=this.logicalWidth;
         this.ratio=height/width; //计算canvas的长宽比（高比宽）
-        this.canvasContext.fillStyle="rgba(255,255,255)"; //测试canvas显示用
-        this.canvasContext.fillRect(0,0,this.logicalWidth,this.logicalHeight);
+        // this.canvasContext.fillStyle="rgba(255,255,255)"; //测试canvas显示用
+        // this.canvasContext.fillRect(0,0,this.logicalWidth,this.logicalHeight);
         // this.canvasContext.fillRect(10,10,this.logicalWidth-20,this.logicalHeight-20);
         this.objectToDraw=new Array(); //包含{layer(图层，越大越靠前),object(需要绘制的对象的this)}
         this.mouseMoveCallBackArray=new Array();
@@ -42,27 +42,16 @@ class Canvas{
     addObjectNeedToDraw(ly,obj){
         this.objectToDraw.push({layer:ly,object:obj});
     }
-    // logicalEvtChange(e){
-    //     var t=e;
-    //     var rect=this.canvas.getBoundingClientRect();
-    //     var relativeX=(e.clientX-rect.left)/this.canvas.style.x*this.logicalWidth;
-    //     var relativeY=(e.clientY-rect.top)/this.canvas.style.y*this.logicalHeight;
-    //     t.clientX=relativeX;
-    //     t.clientY=relativeY;
-    //     return t;
-    // }
     draw(){
-        this.canvasContext.drawImage(megumi,0,0,600,600);
+        document.getElementById("information").innerHTML=this.clickFocusPoint;
+        this.canvasContext.drawImage(megumi,0,0,this.logicalWidth,this.logicalHeight);
         this.objectToDraw.sort(function(a,b){
             return a.layer-b.layer;
         });
         var t;
         for (var i in this.objectToDraw){
             t=this.objectToDraw[i].object.getImg();
-            // console.log(t.src);
             this.canvasContext.drawImage(t,this.objectToDraw[i].object.x,this.objectToDraw[i].object.y);
-            // this.canvasContext.drawImage(t,this.objectToDraw[i].object.x,this.objectToDraw[i].object.y,
-            //     this.objectToDraw[i].object.width,this.objectToDraw[i].object.height);
         }
     }
     addClickCallBack(mm,md,mu,tm,ts,te,l){
@@ -123,7 +112,7 @@ class Canvas{
         // }
     }
     touchMoveCallBack(evt){
-        evt.preventDefault();
+        evt.preventDefault(); //触摸屏事件的preventDefault很重要，可防止浏览器模拟鼠标事件导致重复触发
         var logicalPos=logicalEvtChange(this,evt.touches[0]);
         if (this.clickFocusPoint!=-1){
             this.touchMoveCallBackArray[this.clickFocusPoint].func(logicalPos);
