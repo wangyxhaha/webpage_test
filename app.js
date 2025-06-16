@@ -25,8 +25,13 @@ function cb(){
 function main(){
     console.log("loading successfully");
     // canvas.canvasContext.drawImage(megumi,0,0,600,600);
-    var b=new Button(canvas,0,0,100,100,1,img1,img2,img3,cb);
-    var c=new Button(canvas,300,300,100,100,0,img1,img2,img3,cb)
+    var input1=new Input(canvas,"gameInput",200,200,5);
+    var b=new Button(canvas,0,0,100,100,1,img1,img2,img3,()=>{
+        input1.enable();
+    });
+    var c=new Button(canvas,300,300,100,100,0,img1,img2,img3,()=>{
+        input1.disable();
+    });
     b.setDraggable(true);
     c.setDraggable(true);
     // c.setClickable(false);
