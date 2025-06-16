@@ -125,7 +125,7 @@ class Button{
         console.log(pos);
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
             pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
-            this.status=1;
+            this.status=0;
             this.buttonCallBack();
             return true;
         }
