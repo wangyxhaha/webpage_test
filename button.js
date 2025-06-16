@@ -99,7 +99,7 @@ class Button{
             if (this.clickable) this.buttonCallBack();
             return true;
         }
-        this.status=0
+        // this.status=0
         return false;
     }
     touchMoveCallBack(pos){ //处理触摸移动事件
@@ -135,7 +135,7 @@ class Button{
             if (this.clickable) this.buttonCallBack();
             return true;
         }
-        this.status=0;
+        // this.status=0;
         return false;
     }
     getImg(){
