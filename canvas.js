@@ -103,8 +103,9 @@ class Canvas{
     mouseUpCallBack(evt){
         var logicalPos=logicalEvtChange(this,evt);
         if (this.clickFocusPoint!=-1){ //无焦点时松开判定无效
-            this.mouseUpCallBackArray[this.clickFocusPoint].func(logicalPos);
-            this.clickFocusPoint=-1;
+            if (this.mouseUpCallBackArray[this.clickFocusPoint].func(logicalPos)){
+                this.clickFocusPoint=-1;
+            }
             return;
         }
         // for (var i in this.mouseUpCallBackArray){
@@ -146,8 +147,9 @@ class Canvas{
         evt.preventDefault();
         var logicalPos=logicalEvtChange(this,evt.changedTouches[0]);
         if (this.clickFocusPoint!=-1){
-            this.touchEndCallBackArray[this.clickFocusPoint].func(logicalPos);
-            this.clickFocusPoint=-1;
+            if (this.touchEndCallBackArray[this.clickFocusPoint].func(logicalPos)){
+                this.clickFocusPoint=-1;
+            }
             return;
         }
         // for (var i in this.touchEndCallBackArray){
