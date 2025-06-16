@@ -37,6 +37,7 @@ class Canvas{
         this.canvas.addEventListener("touchmove",this.touchMoveCallBack.bind(this)) //设置对触摸移动的监听
         this.canvas.addEventListener("touchstart",this.touchStartCallBack.bind(this)) //设置对触摸屏按下的监听
         this.canvas.addEventListener("touchend",this.touchEndCallBack.bind(this)) //设置对触摸屏松开的监听
+        this.clickFocusPoint=-1; //可点击元素的焦点，-1为无焦点（存在焦点时只对焦点元素进行判定）
     }
     addObjectNeedToDraw(ly,obj){
         this.objectToDraw.push({layer:ly,object:obj});
@@ -64,43 +65,104 @@ class Canvas{
             //     this.objectToDraw[i].object.width,this.objectToDraw[i].object.height);
         }
     }
+    addClickCallBack(mm,md,mu,tm,ts,te,l){
+        this.mouseMoveCallBackArray.push({func:mm,layer:l});
+        this.mouseMoveCallBackArray.sort((a,b)=>b.layer-a.layer); //以图层从前到后的顺序排序
+        this.mouseDownCallBackArray.push({func:md,layer:l});
+        this.mouseDownCallBackArray.sort((a,b)=>b.layer-a.layer);
+        this.mouseUpCallBackArray.push({func:mu,layer:l});
+        this.mouseUpCallBackArray.sort((a,b)=>b.layer-a.layer);
+        this.touchMoveCallBackArray.push({func:tm,layer:l});
+        this.touchMoveCallBackArray.sort((a,b)=>b.layer-a.layer);
+        this.touchStartCallBackArray.push({func:ts,layer:l});
+        this.touchStartCallBackArray.sort((a,b)=>b.layer-a.layer);
+        this.touchEndCallBackArray.push({func:te,layer:l});
+        this.touchEndCallBackArray.sort((a,b)=>b.layer-a.layer);
+    }
     mouseMoveCallBack(evt){
         var logicalPos=logicalEvtChange(this,evt);
+        if (this.clickFocusPoint!=-1){
+            this.mouseMoveCallBackArray[this.clickFocusPoint].func(logicalPos);
+            return;
+        }
+        var t=true; //从最靠前的开始判定，如果判定成功则把t设为false，并给予后续元素虚假的不可能的逻辑坐标，以免重叠元素被判定
         for (var i in this.mouseMoveCallBackArray){
-            this.mouseMoveCallBackArray[i](logicalPos);
+            if (t){
+                if (this.mouseMoveCallBackArray[i].func(logicalPos)){
+                    // this.clickFocusPoint=i;
+                    // break;
+                    t=false;
+                }
+            }
+            else this.mouseMoveCallBackArray[i].func({x:Infinity,y:Infinity});
+            // this.mouseMoveCallBackArray[i].func(logicalPos);
         }
     }
     mouseDownCallBack(evt){
         var logicalPos=logicalEvtChange(this,evt);
+        // if (this.clickFocusPoint!=-1){
+        //     this.mouseDownCallBackArray[this.clickFocusPoint].func(logicalPos);
+        //     return;
+        // }
         for (var i in this.mouseDownCallBackArray){
-            this.mouseDownCallBackArray[i](logicalPos);
+            if (this.mouseDownCallBackArray[i].func(logicalPos)){
+                this.clickFocusPoint=i; //只有按下动作会产生焦点
+                break;
+            }
         }
     }
     mouseUpCallBack(evt){
         var logicalPos=logicalEvtChange(this,evt);
-        for (var i in this.mouseUpCallBackArray){
-            this.mouseUpCallBackArray[i](logicalPos);
+        if (this.clickFocusPoint!=-1){ //无焦点时松开判定无效
+            this.mouseUpCallBackArray[this.clickFocusPoint].func(logicalPos);
+            this.clickFocusPoint=-1;
+            return;
         }
+        // for (var i in this.mouseUpCallBackArray){
+        //     if (this.mouseUpCallBackArray[i].func(logicalPos)) break;
+        // }
     }
     touchMoveCallBack(evt){
         evt.preventDefault();
         var logicalPos=logicalEvtChange(this,evt.touches[0]);
+        if (this.clickFocusPoint!=-1){
+            this.touchMoveCallBackArray[this.clickFocusPoint].func(logicalPos);
+            return;
+        }
+        var t=true;
         for (var i in this.mouseMoveCallBackArray){
-            this.touchMoveCallBackArray[i](logicalPos);
+            if (t){
+                if (this.touchMoveCallBackArray[i].func(logicalPos)){
+                    t=false;
+                }
+            }
+            else this.touchMoveCallBackArray[i].func({x:Infinity,y:Infinity});
         }
     }
     touchStartCallBack(evt){
         evt.preventDefault();
         var logicalPos=logicalEvtChange(this,evt.touches[0]);
+        // if (this.clickFocusPoint!=-1){
+        //     this.touchStartCallBackArray[this.clickFocusPoint].func(logicalPos);
+        //     return;
+        // }
         for (var i in this.touchStartCallBackArray){
-            this.touchStartCallBackArray[i](logicalPos);
+            if (this.touchStartCallBackArray[i].func(logicalPos)){
+                this.clickFocusPoint=i;
+                break;
+            }
         }
     }
     touchEndCallBack(evt){
         evt.preventDefault();
         var logicalPos=logicalEvtChange(this,evt.changedTouches[0]);
-        for (var i in this.touchEndCallBackArray){
-            this.touchEndCallBackArray[i](logicalPos);
+        if (this.clickFocusPoint!=-1){
+            this.touchEndCallBackArray[this.clickFocusPoint].func(logicalPos);
+            this.clickFocusPoint=-1;
+            return;
         }
+        // for (var i in this.touchEndCallBackArray){
+        //     if (this.touchEndCallBackArray[i].func(logicalPos)) break;
+        // }
     }
 }
