@@ -43,7 +43,7 @@ class Canvas{
         this.objectToDraw.push({layer:ly,object:obj});
     }
     draw(){
-        document.getElementById("information").innerHTML=this.clickFocusPoint;
+        // document.getElementById("information").innerHTML=this.clickFocusPoint;
         this.canvasContext.drawImage(megumi,0,0,this.logicalWidth,this.logicalHeight);
         this.objectToDraw.sort(function(a,b){
             return a.layer-b.layer;
