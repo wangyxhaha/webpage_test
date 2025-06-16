@@ -48,7 +48,7 @@ class Button{
         );
         this.status=0; //0=inital 1=mouseOver 2=mouseDown
         this.buttonCallBack=buttonCallBack; //设置按下按钮后调用的回调函数
-        cvs.addObjectNeedToDraw(layer,this) //向canvas进行注册
+        cvs.addObjectNeedToDraw(layer,this.draw.bind(this)) //向canvas进行注册
         this.draggable=false; //可否拖动
         this.clickable=true; //可否点击
         this.mouseDownRelativeX=undefined; //拖动时与鼠标的相对位置
@@ -57,6 +57,9 @@ class Button{
         console.log(this.img_initial);
         console.log(this.img_onMouseOver);
         console.log(this.img_onClick);
+    }
+    draw(){
+        this.canvasContext.drawImage(this.getImg(),this.x,this.y);
     }
     setDraggable(d){
         this.draggable=d;
