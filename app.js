@@ -26,7 +26,9 @@ function main(){
     console.log("loading successfully");
     // canvas.canvasContext.drawImage(megumi,0,0,600,600);
     var b=new Button(canvas,0,0,100,100,1,img1,img2,img3,cb);
+    var c=new Button(canvas,300,300,100,100,0,img1,img2,img3,cb)
     b.setDraggable(true);
+    c.setDraggable(true);
     setInterval(canvas.draw.bind(canvas), 16.7);
 }
 
