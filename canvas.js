@@ -39,8 +39,8 @@ class Canvas{
         this.canvas.addEventListener("touchend",this.touchEndCallBack.bind(this)) //设置对触摸屏松开的监听
         this.clickFocusPoint=-1; //可点击元素的焦点，-1为无焦点（存在焦点时只对焦点元素进行判定）
     }
-    addObjectNeedToDraw(ly,obj){
-        this.objectToDraw.push({layer:ly,object:obj});
+    addObjectNeedToDraw(ly,f){
+        this.objectToDraw.push({layer:ly,func:f});
     }
     draw(){
         // document.getElementById("information").innerHTML=this.clickFocusPoint;
@@ -50,8 +50,9 @@ class Canvas{
         });
         var t;
         for (var i in this.objectToDraw){
-            t=this.objectToDraw[i].object.getImg();
-            this.canvasContext.drawImage(t,this.objectToDraw[i].object.x,this.objectToDraw[i].object.y);
+            // t=this.objectToDraw[i].object.getImg();
+            // this.canvasContext.drawImage(t,this.objectToDraw[i].object.x,this.objectToDraw[i].object.y);
+            this.objectToDraw[i].func();
         }
     }
     addClickCallBack(mm,md,mu,tm,ts,te,l){
