@@ -142,10 +142,10 @@ class Canvas{
     touchStartCallBack(evt){
         evt.preventDefault();
         var logicalPos=logicalEvtChange(this,evt.touches[0]);
-        // if (this.clickFocusPoint!=-1){
-        //     this.touchStartCallBackArray[this.clickFocusPoint].func(logicalPos);
-        //     return;
-        // }
+        if (this.clickFocusPoint!=-1){ //因为触摸屏有多指点击，有必要限制一下有焦点时的点击
+            this.touchStartCallBackArray[this.clickFocusPoint].func(logicalPos);
+            return;
+        }
         for (var i in this.touchStartCallBackArray){
             if (this.touchStartCallBackArray[i].func(logicalPos)){
                 this.clickFocusPoint=i;
