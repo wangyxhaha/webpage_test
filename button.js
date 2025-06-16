@@ -92,6 +92,7 @@ class Button{
     }
     mouseUpCallBack(pos){ //处理鼠标松开事件
         // console.log("mouse up",pos);
+        if (this.status!=2) return false;
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
             pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
             this.status=1;
@@ -127,6 +128,7 @@ class Button{
     }
     touchEndCallBack(pos){ //处理触摸屏松开事件
         console.log(pos);
+        if (this.status!=2) return false;
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
             pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
             this.status=0;
