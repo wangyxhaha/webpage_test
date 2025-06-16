@@ -9,7 +9,7 @@ console.log("test console.");
 var megumi=new Image();
 megumi.src="./Megumi.jpg";
 
-var canvas=new Canvas("gameCanvas",600,600)
+var canvas=new Canvas("gameCanvas",800,800)
 
 // console.log(canvas.canvas);
 
@@ -30,7 +30,7 @@ function main(){
     b.setDraggable(true);
     c.setDraggable(true);
     // c.setClickable(false);
-    setInterval(canvas.draw.bind(canvas), 16.7);
+    setInterval(canvas.draw.bind(canvas),16.7);
 }
 
 window.onload=main;
