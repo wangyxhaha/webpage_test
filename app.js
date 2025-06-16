@@ -29,6 +29,7 @@ function main(){
     var c=new Button(canvas,300,300,100,100,0,img1,img2,img3,cb)
     b.setDraggable(true);
     c.setDraggable(true);
+    c.setClickable(false);
     setInterval(canvas.draw.bind(canvas), 16.7);
 }
 
