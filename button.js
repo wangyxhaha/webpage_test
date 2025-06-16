@@ -50,6 +50,7 @@ class Button{
         this.buttonCallBack=buttonCallBack; //设置按下按钮后调用的回调函数
         cvs.addObjectNeedToDraw(layer,this) //向canvas进行注册
         this.draggable=false; //可否拖动
+        this.clickable=true; //可否点击
         this.mouseDownRelativeX=undefined; //拖动时与鼠标的相对位置
         this.mouseDownRelativeY=undefined;
 
@@ -59,6 +60,9 @@ class Button{
     }
     setDraggable(d){
         this.draggable=d;
+    }
+    setClickable(c){
+        this.clickable=c;
     }
     mouseMoveCallBack(pos){ //处理鼠标移动事件
         // console.log(pos.x,pos.y,this.x,this.y,this.boxWidth,this.boxHeight);
@@ -91,7 +95,7 @@ class Button{
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
             pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
             this.status=1;
-            this.buttonCallBack();
+            if (this.clickable) this.buttonCallBack();
             return true;
         }
         this.status=0
@@ -126,13 +130,14 @@ class Button{
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
             pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
             this.status=0;
-            this.buttonCallBack();
+            if (this.clickable) this.buttonCallBack();
             return true;
         }
         this.status=0;
         return false;
     }
     getImg(){
+        if (!this.clickable) return this.img_initial;
         if (this.status==1) return this.img_onMouseOver;
         else if (this.status==2) return this.img_onClick;
         else return this.img_initial;
