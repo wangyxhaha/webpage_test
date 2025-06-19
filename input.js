@@ -16,8 +16,8 @@ class Input{
         this.canvasContext.fillStyle='red';            // 填充颜色
         this.canvasContext.strokeStyle='blue';         // 描边颜色
         this.canvasContext.lineWidth=2;                // 描边宽度
-        this.inputElement.addEventListener("keydown",this.submitCallBack.bind(this));
-        this.inputElement.addEventListener("blur",this.disable.bind(this));
+        this.inputElement.addEventListener("keydown",this.submitCallBack.bind(this)); //用于检测Enter
+        this.inputElement.addEventListener("blur",this.disable.bind(this)); //用于检测失去焦点
     }
     draw(){
         this.canvasContext.fillText(this.inputElement.value,this.x,this.y);
