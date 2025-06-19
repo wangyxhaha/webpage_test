@@ -11,16 +11,20 @@ class Input{
         this.layer=layer;
         cvs.addObjectNeedToDraw(layer,this.draw.bind(this));
         // 设置文本样式
-        this.canvasContext.font='30px Arial';          // 字体大小和类型
+        this.fontHeight=30;
+        this.canvasContext.font=`${this.fontHeight}px Arial`;          // 字体大小和类型
         this.canvasContext.fillStyle='red';            // 填充颜色
         this.canvasContext.strokeStyle='blue';         // 描边颜色
         this.canvasContext.lineWidth=2;                // 描边宽度
-        this.inputElement.addEventListener("keydown",this.submitCallBack.bind(this));
+        this.inputElement.addEventListener("keydown",this.submitCallBack.bind(this)); //用于检测Enter
+        this.inputElement.addEventListener("blur",this.disable.bind(this)); //用于检测失去焦点
     }
     draw(){
         this.canvasContext.fillText(this.inputElement.value,this.x,this.y);
         // this.canvasContext.strock
         // console.log("draw input");
+        var w=this.canvasContext.measureText(this.inputElement.value.substring(0,this.inputElement.selectionStart)); //获取到光标位置的内容的宽度
+        this.canvasContext.fillRect(this.x+w.width,this.y-this.fontHeight,2,this.fontHeight);
     }
     enable(){
         this.inputElement.focus();
