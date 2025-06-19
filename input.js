@@ -17,15 +17,14 @@ class Input{
         this.canvasContext.strokeStyle='blue';         // 描边颜色
         this.canvasContext.lineWidth=2;                // 描边宽度
         this.inputElement.addEventListener("keydown",this.submitCallBack.bind(this));
-        this.cursorPos=0; //光标的位置
+        this.inputElement.addEventListener("blur",this.disable.bind(this));
     }
     draw(){
         this.canvasContext.fillText(this.inputElement.value,this.x,this.y);
         // this.canvasContext.strock
         // console.log("draw input");
-        var w=this.canvasContext.measureText(this.inputElement.value.substring(0,this.cursorPos));
+        var w=this.canvasContext.measureText(this.inputElement.value.substring(0,this.inputElement.selectionStart)); //获取到光标位置的内容的宽度
         this.canvasContext.fillRect(this.x+w.width,this.y-this.fontHeight,2,this.fontHeight);
-        console.log(this.cursorPos);
     }
     enable(){
         this.inputElement.focus();
@@ -36,25 +35,9 @@ class Input{
         console.log("disable");
     }
     submitCallBack(evt){
-        if (evt.key==="ArrowLeft"){
-            evt.preventDefault();
-            this.cursorPos=Math.max(0,this.cursorPos-1);
-        }
-        else if (evt.key==="ArrowRight"){
-            evt.preventDefault();
-            this.cursorPos=Math.min(this.inputElement.value.length,this.cursorPos+1);
-        }
-        else if (evt.key==="Enter"){
+        if (evt.key==="Enter"){
             evt.preventDefault();
             this.disable();
-        }
-        else if (evt.key==="Backspace"){
-            this.cursorPos=Math.max(0,this.cursorPos-1);
-        }
-        else if (evt.key.length==1){
-            evt.preventDefault();
-            this.inputElement.value=this.inputElement.value.substring(0,this.cursorPos)+evt.key+this.inputElement.value.substring(this.cursorPos);
-            this.cursorPos=Math.min(this.inputElement.value.length,this.cursorPos+1);
         }
         // else this.inputElement.value=this.inputElement.value+evt.key;
         console.log("smcb:",evt.key,evt.keyCode,this.inputElement.value);
