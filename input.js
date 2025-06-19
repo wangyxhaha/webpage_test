@@ -18,20 +18,31 @@ class Input{
         this.canvasContext.lineWidth=2;                // 描边宽度
         this.inputElement.addEventListener("keydown",this.submitCallBack.bind(this)); //用于检测Enter
         this.inputElement.addEventListener("blur",this.disable.bind(this)); //用于检测失去焦点
+        this.timeHandler.flag=true;
+        this.oninput=false;
+        setInterval(this.timeHandler.bind(this),500); //用来处理光标周期性闪烁
+    }
+    timeHandler(){
+        this.timeHandler.flag=!this.timeHandler.flag;
+        // console.log("switch cursor");
     }
     draw(){
         this.canvasContext.fillText(this.inputElement.value,this.x,this.y);
         // this.canvasContext.strock
         // console.log("draw input");
-        var w=this.canvasContext.measureText(this.inputElement.value.substring(0,this.inputElement.selectionStart)); //获取到光标位置的内容的宽度
-        this.canvasContext.fillRect(this.x+w.width,this.y-this.fontHeight,2,this.fontHeight);
+        if (this.oninput && this.timeHandler.flag){
+            var w=this.canvasContext.measureText(this.inputElement.value.substring(0,this.inputElement.selectionStart)); //获取到光标位置的内容的宽度
+            this.canvasContext.fillRect(this.x+w.width,this.y-this.fontHeight,2,this.fontHeight);
+        }
     }
     enable(){
         this.inputElement.focus();
+        this.oninput=true;
         console.log("enable");
     }
     disable(){
         this.inputElement.blur();
+        this.oninput=false;
         console.log("disable");
     }
     submitCallBack(evt){
