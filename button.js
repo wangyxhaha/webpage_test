@@ -77,7 +77,7 @@ class Button{
         }
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
             pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
-            this.status=1;
+            if (this.status!=2) this.status=1;
             return true;
         }
         this.status=0;
