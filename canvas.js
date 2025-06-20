@@ -14,6 +14,7 @@ function logicalEvtChange(cvs,e){
 
 class Canvas{
     constructor(canvasid,height,width){
+        this.canvasid=canvasid;
         this.canvas=document.getElementById(canvasid); //设置canvas和上下文
         this.canvasContext=this.canvas.getContext("2d");
         this.logicalHeight=height; //逻辑分辨率 （原尺寸）
@@ -21,6 +22,70 @@ class Canvas{
         this.canvas.height=this.logicalHeight;
         this.canvas.width=this.logicalWidth;
         this.ratio=height/width; //计算canvas的长宽比（高比宽）
+        this.sceneArray=new Array();
+        this.sceneArray["main"]=new CanvasScene(canvasid,height,width,null);
+        this.nowScene="main";
+        this.canvas.addEventListener("mousemove",this.mouseMoveCallBack.bind(this)) //设置对鼠标移动的监听
+        this.canvas.addEventListener("mousedown",this.mouseDownCallBack.bind(this)) //设置对鼠标按下的监听
+        this.canvas.addEventListener("mouseup",this.mouseUpCallBack.bind(this)) //设置对鼠标松开的监听
+        this.canvas.addEventListener("touchmove",this.touchMoveCallBack.bind(this)) //设置对触摸移动的监听
+        this.canvas.addEventListener("touchstart",this.touchStartCallBack.bind(this)) //设置对触摸屏按下的监听
+        this.canvas.addEventListener("touchend",this.touchEndCallBack.bind(this)) //设置对触摸屏松开的监听
+        setInterval(this.draw.bind(this),16.7);
+        // this.sceneArray["scene2"]=new CanvasScene(canvasid,height,width,hitori);
+    }
+    draw(){
+        this.sceneArray[this.nowScene].draw();
+        // console.log(`now scene: ${this.nowScene}`);
+    }
+    scene(name){
+        if (name in this.sceneArray) return this.sceneArray[name];
+        throw `${name} isn't existed.`;
+    }
+    createNewScene(name,background){
+        if (name in this.sceneArray){
+            throw `${name} is already existed.`;
+        }
+        // this.sceneArray["scene2"]=new CanvasScene(canvasid,height,width,hitori);
+        console.log(name,this.canvasid,this.logicalHeight,this.logicalWidth,background);
+        this.sceneArray[name]=new CanvasScene(this.canvasid,this.logicalHeight,this.logicalWidth,background);
+    }
+    changeScene(name){
+        if (name in this.sceneArray){
+            this.nowScene=name;
+        }
+        else throw `${name} isn't existed.`;
+    }
+    mouseMoveCallBack(evt){
+        this.sceneArray[this.nowScene].mouseMoveCallBack(evt);
+    }
+    mouseDownCallBack(evt){
+        this.sceneArray[this.nowScene].mouseDownCallBack(evt);
+    }
+    mouseUpCallBack(evt){
+        this.sceneArray[this.nowScene].mouseUpCallBack(evt);
+    }
+    touchMoveCallBack(evt){
+        this.sceneArray[this.nowScene].touchMoveCallBack(evt);
+    }
+    touchStartCallBack(evt){
+        this.sceneArray[this.nowScene].touchStartCallBack(evt);
+    }
+    touchEndCallBack(evt){
+        this.sceneArray[this.nowScene].touchEndCallBack(evt);
+    }
+}
+
+class CanvasScene{ //不同场景（可以方便切换）
+    constructor(canvasid,height,width,background){
+        this.canvas=document.getElementById(canvasid); //设置canvas和上下文
+        this.canvasContext=this.canvas.getContext("2d");
+        this.logicalHeight=height; //逻辑分辨率 （原尺寸）
+        this.logicalWidth=width;
+        this.canvas.height=this.logicalHeight;
+        this.canvas.width=this.logicalWidth;
+        this.background=background;
+        // this.ratio=height/width; //计算canvas的长宽比（高比宽）
         // this.canvasContext.fillStyle="rgba(255,255,255)"; //测试canvas显示用
         // this.canvasContext.fillRect(0,0,this.logicalWidth,this.logicalHeight);
         // this.canvasContext.fillRect(10,10,this.logicalWidth-20,this.logicalHeight-20);
@@ -31,20 +96,17 @@ class Canvas{
         this.touchMoveCallBackArray=new Array();
         this.touchStartCallBackArray=new Array();
         this.touchEndCallBackArray=new Array();
-        this.canvas.addEventListener("mousemove",this.mouseMoveCallBack.bind(this)) //设置对鼠标移动的监听
-        this.canvas.addEventListener("mousedown",this.mouseDownCallBack.bind(this)) //设置对鼠标按下的监听
-        this.canvas.addEventListener("mouseup",this.mouseUpCallBack.bind(this)) //设置对鼠标松开的监听
-        this.canvas.addEventListener("touchmove",this.touchMoveCallBack.bind(this)) //设置对触摸移动的监听
-        this.canvas.addEventListener("touchstart",this.touchStartCallBack.bind(this)) //设置对触摸屏按下的监听
-        this.canvas.addEventListener("touchend",this.touchEndCallBack.bind(this)) //设置对触摸屏松开的监听
         this.clickFocusPoint=-1; //可点击元素的焦点，-1为无焦点（存在焦点时只对焦点元素进行判定）
+    }
+    setBackground(img){
+        this.background=img;
     }
     addObjectNeedToDraw(ly,f){
         this.objectToDraw.push({layer:ly,func:f});
     }
     draw(){
         // document.getElementById("information").innerHTML=this.clickFocusPoint;
-        this.canvasContext.drawImage(megumi,0,0,this.logicalWidth,this.logicalHeight);
+        if (this.background!=null) this.canvasContext.drawImage(this.background,0,0,this.logicalWidth,this.logicalHeight);
         this.objectToDraw.sort(function(a,b){
             return a.layer-b.layer;
         });
