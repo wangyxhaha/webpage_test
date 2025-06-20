@@ -2,7 +2,7 @@
 
 class Button{
     /*
-    cvs：绘图canvas
+    cvs：绘图canvas（准确来说是scene即场景，但是scene是封装了多场景功能后才有的概念，此对象仍将scene视作一个canvas）
     x：左上角x坐标
     y：左上角y坐标
     boxHeight：判定区域高度
