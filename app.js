@@ -40,7 +40,7 @@ function main(){
     var d=new Button(canvas.sceneArray["main"],300,0,100,100,0,img1,img2,img3,()=>{
         canvas.changeScene("scene2");
     });
-    var s2b=new Button(canvas.sceneArray["scene2"],400,400,100,100,0,img1,img2,img3,()=>{
+    var s2b=new Button(canvas.sceneArray["scene2"],0,400,100,100,0,img1,img2,img3,()=>{
         canvas.changeScene("main");
     });
 
