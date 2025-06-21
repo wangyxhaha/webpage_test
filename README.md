@@ -50,4 +50,14 @@
             > `img_onMouseOver`为鼠标悬停时图片，被设置为不可点击时不会切换至这个图片\
             > `img_onClick`为鼠标或触摸按下时图片，被设置为不可点击时不会切换至这个图片\
             > `buttonCallBack`为被按下并松开后触发的回调函数，被设置为不可点击时不会触发
+        - `Button.draw()`（绘制函数）
+            > 根据目前所处的状态和透明度绘制自身
+        - `Button.setDraggable(d)`（设置是否可拖动）
+            > `true`为可拖动，`false`为不可拖动
+        - `Button.setClickable(c)`（设置是否可点击）
+            > `true`为可点击，`false`为不可点击
+        - `Button.setTransparentAlpha(a)`（设置透明度）
+            > 范围为0.0~1.0，0.0为完全透明，1.0为完全不透明\
+            > 如参数超出了范围，则不会有任何动作
+        - `Button.getImg()`（获取当前状态的图片）
 - 文本输入框：依赖于对HTML标签`<input>`的伪装，支持文本输入、删除、粘贴、光标移动等，但不支持显示选中区域、鼠标点击交互等
