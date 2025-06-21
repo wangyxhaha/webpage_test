@@ -39,7 +39,7 @@
             > `f`为需绘制的对象提供的回调函数，需定义绘制方法（就是说，`CanvasScene`不负责具体的绘制，由具体每个对象负责具体的自己的绘制，`CanvasScene`只负责管理）
         - `CanvasScene.draw()`（绘制函数）
             > 一般被`Canvas`类自动调用，会按照图层顺序调用已注册对象的`draw()`
-- 按钮：一种封装好的可绘制对象
+- 按钮：一种封装好的可绘制对象，支持一些鼠标（或触摸）交互
     1. `Button`类为按钮类，支持鼠标（或触摸）悬停（触摸不存在悬停）、点击、触发回调函数等，可设置是否可点击、是否可拖动（也可以当作一般对象使用）
         - `Button(cvs,x,y,boxHeight,boxWidth,layer,img_initial,img_onMouseOver,img_onClick,buttonCallBack)`（构造函数）
             > `cvs`为对应的`CanvasScene`\
@@ -61,3 +61,9 @@
             > 如参数超出了范围，则不会有任何动作
         - `Button.getImg()`（获取当前状态的图片）
 - 文本输入框：依赖于对HTML标签`<input>`的伪装，支持文本输入、删除、粘贴、光标移动等，但不支持显示选中区域、鼠标点击交互等
+    1. `Input`类为输入类
+        - `Input(cvs,input_id,x,y,layer)`（构造函数）
+            > `cvs`为所处的场景\
+            > `input_id`为用于伪装的`<input>`的属性`id`\
+            > `x`、`y`为基准坐标（具体文字绘制位置和文字的对其方式等有关）\
+            > `layer`为所处图层
