@@ -25,25 +25,13 @@ class Button{
         this.img_initial=img_initial; //获取默认显示样式
         this.img_onMouseOver=img_onMouseOver; //获取鼠标悬停样式
         this.img_onClick=img_onClick; //获取鼠标点击样式
-        // cvs.mouseMoveCallBackArray.push(this.mouseMoveCallBack.bind(this)); //设置对鼠标移动的监听
-        // cvs.mouseDownCallBackArray.push(this.mouseDownCallBack.bind(this)); //设置对鼠标按下的监听
-        // cvs.mouseUpCallBackArray.push(this.mouseUpCallBack.bind(this)); //设置对鼠标松开的监听
-        // cvs.touchMoveCallBackArray.push(this.touchMoveCallBack.bind(this)); //设置对触摸移动的监听
-        // cvs.touchStartCallBackArray.push(this.touchStartCallBack.bind(this)); //设置对触摸屏按下的监听
-        // cvs.touchEndCallBackArray.push(this.touchEndCallBack.bind(this)); //设置对触摸屏松开的监听
-        // cvs.addMouseMoveCallBack(this.mouseMoveCallBack.bind(this),layer);
-        // cvs.addMouseDownCallBack(this.mouseDownCallBack.bind(this),layer);
-        // cvs.addMouseUpCallBack(this.mouseUpCallBack.bind(this),layer);
-        // cvs.addTouchMoveCallBack(this.touchMoveCallBack.bind(this),layer);
-        // cvs.addTouchStartCallBack(this.touchStartCallBack.bind(this),layer);
-        // cvs.addTouchEndCallBack(this.touchEndCallBack.bind(this),layer);
         cvs.addClickCallBack(
-            this.mouseMoveCallBack.bind(this),
-            this.mouseDownCallBack.bind(this),
-            this.mouseUpCallBack.bind(this),
-            this.touchMoveCallBack.bind(this),
-            this.touchStartCallBack.bind(this),
-            this.touchEndCallBack.bind(this),
+            this.mouseMoveCallBack.bind(this), //设置对鼠标移动的监听
+            this.mouseDownCallBack.bind(this), //设置对鼠标按下的监听
+            this.mouseUpCallBack.bind(this), //设置对鼠标松开的监听
+            this.touchMoveCallBack.bind(this), //设置对触摸移动的监听
+            this.touchStartCallBack.bind(this), //设置对触摸屏按下的监听
+            this.touchEndCallBack.bind(this), //设置对触摸屏松开的监听
             layer
         );
         this.status=0; //0=inital 1=mouseOver 2=mouseDown

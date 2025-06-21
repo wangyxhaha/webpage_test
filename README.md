@@ -37,6 +37,17 @@
         - `CanvasScene.addObjectNeedToDraw(ly,f)`（注册在当前场景需要绘制的对象）
             > `ly`为所在的图层（值越大越靠前）\
             > `f`为需绘制的对象提供的回调函数，需定义绘制方法（就是说，`CanvasScene`不负责具体的绘制，由具体每个对象负责具体的自己的绘制，`CanvasScene`只负责管理）
-- 按钮：可点击可拖动，可触发回调函数（将点击和拖动 取消掉，可以当作普通对象用）
-    - new! 添加了透明的功能（JavaScript直接就提供了相应api，真是方便啊）
+        - `CanvasScene.draw()`（绘制函数）
+            > 一般被`Canvas`类自动调用，会按照图层顺序调用已注册对象的`draw()`
+- 按钮：一种封装好的可绘制对象
+    1. `Button`类为按钮类，支持鼠标（或触摸）悬停（触摸不存在悬停）、点击、触发回调函数等，可设置是否可点击、是否可拖动（也可以当作一般对象使用）
+        - `Button(cvs,x,y,boxHeight,boxWidth,layer,img_initial,img_onMouseOver,img_onClick,buttonCallBack)`（构造函数）
+            > `cvs`为对应的`CanvasScene`\
+            > `x`、`y`分别为左上角的x坐标和y坐标（x轴由画布左上角水平指向右，y轴由画布左上角竖直指向下）\
+            > `boxHeight`、`boxWidth`为判定区域的高度与宽度\
+            > `layer`为所在图层\
+            > `img_initial`为初始状态图片\
+            > `img_onMouseOver`为鼠标悬停时图片，被设置为不可点击时不会切换至这个图片\
+            > `img_onClick`为鼠标或触摸按下时图片，被设置为不可点击时不会切换至这个图片\
+            > `buttonCallBack`为被按下并松开后触发的回调函数，被设置为不可点击时不会触发
 - 文本输入框：依赖于对HTML标签`<input>`的伪装，支持文本输入、删除、粘贴、光标移动等，但不支持显示选中区域、鼠标点击交互等
