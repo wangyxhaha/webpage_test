@@ -53,19 +53,24 @@ class Button{
         this.clickable=true; //可否点击
         this.mouseDownRelativeX=undefined; //拖动时与鼠标的相对位置
         this.mouseDownRelativeY=undefined;
-
-        console.log(this.img_initial);
-        console.log(this.img_onMouseOver);
-        console.log(this.img_onClick);
+        this.transparentAlpha=1.0; //0=完全透明 1=完全不透明
+        // console.log(this.img_initial);
+        // console.log(this.img_onMouseOver);
+        // console.log(this.img_onClick);
     }
     draw(){
+        this.canvasContext.globalAlpha=this.transparentAlpha;
         this.canvasContext.drawImage(this.getImg(),this.x,this.y);
+        this.canvasContext.globalAlpha=1;
     }
     setDraggable(d){
         this.draggable=d;
     }
     setClickable(c){
         this.clickable=c;
+    }
+    setTransparentAlpha(a){
+        if (a>=0 && a<=1) this.transparentAlpha=a;
     }
     mouseMoveCallBack(pos){ //处理鼠标移动事件
         // console.log(pos.x,pos.y,this.x,this.y,this.boxWidth,this.boxHeight);

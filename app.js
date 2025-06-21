@@ -28,22 +28,25 @@ function cb(){
 function main(){
     console.log("loading successfully");
     // canvas.canvasContext.drawImage(megumi,0,0,600,600);
-    canvas.sceneArray["main"].setBackground(megumi);
+    canvas.scene("main").setBackground(megumi);
     var input1=new Input(canvas.sceneArray["main"],"gameInput",200,200,5);
-    var b=new Button(canvas.sceneArray["main"],0,0,100,100,1,img1,img2,img3,()=>{
+    var b=new Button(canvas.scene("main"),0,0,100,100,1,img1,img2,img3,()=>{
         input1.enable();
     });
-    var c=new Button(canvas.sceneArray["main"],300,300,100,100,0,img1,img2,img3,()=>{
+    var c=new Button(canvas.scene("main"),300,300,100,100,0,img1,img2,img3,()=>{
         input1.disable();
     });
-    console.log(canvas.sceneArray["main"]);
-    var d=new Button(canvas.sceneArray["main"],300,0,100,100,0,img1,img2,img3,()=>{
+    console.log(canvas.scene("main"));
+    var d=new Button(canvas.scene("main"),300,0,100,100,0,img1,img2,img3,()=>{
         canvas.changeScene("scene2");
     });
-    var s2b=new Button(canvas.sceneArray["scene2"],0,400,100,100,0,img1,img2,img3,()=>{
+    var s2b=new Button(canvas.scene("scene2"),0,400,100,100,0,img1,img2,img3,()=>{
         canvas.changeScene("main");
     });
-
+    b.setTransparentAlpha(0.5);
+    c.setTransparentAlpha(0.5);
+    d.setTransparentAlpha(0.5);
+    s2b.setTransparentAlpha(0.5);
     b.setDraggable(true);
     c.setDraggable(true);
     // c.setClickable(false);
