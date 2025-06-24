@@ -1,6 +1,6 @@
 "use strict"
 
-class Button{
+class Button extends Sprite{
     /*
     cvs：绘图canvas（准确来说是scene即场景，但是scene是封装了多场景功能后才有的概念，此对象仍将scene视作一个canvas）
     x：左上角x坐标
@@ -14,11 +14,14 @@ class Button{
     buttonCallBack：按钮被点击后（鼠标松开或触摸结束后）调用的回调函数
     */
     constructor(cvs,x,y,boxHeight,boxWidth,layer,img_initial,img_onMouseOver,img_onClick,buttonCallBack){
+        super(x,y); //获取所在位置的坐标
         this.canvas=cvs.canvas; //获取所在的canvas
         // console.log(this.canvas);
         this.canvasContext=cvs.canvasContext; //获取所在canvas的绘图上下文
-        this.x=x; //获取所在位置的坐标
-        this.y=y;
+        // this.transparentAlpha=1.0;
+        this.setTransparentAlpha(1.0); //0=完全透明 1=完全不透明
+        // this.x=x; 
+        // this.y=y;
         this.boxHeight=boxHeight; //获取判定区域的大小
         this.boxWidth=boxWidth;
         this.layer=layer;
@@ -41,7 +44,6 @@ class Button{
         this.clickable=true; //可否点击
         this.mouseDownRelativeX=undefined; //拖动时与鼠标的相对位置
         this.mouseDownRelativeY=undefined;
-        this.transparentAlpha=1.0; //0=完全透明 1=完全不透明
         // console.log(this.img_initial);
         // console.log(this.img_onMouseOver);
         // console.log(this.img_onClick);
@@ -57,9 +59,9 @@ class Button{
     setClickable(c){
         this.clickable=c;
     }
-    setTransparentAlpha(a){
-        if (a>=0 && a<=1) this.transparentAlpha=a;
-    }
+    // setTransparentAlpha(a){
+    //     if (a>=0 && a<=1) this.transparentAlpha=a;
+    // }
     mouseMoveCallBack(pos){ //处理鼠标移动事件
         // console.log(pos.x,pos.y,this.x,this.y,this.boxWidth,this.boxHeight);
         // console.log(pos.x>=this.x,pos.x<=this.x+this.boxWidth,pos.y>=this.y,pos.y<=this.y+this.boxHeight)
