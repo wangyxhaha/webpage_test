@@ -1,13 +1,14 @@
 "use strict"
 
-class Input{
+class Input extends Sprite{
     constructor(cvs,input_id,x,y,layer){
+        super(x,y);
         this.canvas=cvs.canvas; //获取canvas环境
         this.canvasContext=cvs.canvasContext;
         this.inputElement=document.getElementById(input_id); //获取实际文本框元素
         this.inputElement.style="position: fixed top: -100px opacity: 0 height: 0"; //隐藏实际文本框，很重要！！
-        this.x=x; //获取坐标（x的定位由textAlign决定，y的定位由textBaseLine决定）
-        this.y=y;
+        // this.x=x; //获取坐标（x的定位由textAlign决定，y的定位由textBaseLine决定）
+        // this.y=y;
         this.layer=layer;
         cvs.addObjectNeedToDraw(layer,this.draw.bind(this));
         // 设置文本样式
