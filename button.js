@@ -14,10 +14,8 @@ class Button extends Sprite{
     buttonCallBack：按钮被点击后（鼠标松开或触摸结束后）调用的回调函数
     */
     constructor(cvs,x,y,boxHeight,boxWidth,layer,img_initial,img_onMouseOver,img_onClick,buttonCallBack){
-        super(x,y); //获取所在位置的坐标
-        this.canvas=cvs.canvas; //获取所在的canvas
+        super(cvs,x,y); //获取所在位置的坐标
         // console.log(this.canvas);
-        this.canvasContext=cvs.canvasContext; //获取所在canvas的绘图上下文
         // this.transparentAlpha=1.0;
         this.setTransparentAlpha(1.0); //0=完全透明 1=完全不透明
         // this.x=x; 

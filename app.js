@@ -35,6 +35,7 @@ function main(){
     });
     var c=new Button(canvas.scene("main"),300,300,100,100,0,img1,img2,img3,()=>{
         input1.disable();
+        c.slideTo(500,500,0.1);
     });
     console.log(canvas.scene("main"));
     var d=new Button(canvas.scene("main"),300,0,100,100,0,img1,img2,img3,()=>{
