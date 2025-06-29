@@ -30,6 +30,7 @@ function main(){
     // canvas.canvasContext.drawImage(megumi,0,0,600,600);
     canvas.scene("main").setBackground(megumi);
     var input1=new Input(canvas.sceneArray["main"],"gameInput",200,200,5);
+    input1.setTransparentAlpha(0.5);
     var b=new Button(canvas.scene("main"),0,0,100,100,1,img1,img2,img3,()=>{
         input1.enable();
     });

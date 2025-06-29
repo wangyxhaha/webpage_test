@@ -28,6 +28,7 @@ class Input extends Sprite{
         // console.log("switch cursor");
     }
     draw(){
+        this.canvasContext.globalAlpha=this.transparentAlpha;
         this.canvasContext.fillText(this.inputElement.value,this.x,this.y);
         // this.canvasContext.strock
         // console.log("draw input");
@@ -35,6 +36,7 @@ class Input extends Sprite{
             var w=this.canvasContext.measureText(this.inputElement.value.substring(0,this.inputElement.selectionStart)); //获取到光标位置的内容的宽度
             this.canvasContext.fillRect(this.x+w.width,this.y-this.fontHeight,2,this.fontHeight);
         }
+        this.canvasContext.globalAlpha=1;
     }
     enable(){
         this.inputElement.focus();
