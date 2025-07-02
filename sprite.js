@@ -44,6 +44,7 @@ class Sprite{
     }
     //平滑移动至(x,y)，k为强度(0<=k<=1)
     slideTo(x,y,k){
+        console.log("slide to");
         clearInterval(this.nowMover);
         // var startx=this.x;
         var starty=this.y;
@@ -51,8 +52,9 @@ class Sprite{
             if (Math.abs(x-this.x)<=0.1 && Math.abs(y-this.y)<=0.1){
                 this.x=x;
                 this.y=y;
-                console.log(`pos:(${this.x},${this.y})`);
+                // console.log(`pos:(${this.x},${this.y})`);
                 clearInterval(this.nowMover);
+                console.log("slide to end");
             }
             this.x+=(x-this.x)*k;
             this.y+=(y-this.y)*k;
