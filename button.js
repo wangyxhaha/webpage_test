@@ -13,7 +13,7 @@ class Button extends Sprite{
     img_onClick：鼠标点击时或触摸时的样式
     buttonCallBack：按钮被点击后（鼠标松开或触摸结束后）调用的回调函数
     */
-    constructor(cvs,x,y,boxHeight,boxWidth,layer,img_initial,img_onMouseOver,img_onClick,buttonCallBack){
+    constructor(cvs,x,y,boxHeight,boxWidth,layer,img_initial,img_onMouseOver,img_onClick,buttonDownCallBack,buttonUpCallBack){
         super(cvs,x,y); //获取所在位置的坐标
         // console.log(this.canvas);
         // this.transparentAlpha=1.0;
@@ -36,7 +36,8 @@ class Button extends Sprite{
             layer
         );
         this.status=0; //0=inital 1=mouseOver 2=mouseDown
-        this.buttonCallBack=buttonCallBack; //设置按下按钮后调用的回调函数
+        this.buttonDownCallBack=buttonDownCallBack; //设置按下按钮时调用的回调函数
+        this.buttonUpCallBack=buttonUpCallBack; //设置抬起按钮时调用的回调函数
         cvs.addObjectNeedToDraw(layer,this.draw.bind(this)) //向canvas进行注册
         this.draggable=false; //可否拖动
         this.clickable=true; //可否点击
@@ -82,6 +83,7 @@ class Button extends Sprite{
             this.status=2;
             this.mouseDownRelativeX=pos.x-this.x; //被按下，设置按钮坐标和鼠标坐标的相对位置
             this.mouseDownRelativeY=pos.y-this.y;
+            if (this.clickable) this.buttonDownCallBack();
             return true;
         }
         return false;
@@ -92,7 +94,7 @@ class Button extends Sprite{
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
             pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
             this.status=1;
-            if (this.clickable) this.buttonCallBack();
+            if (this.clickable) this.buttonUpCallBack();
             return true;
         }
         // this.status=0
@@ -118,6 +120,7 @@ class Button extends Sprite{
             this.status=2;
             this.mouseDownRelativeX=pos.x-this.x; //被按下，设置按钮坐标和触摸位置坐标的相对位置
             this.mouseDownRelativeY=pos.y-this.y;
+            if (this.clickable) this.buttonDownCallBack();
             return true;
         }
         return false;
@@ -128,7 +131,7 @@ class Button extends Sprite{
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
             pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
             this.status=0;
-            if (this.clickable) this.buttonCallBack();
+            if (this.clickable) this.buttonUpCallBack();
             return true;
         }
         // this.status=0;

@@ -31,18 +31,22 @@ function main(){
     canvas.scene("main").setBackground(megumi);
     var input1=new Input(canvas.sceneArray["main"],"gameInput",200,200,5);
     input1.setTransparentAlpha(0.5);
-    var b=new Button(canvas.scene("main"),0,0,100,100,1,img1,img2,img3,()=>{
+    var b=new Button(canvas.scene("main"),0,0,100,100,1,img1,img2,img3,()=>{},()=>{
         input1.enable();
     });
-    var c=new Button(canvas.scene("main"),300,300,100,100,0,img1,img2,img3,()=>{
+    var c=new Button(canvas.scene("main"),300,300,100,100,0,img1,img2,img3,
+    ()=>{
+        c.cancelMovement();
+    },
+    ()=>{
         input1.disable();
         c.slideTo(300,300,0.05);
     });
     console.log(canvas.scene("main"));
-    var d=new Button(canvas.scene("main"),300,0,100,100,0,img1,img2,img3,()=>{
+    var d=new Button(canvas.scene("main"),300,0,100,100,0,img1,img2,img3,()=>{},()=>{
         canvas.changeScene("scene2");
     });
-    var s2b=new Button(canvas.scene("scene2"),0,400,100,100,0,img1,img2,img3,()=>{
+    var s2b=new Button(canvas.scene("scene2"),0,400,100,100,0,img1,img2,img3,()=>{},()=>{
         canvas.changeScene("main");
     });
     var tb=new Dialog(canvas.scene("main"),500,500,300,300,0.5,0.2,1,"123\n12345\n一二三四五六七八九\n1234\n12");

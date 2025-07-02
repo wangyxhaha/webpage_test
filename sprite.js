@@ -46,8 +46,6 @@ class Sprite{
     slideTo(x,y,k){
         console.log("slide to");
         clearInterval(this.nowMover);
-        // var startx=this.x;
-        var starty=this.y;
         this.nowMover=setInterval(()=>{
             if (Math.abs(x-this.x)<=0.1 && Math.abs(y-this.y)<=0.1){
                 this.x=x;
@@ -60,5 +58,9 @@ class Sprite{
             this.y+=(y-this.y)*k;
             // console.log(`endTime:${endTime}, nowTime${new Date().valueOf()}`);
         },16.7)
+    }
+    cancelMovement(){
+        clearInterval(this.nowMover);
+        this.nowMover=null;
     }
 }
