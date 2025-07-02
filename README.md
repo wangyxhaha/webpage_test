@@ -47,16 +47,20 @@
         - `Sprite.setPostition(x,y)`（设置位置）
         - `Sprite.setTransparentAlpha(a)`（设置透明度）
             > 范围为0.0~1.0，0.0为完全透明，1.0为完全不透明\
-            > 如参数超出了范围，则静默处理
+            > 如参数超出了范围，则静默处理\
+            > 当然这只是设置一下，需要手动在派生类绘制时再手动设置相应api（已经做好的类就不用管了）
         - `Sprite.moveTo(x,y,time)`（匀速移动）
             > `x`和`y`为移动的目标坐标\
-            > `time`为移动用时，单位为ms
+            > `time`为移动用时，单位为ms\
+            > 如果存在已有的移动，会将已有的移动取消后再进行现在的移动
         - `Sprite.slideTo(x,y,k)`（平滑移动）
             > `x`和`y`为移动的目标坐标\
             > `k`为强度，0.0≤`k`≤1.0 且`k`越大速度越快
-            > `k`在范围之外会有不预期的结果
+            > `k`在范围之外会有不预期的结果\
+            > 如果存在已有的移动，会将已有的移动取消后再进行现在的移动
+        - `Sprite.cancelMovement()`（取消已有的移动）
 - 按钮：一种封装好的可绘制对象，支持一些鼠标（或触摸）交互
-    1. `Button`类为按钮类，继承自`Sprite`类，支持鼠标（或触摸）悬停（触摸不存在悬停）、点击、触发回调函数等，可设置是否可点击、是否可拖动（也可以当作一般对象使用）
+    1. `Button`类为按钮类，继承自`Sprite`类，支持`Sprite`类的一切功能（大概吧，只要没冲突），支持鼠标（或触摸）悬停（触摸不存在悬停）、点击、触发回调函数等，可设置是否可点击、是否可拖动（也可以当作一般对象使用）
         - `Button(cvs,x,y,boxHeight,boxWidth,layer,img_initial,img_onMouseOver,img_onClick,buttonDownCallBack,buttonUpCallBack)`（构造函数）
             > `cvs`为对应的`CanvasScene`\
             > `x`、`y`分别为左上角的x坐标和y坐标（x轴由画布左上角水平指向右，y轴由画布左上角竖直指向下）\
@@ -74,8 +78,8 @@
         - `Button.setClickable(c)`（设置是否可点击）
             > `true`为可点击，`false`为不可点击
         - `Button.getImg()`（获取当前状态的图片）
-- 文本输入框：依赖于对HTML标签`<input>`的伪装，支持文本输入、删除、粘贴、光标移动等，但不支持显示选中区域、鼠标点击交互等
-    1. `Input`类为输入类
+- 文本输入框：
+    1. `Input`类为输入类，依赖于对HTML标签`<input>`的伪装（这意味着一个`Input`对象就要有一个`<input>`标签），继承自`Sprite`类，支持`Sprite`类的一切功能（大概吧，同`Button`类），支持文本输入、删除、粘贴、光标移动等，但不支持显示选中区域、鼠标点击交互等（懒了，如果有需要再说吧）
         - `Input(cvs,input_id,x,y,layer)`（构造函数）
             > `cvs`为所处的场景\
             > `input_id`为用于伪装的`<input>`的属性`id`\
@@ -87,3 +91,18 @@
         - `Input.disable()`（关闭输入）
             > 由`Input.submitCallBack(evt)`实现用户按下回车键时会自动关闭输入\
             > 另外，由对`"blur"`事件的监听实现输入失去焦点时会自动关闭输入（*BUG：对于虚拟键盘上收起键盘的按键无法自动关闭，会导致在其他场景继续输入，目前没有想到的解决方案*）
+- 气泡框：
+    1. `Dialog`类，继承自`Sprite`类， **_但不太建议设置透明度！会穿帮！！！_** 支持显示文字，自动适应文字内容的宽度和高度
+        - `Dialog(cvs,x,y,tx,ty,e,tailBottomWidth,layer,text)`（构造函数）
+            > `cvs`是所在场景\
+            > `x`和`y`是中心点（主体的）的坐标\
+            > `tx`和`ty`是尾巴顶点的坐标\
+            > `e`是椭圆离心率\
+            > `tailBottomWidth`是尾巴底部宽度（尾巴实际是个等腰三角形，底边中点在椭圆中心，这个参数为底边长度）\
+            > `layer`是所在图层\
+            > `text`是内容，支持`\n`
+        - `Dialog.draw()`（绘制函数）
+        - `Dialog.setTailPos(tx,ty)`（设置尾巴坐标）
+        - `Dialog.setE(e)`（设置离心率）
+        - `Dialog.setText(t)`（设置内容）
+

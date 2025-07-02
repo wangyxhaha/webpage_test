@@ -75,4 +75,14 @@ class Dialog extends Sprite{
         }
         this.canvasContext.globalAlpha=1;
     }
+    setTailPos(tx,ty){
+        this.tx=tx;
+        this.ty=ty;
+    }
+    setE(e){
+        this.e=e;
+    }
+    setText(t){
+        this.text=t;
+    }
 }
