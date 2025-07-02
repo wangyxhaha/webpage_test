@@ -39,6 +39,16 @@
             > `f`为需绘制的对象提供的回调函数，需定义绘制方法（就是说，`CanvasScene`不负责具体的绘制，由具体每个对象负责具体的自己的绘制，`CanvasScene`只负责管理）
         - `CanvasScene.draw()`（绘制函数）
             > 一般被`Canvas`类自动调用，会按照图层顺序调用已注册对象的`draw()`
+- 基础精灵类：可绘制、移动等的对象或元素的基类
+    1. `Sprite`类为上述基类，支持一些此类对象的基础功能，比如说移动、透明度等
+        - `Sprite(cvs,x,y)`（构造函数）
+            > `cvs`为对应的`CanvasScene`\
+            > `x`、`y`分别为左上角的x坐标和y坐标（x轴由画布左上角水平指向右，y轴由画布左上角竖直指向下）
+        - `Sprite.setPostition(x,y)`（设置位置）
+        - `Sprite.setTransparentAlpha(a)`（设置透明度）
+            > 范围为0.0~1.0，0.0为完全透明，1.0为完全不透明\
+            > 如参数超出了范围，则静默处理
+        
 - 按钮：一种封装好的可绘制对象，支持一些鼠标（或触摸）交互
     1. `Button`类为按钮类，继承自`Sprite`类，支持鼠标（或触摸）悬停（触摸不存在悬停）、点击、触发回调函数等，可设置是否可点击、是否可拖动（也可以当作一般对象使用）
         - `Button(cvs,x,y,boxHeight,boxWidth,layer,img_initial,img_onMouseOver,img_onClick,buttonCallBack)`（构造函数）
@@ -56,9 +66,6 @@
             > `true`为可拖动，`false`为不可拖动
         - `Button.setClickable(c)`（设置是否可点击）
             > `true`为可点击，`false`为不可点击
-        - `Button.setTransparentAlpha(a)`（设置透明度）
-            > 范围为0.0~1.0，0.0为完全透明，1.0为完全不透明\
-            > 如参数超出了范围，则不会有任何动作
         - `Button.getImg()`（获取当前状态的图片）
 - 文本输入框：依赖于对HTML标签`<input>`的伪装，支持文本输入、删除、粘贴、光标移动等，但不支持显示选中区域、鼠标点击交互等
     1. `Input`类为输入类
