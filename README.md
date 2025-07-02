@@ -48,7 +48,12 @@
         - `Sprite.setTransparentAlpha(a)`（设置透明度）
             > 范围为0.0~1.0，0.0为完全透明，1.0为完全不透明\
             > 如参数超出了范围，则静默处理
-        
+        - `Sprite.moveTo(x,y,time)`（匀速移动）
+            > `x`和`y`为移动的目标坐标\
+            > `time`为移动用时，单位为ms
+        - `Sprite.slideTo(x,y,k)`（平滑移动）
+            > `x`和`y`为移动的目标坐标\
+            > `k`为强度，$0.0 \le k \le 1.0$ 且`k`越大速度越快
 - 按钮：一种封装好的可绘制对象，支持一些鼠标（或触摸）交互
     1. `Button`类为按钮类，继承自`Sprite`类，支持鼠标（或触摸）悬停（触摸不存在悬停）、点击、触发回调函数等，可设置是否可点击、是否可拖动（也可以当作一般对象使用）
         - `Button(cvs,x,y,boxHeight,boxWidth,layer,img_initial,img_onMouseOver,img_onClick,buttonCallBack)`（构造函数）
