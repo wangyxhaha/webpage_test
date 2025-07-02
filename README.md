@@ -25,13 +25,13 @@
         - `CanvasScene.setBackground(img)`（设置场景背景）
             > 需向`img`提供`Image`对象
         - `CanvasScene.addClickCallBack(mm,md,mu,tm,ts,te,l)`（注册鼠标以及触摸事件监听）
-            > `CanvasScene`提供的监听接口有：
-            > `mouseMove`：监听鼠标移动（mm）\
-            > `mouseDown`：监听鼠标按下（md）\
-            > `mouseUp`：监听鼠标松开（mu）\
-            > `touchMove`：监听触摸移动（tm）\
-            > `touchStart`：监听触摸开始（ts）\
-            > `touchEnd`：监听触摸结束（te）\
+            > `CanvasScene`提供的监听接口有：\
+            > 　　`mouseMove`：监听鼠标移动（mm）\
+            > 　　`mouseDown`：监听鼠标按下（md）\
+            > 　　`mouseUp`：监听鼠标松开（mu）\
+            > 　　`touchMove`：监听触摸移动（tm）\
+            > 　　`touchStart`：监听触摸开始（ts）\
+            > 　　`touchEnd`：监听触摸结束（te）\
             > `l`为对象所在图层，用于解决多个对象重叠时的优先级\
             > *为了兼容电脑端和移动端，一旦一个对象要注册监听，必须提供全部6种的回调函数*
         - `CanvasScene.addObjectNeedToDraw(ly,f)`（注册在当前场景需要绘制的对象）
