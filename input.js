@@ -11,12 +11,7 @@ class Input extends Sprite{
         // this.y=y;
         this.layer=layer;
         cvs.addObjectNeedToDraw(layer,this.draw.bind(this));
-        // 设置文本样式
         this.fontHeight=30;
-        this.canvasContext.font=`${this.fontHeight}px Arial`;          // 字体大小和类型
-        this.canvasContext.fillStyle='red';            // 填充颜色
-        this.canvasContext.strokeStyle='blue';         // 描边颜色
-        this.canvasContext.lineWidth=2;                // 描边宽度
         this.inputElement.addEventListener("keydown",this.submitCallBack.bind(this)); //用于检测Enter
         this.inputElement.addEventListener("blur",this.disable.bind(this)); //用于检测失去焦点
         this.timeHandler.flag=true;
@@ -29,6 +24,13 @@ class Input extends Sprite{
     }
     draw(){
         this.canvasContext.globalAlpha=this.transparentAlpha;
+        // 设置文本样式
+        this.canvasContext.font=`${this.fontHeight}px Arial`;          // 字体大小和类型
+        this.canvasContext.fillStyle='red';            // 填充颜色
+        this.canvasContext.strokeStyle='blue';         // 描边颜色
+        this.canvasContext.lineWidth=2;                // 描边宽度
+        this.canvasContext.textAlign="start";
+        this.canvasContext.testBaseline="alphabetic";
         this.canvasContext.fillText(this.inputElement.value,this.x,this.y);
         // this.canvasContext.strock
         // console.log("draw input");

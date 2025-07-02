@@ -45,12 +45,16 @@ function main(){
     var s2b=new Button(canvas.scene("scene2"),0,400,100,100,0,img1,img2,img3,()=>{
         canvas.changeScene("main");
     });
+    var tb=new Dialog(canvas.scene("main"),500,500,300,300,0.5,0.2,1,"123\n12345\n一二三四五六七八九\n1234\n12");
     b.setTransparentAlpha(0.5);
     c.setTransparentAlpha(0.5);
     d.setTransparentAlpha(0.5);
     s2b.setTransparentAlpha(0.5);
     b.setDraggable(true);
     c.setDraggable(true);
+    // setInterval(()=>{
+    //     tb.text=input1.inputElement.value;
+    // });
     // c.setClickable(false);
     // setInterval(canvas.draw.bind(canvas),16.7);
 }
