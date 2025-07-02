@@ -30,7 +30,7 @@ class Input extends Sprite{
         this.canvasContext.strokeStyle='blue';         // 描边颜色
         this.canvasContext.lineWidth=2;                // 描边宽度
         this.canvasContext.textAlign="start";
-        this.canvasContext.testBaseline="alphabetic";
+        this.canvasContext.textBaseline="alphabetic";
         this.canvasContext.fillText(this.inputElement.value,this.x,this.y);
         // this.canvasContext.strock
         // console.log("draw input");
