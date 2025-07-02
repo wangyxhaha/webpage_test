@@ -1,11 +1,12 @@
 "use strict"
 
 class Sprite{
-    constructor(cvs,x,y){
+    constructor(cvs,x,y,visible=true){
         this.canvas=cvs.canvas; //获取所在的canvas
         this.canvasContext=cvs.canvasContext; //获取所在canvas的绘图上下文
         this.x=x;
         this.y=y;
+        this.visible=visible;
         this.transparentAlpha=1.0;
         this.nowMover=null;
     }
@@ -15,6 +16,12 @@ class Sprite{
     }
     setTransparentAlpha(a){
         if (a>=0 && a<=1) this.transparentAlpha=a;
+    }
+    setVisible(v){
+        this.visible=v;
+    }
+    isVisible(){
+        return this.visible;
     }
     //匀速运动至(x,y)，time为运动时间，单位为ms
     moveTo(x,y,time){
