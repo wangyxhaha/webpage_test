@@ -42,6 +42,7 @@ export class Button extends Sprite{
         cvs.addObjectNeedToDraw(layer,this.draw.bind(this)) //向canvas进行注册
         this.draggable=false; //可否拖动
         this.clickable=true; //可否点击
+        this.ignoreClickEvent=false; //是否忽略点击事件（不再会遮挡后方可触发点击事件的元素）
         this.mouseDownRelativeX=undefined; //拖动时与鼠标的相对位置
         this.mouseDownRelativeY=undefined;
         // console.log(this.img_initial);
@@ -59,12 +60,16 @@ export class Button extends Sprite{
     setClickable(c){
         this.clickable=c;
     }
+    setIgnoreClickEven(i){
+        this.ignoreClickEvent=i;
+    }
     // setTransparentAlpha(a){
     //     if (a>=0 && a<=1) this.transparentAlpha=a;
     // }
     mouseMoveCallBack(pos){ //处理鼠标移动事件
         // console.log(pos.x,pos.y,this.x,this.y,this.boxWidth,this.boxHeight);
         // console.log(pos.x>=this.x,pos.x<=this.x+this.boxWidth,pos.y>=this.y,pos.y<=this.y+this.boxHeight)
+        if (this.ignoreClickEvent) return false;
         if (this.status==2 && this.draggable){ //如果可拖动且目前为摁下状态，更新位置
             this.x=pos.x-this.mouseDownRelativeX;
             this.y=pos.y-this.mouseDownRelativeY;
@@ -79,6 +84,7 @@ export class Button extends Sprite{
         return false;
     }
     mouseDownCallBack(pos){ //处理鼠标按下事件
+        if (this.ignoreClickEvent) return false;
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
             pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
             this.status=2;
@@ -91,6 +97,7 @@ export class Button extends Sprite{
     }
     mouseUpCallBack(pos){ //处理鼠标松开事件
         // console.log("mouse up",pos);
+        if (this.ignoreClickEvent) return false;
         if (this.status!=2) return false;
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
             pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
@@ -102,6 +109,7 @@ export class Button extends Sprite{
         return false;
     }
     touchMoveCallBack(pos){ //处理触摸移动事件
+        if (this.ignoreClickEvent) return false;
         if (this.status==2 && this.draggable){ //如果可拖动且目前为摁下状态，更新位置
             this.x=pos.x-this.mouseDownRelativeX;
             this.y=pos.y-this.mouseDownRelativeY;
@@ -116,6 +124,7 @@ export class Button extends Sprite{
         return false;
     }
     touchStartCallBack(pos){ //处理触摸屏按下事件
+        if (this.ignoreClickEvent) return false;
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
             pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
             this.status=2;
@@ -127,7 +136,8 @@ export class Button extends Sprite{
         return false;
     }
     touchEndCallBack(pos){ //处理触摸屏松开事件
-        console.log(pos);
+        // console.log(pos);
+        if (this.ignoreClickEvent) return false;
         if (this.status!=2) return false;
         if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
             pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
