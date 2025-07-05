@@ -1,6 +1,6 @@
 "use strict"
 
-class Sprite{
+export class Sprite{
     constructor(cvs,x,y,visible=true){
         this.canvas=cvs.canvas; //获取所在的canvas
         this.canvasContext=cvs.canvasContext; //获取所在canvas的绘图上下文

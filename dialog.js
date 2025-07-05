@@ -1,6 +1,7 @@
 "use strict"
+import {Sprite} from "./sprite.js";
 
-class Dialog extends Sprite{
+export class Dialog extends Sprite{
     constructor(cvs,x,y,tx,ty,e,tailBottomWidth,layer,text){
         super(cvs,x,y);
         this.tx=tx;

@@ -12,7 +12,7 @@ function logicalEvtChange(cvs,e){
     return {x:relativeX,y:relativeY};
 }
 
-class Canvas{
+export class Canvas{
     constructor(canvasid,height,width){
         this.canvasid=canvasid;
         this.canvas=document.getElementById(canvasid); //设置canvas和上下文
@@ -76,7 +76,7 @@ class Canvas{
     }
 }
 
-class CanvasScene{ //不同场景（可以方便切换）
+export class CanvasScene{ //不同场景（可以方便切换）
     constructor(canvasid,height,width,background){
         this.canvas=document.getElementById(canvasid); //设置canvas和上下文
         this.canvasContext=this.canvas.getContext("2d");

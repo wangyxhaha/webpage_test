@@ -1,5 +1,11 @@
 "use strict"
 
+import {Canvas} from "./canvas.js";
+// import Sprite from "./sprite";
+import {Button} from "./button.js";
+import {Input} from "./input.js";
+import {Dialog} from "./dialog.js";
+
 console.log("test console.");
 
 // var canvas=document.getElementById("my_canvas");
@@ -11,7 +17,7 @@ megumi.src="./Megumi.jpg";
 var hitori=new Image();
 hitori.src="./Hitori.jpeg";
 
-var canvas=new Canvas("gameCanvas",800,800)
+var canvas=new Canvas("gameCanvas",1000,1000)
     canvas.createNewScene("scene2",hitori);
 
 // console.log(canvas.canvas);
