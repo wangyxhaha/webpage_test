@@ -55,7 +55,7 @@ function main(){
     c.setTransparentAlpha(0.5);
     d.setTransparentAlpha(0.5);
     s2b.setTransparentAlpha(0.5);
-    // tb.setTransparentAlpha(0.5);
+    tb.setTransparentAlpha(0.5);
     b.setDraggable(true);
     c.setDraggable(true);
     // setInterval(()=>{

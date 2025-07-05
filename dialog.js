@@ -12,6 +12,10 @@ class Dialog extends Sprite{
         this.fontHeight=30;
         this.lineInterval=3;
         cvs.addObjectNeedToDraw(layer,this.draw.bind(this)) //向canvas进行注册
+        this.preCanvas=new OffscreenCanvas(this.canvas.width,this.canvas.height);
+        this.preCanvasContext=this.preCanvas.getContext("2d");
+        this.preImage=new Image();
+        this.preDraw();
     }
     #divide(){ //按换行符分割内容并返回包含分割内容的Array和最长行的长度
         var temp=new Array();
@@ -20,20 +24,20 @@ class Dialog extends Sprite{
         for (var i=0;i<this.text.length;i++){
             if (this.text[i]=='\n'){
                 temp.push(this.text.substring(pre,i));
-                maxlength=Math.max(maxlength,this.canvasContext.measureText(temp[temp.length-1]).width);
+                maxlength=Math.max(maxlength,this.preCanvasContext.measureText(temp[temp.length-1]).width);
                 pre=i+1;
             }
             else if (this.text[i]=='\0'){
                 temp.push(this.text.substring(pre,i));
-                maxlength=Math.max(maxlength,this.canvasContext.measureText(temp[temp.length-1]).width);
+                maxlength=Math.max(maxlength,this.preCanvasContext.measureText(temp[temp.length-1]).width);
                 break;
             }
         }
         temp.push(this.text.substring(pre,this.text.length));
-        maxlength=Math.max(maxlength,this.canvasContext.measureText(temp[temp.length-1]).width);
+        maxlength=Math.max(maxlength,this.preCanvasContext.measureText(temp[temp.length-1]).width);
         return {maxlength:maxlength,sentence:temp};
     }
-    draw(){
+    preDraw(){ //预先绘制到offScreenCanvas
         //初始准备
         var parts=this.#divide(); //对内容按换行符进行划分
         var height=parts.sentence.length*this.fontHeight+(parts.sentence.length-1)*this.lineInterval; //计算全部内容所占高
@@ -51,28 +55,33 @@ class Dialog extends Sprite{
         tail.lineTo(this.x-dx,this.y-dy);
         tail.closePath();
         //开始绘制气泡框
-        this.canvasContext.globalAlpha=this.transparentAlpha;
-        this.canvasContext.fillStyle='white';            // 填充颜色
-        this.canvasContext.strokeStyle='black';         // 描边颜色
-        this.canvasContext.lineWidth=5;                // 描边宽度
-        this.canvasContext.stroke(ell);
-        this.canvasContext.stroke(tail);
-        this.canvasContext.fill(ell);
-        this.canvasContext.fill(tail);
+        this.preCanvasContext.fillStyle='white';            // 填充颜色
+        this.preCanvasContext.strokeStyle='black';         // 描边颜色
+        this.preCanvasContext.lineWidth=5;                // 描边宽度
+        this.preCanvasContext.stroke(ell);
+        this.preCanvasContext.stroke(tail);
+        this.preCanvasContext.fill(ell);
+        this.preCanvasContext.fill(tail);
         // this.canvasContext.strokeRect(this.x-parts.maxlength/2,this.y-height/2,parts.maxlength,height);
         //绘制字体
-        this.canvasContext.font=`${this.fontHeight}px Arial`;          // 字体大小和类型
-        this.canvasContext.fillStyle='black';            // 填充颜色
-        this.canvasContext.textAlign="center";
-        this.canvasContext.textBaseline="middle";
+        this.preCanvasContext.font=`${this.fontHeight}px Arial`;          // 字体大小和类型
+        this.preCanvasContext.fillStyle='black';            // 填充颜色
+        this.preCanvasContext.textAlign="center";
+        this.preCanvasContext.textBaseline="middle";
         for (var i=0;i<parts.sentence.length;i++){
             // console.log(parts.sentence[i],this.x,this.y+i*(this.lineInterval+this.fontHeight)+this.fontHeight/2-height/2);
-            this.canvasContext.fillText(parts.sentence[i],this.x,this.y+i*(this.lineInterval+this.fontHeight)+this.fontHeight/2-height/2);
-            this.canvasContext.beginPath();
-            // this.canvasContext.moveTo(this.x-parts.maxlength/2,this.y+i*(this.lineInterval+this.fontHeight)+this.fontHeight/2-height/2);
-            // this.canvasContext.lineTo(this.x+parts.maxlength/2,this.y+i*(this.lineInterval+this.fontHeight)+this.fontHeight/2-height/2);
-            // this.canvasContext.stroke();
+            this.preCanvasContext.fillText(parts.sentence[i],this.x,this.y+i*(this.lineInterval+this.fontHeight)+this.fontHeight/2-height/2);
+            this.preCanvasContext.beginPath();
+            // this.preCanvasContext.moveTo(this.x-parts.maxlength/2,this.y+i*(this.lineInterval+this.fontHeight)+this.fontHeight/2-height/2);
+            // this.preCanvasContext.lineTo(this.x+parts.maxlength/2,this.y+i*(this.lineInterval+this.fontHeight)+this.fontHeight/2-height/2);
+            // this.preCanvasContext.stroke();
         }
+        this.preImage=this.preCanvas.transferToImageBitmap();
+    }
+    draw(){
+        this.canvasContext.globalAlpha=this.transparentAlpha;
+        this.preDraw();
+        this.canvasContext.drawImage(this.preImage,0,0);
         this.canvasContext.globalAlpha=1;
     }
     setTailPos(tx,ty){
@@ -84,5 +93,6 @@ class Dialog extends Sprite{
     }
     setText(t){
         this.text=t;
+        // this.preDraw();
     }
 }
