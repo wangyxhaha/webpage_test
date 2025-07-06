@@ -133,4 +133,17 @@
             > 没有全部加载完毕时返回`null`\
             > 加载失败返回`null`
 
+## 关卡制作规范
+为了保证在整合关卡时的统一性，所以制定如下规则：
 
+1. 每个关卡一个文件夹，名称应为缩写
+2. 文件夹中一个以名称缩写命名的js文件，以及一个名为data的数据文件夹
+3. data文件夹中存放资源
+4. js文件中应导出`init(canvas)`和`build(canvas)`函数，其中`canvas`是主程序会提供的`Canvas`对象，是当前显示的画布
+5. `init(canvas)`是初始化函数，其中应只包含加载资源用的代码
+6. `build(canvas)`是关卡构建函数，其中包含关卡如何构成，以及其他代码
+7. `init(canvas)`函数加载时请使用`Resource`类提供的异步加载功能
+8. `init(canvas)`函数被调用的时机不确定，但一定在`build(canvas)`被调用前调用（如果想要保险一些，请在`build(canvas)`中用`Resource.areOurResourcesReady()`判断一下）
+9. `build(canvas)`函数会在玩家抵达某个关卡时被调用
+
+大致就这样
