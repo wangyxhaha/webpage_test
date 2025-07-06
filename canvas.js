@@ -149,6 +149,7 @@ export class CanvasScene{ //不同场景（可以方便切换）
             else this.mouseMoveCallBackArray[i].func({x:Infinity,y:Infinity});
             // this.mouseMoveCallBackArray[i].func(logicalPos);
         }
+        if (t) console.log("mm t=true");
     }
     mouseDownCallBack(evt){
         var logicalPos=logicalEvtChange(this,evt);
