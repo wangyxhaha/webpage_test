@@ -5,6 +5,7 @@ import Canvas from "./canvas.js";
 import Button from "./button.js";
 import Input from "./input.js";
 import Dialog from "./dialog.js";
+import Resource from "./resource.js";
 
 console.log("test console.");
 
@@ -27,6 +28,26 @@ img1.src="./button1.png";
 img2.src="./button2.png";
 img3.src="./button3.png";
 
+var reslist=[
+    {
+        name:"Button1",
+        type:"image",
+        value:"./button1.png"
+    },
+    {
+        name:"Button2",
+        type:"image",
+        value:"./button2.png"
+    },
+    {
+        name:"Button3",
+        type:"image",
+        value:"./button3.png"
+    }
+]
+
+var res=new Resource.Resource(reslist);
+
 function cb(){
     console.log("press down button");
 }
@@ -41,7 +62,7 @@ function main(){
     var b=new Button.Button(canvas.scene("main"),0,0,100,100,1,img1,img2,img3,()=>{},()=>{
         input1.enable();
     });
-    var c=new Button.Button(canvas.scene("main"),300,300,100,100,0,img1,img2,img3,
+    var c=new Button.Button(canvas.scene("main"),300,300,100,100,0,res.getResource("Button1"),res.getResource("Button2"),res.getResource("Button3"),
     ()=>{
         c.cancelMovement();
     },
