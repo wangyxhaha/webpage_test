@@ -1,5 +1,10 @@
 "use strict"
 
-var cfg={
-    
-}
+import Resource from "../resource.js";
+
+var cfg=[
+    {
+        name: "lhy_door",
+        
+    }
+]

@@ -61,7 +61,7 @@
         - `Sprite.cancelMovement()`（取消已有的移动）
 - 按钮：一种封装好的可绘制对象，支持一些鼠标（或触摸）交互
     1. `Button`类为按钮类，继承自`Sprite`类，支持`Sprite`类的一切功能（大概吧，只要没冲突），支持鼠标（或触摸）悬停（触摸不存在悬停）、点击、触发回调函数等，可设置是否可点击、是否可拖动（也可以当作一般对象使用）
-        - `Button(cvs,x,y,boxHeight,boxWidth,layer,img_initial,img_onMouseOver,img_onClick,buttonDownCallBack,buttonUpCallBack)`（构造函数）
+        - `Button(cvs,x,y,boxHeight,boxWidth,layer,img_initial,img_onMouseOver,img_onClick,buttonDownCallBack,buttonUpCallBack,boxX=0,boxY=0)`（构造函数）
             > `cvs`为对应的`CanvasScene`\
             > `x`、`y`分别为左上角的x坐标和y坐标（x轴由画布左上角水平指向右，y轴由画布左上角竖直指向下）\
             > `boxHeight`、`boxWidth`为判定区域的高度与宽度\
@@ -70,7 +70,9 @@
             > `img_onMouseOver`为鼠标悬停时图片，被设置为不可点击时不会切换至这个图片\
             > `img_onClick`为鼠标或触摸按下时图片，被设置为不可点击时不会切换至这个图片\
             > `buttonDownCallBack`为被按下时触发的回调函数，被设置为不可点击时不会触发\
-            > `buttonUpCallBack`为被松开时触发的回调函数，被设置为不可点击时不会触发
+            > `buttonUpCallBack`为被松开时触发的回调函数，被设置为不可点击时不会触发\
+            > `boxX`为判定区域相对对象坐标的x轴偏移（不填的话默认为0）\
+            > `boxY`同理
         - `Button.draw()`（绘制函数）
             > 根据目前所处的状态和透明度绘制自身
         - `Button.setDraggable(d)`（设置是否可拖动）
