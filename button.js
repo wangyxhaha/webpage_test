@@ -2,7 +2,7 @@
 import Sprite from "./sprite.js";
 
 class Button extends Sprite.Sprite{
-    constructor(cvs,x,y,boxHeight,boxWidth,layer,img_initial,img_onMouseOver,img_onClick,buttonDownCallBack,buttonUpCallBack,boxX=0,boxY=0){
+    constructor(cvs,x,y,boxWidth,boxHeight,layer,img_initial,img_onMouseOver,img_onClick,buttonDownCallBack,buttonUpCallBack,boxX=0,boxY=0){
         super(cvs,x,y); //获取所在位置的坐标
         // console.log(this.canvas);
         // this.transparentAlpha=1.0;
@@ -42,6 +42,9 @@ class Button extends Sprite.Sprite{
     draw(){
         this.canvasContext.globalAlpha=this.transparentAlpha;
         this.canvasContext.drawImage(this.getImg(),this.x,this.y);
+        this.canvasContext.strokeStyle="black";
+        this.canvasContext.lineWidth=3;
+        this.canvasContext.strokeRect(this.x+this.boxX,this.y+this.boxY,this.boxWidth,this.boxHeight);
         this.canvasContext.globalAlpha=1;
     }
     setDraggable(d){
