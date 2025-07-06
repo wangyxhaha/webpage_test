@@ -18,6 +18,7 @@ class Resource{ //用来读取关卡并加载资源，生成对应对象
         this.resourceOK=false;
         this.resource=new Object();
         this.promiseArray=new Array();
+        this.onload=null;
         for (let i=0;i<urls.length;i++){
             if (urls[i].type=="image"){
                 this.promiseArray.push( //通过Promise数组和Promise.all来统一加载
@@ -53,6 +54,7 @@ class Resource{ //用来读取关卡并加载资源，生成对应对象
             .then(()=>{
                 this.resourceOK=true;
                 console.log("Resources loaded successfully");
+                this.onload();
             })
             .catch(()=>{
                 this.fail=true;
