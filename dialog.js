@@ -1,7 +1,7 @@
 "use strict"
-import {Sprite} from "./sprite.js";
+import Sprite from "./sprite.js";
 
-export class Dialog extends Sprite{
+class Dialog extends Sprite.Sprite{
     constructor(cvs,x,y,tx,ty,e,tailBottomWidth,layer,text){
         super(cvs,x,y);
         this.tx=tx;
@@ -96,4 +96,8 @@ export class Dialog extends Sprite{
         this.text=t;
         // this.preDraw();
     }
+}
+
+export default{
+    Dialog
 }

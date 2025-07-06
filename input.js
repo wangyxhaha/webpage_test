@@ -1,7 +1,7 @@
 "use strict"
-import {Sprite} from "./sprite.js";
+import Sprite from "./sprite.js";
 
-export class Input extends Sprite{
+class Input extends Sprite.Sprite{
     constructor(cvs,input_id,x,y,layer){
         super(cvs,x,y);
         // this.canvas=cvs.canvas; //获取canvas环境
@@ -59,4 +59,8 @@ export class Input extends Sprite{
         // else this.inputElement.value=this.inputElement.value+evt.key;
         console.log("smcb:",evt.key,evt.keyCode,this.inputElement.value);
     }
+}
+
+export default{
+    Input
 }

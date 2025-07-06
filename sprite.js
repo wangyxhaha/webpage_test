@@ -1,6 +1,6 @@
 "use strict"
 
-export class Sprite{
+class Sprite{
     constructor(cvs,x,y,visible=true){
         this.canvas=cvs.canvas; //获取所在的canvas
         this.canvasContext=cvs.canvasContext; //获取所在canvas的绘图上下文
@@ -63,4 +63,8 @@ export class Sprite{
         clearInterval(this.nowMover);
         this.nowMover=null;
     }
+}
+
+export default{
+    Sprite
 }

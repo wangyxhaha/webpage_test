@@ -12,7 +12,7 @@ function logicalEvtChange(cvs,e){
     return {x:relativeX,y:relativeY};
 }
 
-export class Canvas{
+class Canvas{
     constructor(canvasid,height,width){
         this.canvasid=canvasid;
         this.canvas=document.getElementById(canvasid); //设置canvas和上下文
@@ -28,8 +28,8 @@ export class Canvas{
         this.canvas.addEventListener("mousemove",this.mouseMoveCallBack.bind(this)) //设置对鼠标移动的监听
         this.canvas.addEventListener("mousedown",this.mouseDownCallBack.bind(this)) //设置对鼠标按下的监听
         this.canvas.addEventListener("mouseup",this.mouseUpCallBack.bind(this)) //设置对鼠标松开的监听
-        this.canvas.addEventListener("touchmove",this.touchMoveCallBack.bind(this)) //设置对触摸移动的监听
-        this.canvas.addEventListener("touchstart",this.touchStartCallBack.bind(this)) //设置对触摸屏按下的监听
+        this.canvas.addEventListener("touchmove",this.touchMoveCallBack.bind(this),{passive:false}) //设置对触摸移动的监听
+        this.canvas.addEventListener("touchstart",this.touchStartCallBack.bind(this),{passive:false}) //设置对触摸屏按下的监听
         this.canvas.addEventListener("touchend",this.touchEndCallBack.bind(this)) //设置对触摸屏松开的监听
         setInterval(this.draw.bind(this),16.7);
         // this.sceneArray["scene2"]=new CanvasScene(canvasid,height,width,hitori);
@@ -219,4 +219,9 @@ export class CanvasScene{ //不同场景（可以方便切换）
         //     if (this.touchEndCallBackArray[i].func(logicalPos)) break;
         // }
     }
+}
+
+export default{
+    Canvas,
+    CanvasScene
 }

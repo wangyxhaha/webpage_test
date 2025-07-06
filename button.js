@@ -1,7 +1,7 @@
 "use strict"
-import {Sprite} from "./sprite.js";
+import Sprite from "./sprite.js";
 
-export class Button extends Sprite{
+class Button extends Sprite.Sprite{
     /*
     cvs：绘图canvas（准确来说是scene即场景，但是scene是封装了多场景功能后才有的概念，此对象仍将scene视作一个canvas）
     x：左上角x坐标
@@ -154,4 +154,8 @@ export class Button extends Sprite{
         else if (this.status==2) return this.img_onClick;
         else return this.img_initial;
     }
+}
+
+export default{
+    Button
 }
