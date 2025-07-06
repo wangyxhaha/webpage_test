@@ -77,7 +77,7 @@ function main(){
     });
     var s2b=new Button.Button(canvas.scene("scene2"),0,400,100,100,0,img1,img2,img3,()=>{},()=>{
         canvas.changeScene("main");
-    });
+    },50,50);
     b.setTransparentAlpha(0.5);
     c.setTransparentAlpha(0.5);
     d.setTransparentAlpha(0.5);

@@ -2,19 +2,7 @@
 import Sprite from "./sprite.js";
 
 class Button extends Sprite.Sprite{
-    /*
-    cvs：绘图canvas（准确来说是scene即场景，但是scene是封装了多场景功能后才有的概念，此对象仍将scene视作一个canvas）
-    x：左上角x坐标
-    y：左上角y坐标
-    boxHeight：判定区域高度
-    boxWidth：判定区域宽度
-    layer：位于的图层（越大越靠前
-    img_inital：初始样式
-    img_onMouseOver：鼠标悬停或刚触摸过的的样式
-    img_onClick：鼠标点击时或触摸时的样式
-    buttonCallBack：按钮被点击后（鼠标松开或触摸结束后）调用的回调函数
-    */
-    constructor(cvs,x,y,boxHeight,boxWidth,layer,img_initial,img_onMouseOver,img_onClick,buttonDownCallBack,buttonUpCallBack){
+    constructor(cvs,x,y,boxHeight,boxWidth,layer,img_initial,img_onMouseOver,img_onClick,buttonDownCallBack,buttonUpCallBack,boxX=0,boxY=0){
         super(cvs,x,y); //获取所在位置的坐标
         // console.log(this.canvas);
         // this.transparentAlpha=1.0;
@@ -45,6 +33,8 @@ class Button extends Sprite.Sprite{
         this.ignoreClickEvent=false; //是否忽略点击事件（不再会遮挡后方可触发点击事件的元素）
         this.mouseDownRelativeX=undefined; //拖动时与鼠标的相对位置
         this.mouseDownRelativeY=undefined;
+        this.boxX=boxX;
+        this.boxY=boxY;
         // console.log(this.img_initial);
         // console.log(this.img_onMouseOver);
         // console.log(this.img_onClick);
@@ -75,8 +65,8 @@ class Button extends Sprite.Sprite{
             this.y=pos.y-this.mouseDownRelativeY;
             return true;
         }
-        if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
-            pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
+        if (pos.x>=this.x+this.boxX && pos.x<=this.x+this.boxWidth+this.boxX &&
+            pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxHeight+this.boxY){ //判定点击是否在判定区内
             if (this.status!=2) this.status=1;
             return true;
         }
@@ -85,8 +75,8 @@ class Button extends Sprite.Sprite{
     }
     mouseDownCallBack(pos){ //处理鼠标按下事件
         if (this.ignoreClickEvent) return false;
-        if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
-            pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
+        if (pos.x>=this.x+this.boxX && pos.x<=this.x+this.boxWidth+this.boxX &&
+            pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxHeight+this.boxY){ //判定点击是否在判定区内
             this.status=2;
             this.mouseDownRelativeX=pos.x-this.x; //被按下，设置按钮坐标和鼠标坐标的相对位置
             this.mouseDownRelativeY=pos.y-this.y;
@@ -99,8 +89,8 @@ class Button extends Sprite.Sprite{
         // console.log("mouse up",pos);
         if (this.ignoreClickEvent) return false;
         if (this.status!=2) return false;
-        if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
-            pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
+        if (pos.x>=this.x+this.boxX && pos.x<=this.x+this.boxWidth+this.boxX &&
+            pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxHeight+this.boxY){ //判定点击是否在判定区内
             this.status=1;
             if (this.clickable) this.buttonUpCallBack();
             return true;
@@ -115,8 +105,8 @@ class Button extends Sprite.Sprite{
             this.y=pos.y-this.mouseDownRelativeY;
             return true;
         }
-        if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
-            pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
+        if (pos.x>=this.x+this.boxX && pos.x<=this.x+this.boxWidth+this.boxX &&
+            pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxHeight+this.boxY){ //判定点击是否在判定区内
             this.status=2;
             return true;
         }
@@ -125,8 +115,8 @@ class Button extends Sprite.Sprite{
     }
     touchStartCallBack(pos){ //处理触摸屏按下事件
         if (this.ignoreClickEvent) return false;
-        if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
-            pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
+        if (pos.x>=this.x+this.boxX && pos.x<=this.x+this.boxWidth+this.boxX &&
+            pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxHeight+this.boxY){ //判定点击是否在判定区内
             this.status=2;
             this.mouseDownRelativeX=pos.x-this.x; //被按下，设置按钮坐标和触摸位置坐标的相对位置
             this.mouseDownRelativeY=pos.y-this.y;
@@ -139,8 +129,8 @@ class Button extends Sprite.Sprite{
         // console.log(pos);
         if (this.ignoreClickEvent) return false;
         if (this.status!=2) return false;
-        if (pos.x>=this.x && pos.x<=this.x+this.boxWidth &&
-            pos.y>=this.y && pos.y<=this.y+this.boxHeight){ //判定点击是否在判定区内
+        if (pos.x>=this.x+this.boxX && pos.x<=this.x+this.boxWidth+this.boxX &&
+            pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxHeight+this.boxY){ //判定点击是否在判定区内
             this.status=0;
             if (this.clickable) this.buttonUpCallBack();
             return true;
