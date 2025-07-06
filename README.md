@@ -92,7 +92,7 @@
             > 由`Input.submitCallBack(evt)`实现用户按下回车键时会自动关闭输入\
             > 另外，由对`"blur"`事件的监听实现输入失去焦点时会自动关闭输入（*BUG：对于虚拟键盘上收起键盘的按键无法自动关闭，会导致在其他场景继续输入，目前没有想到的解决方案*）
 - 气泡框：
-    1. `Dialog`类，继承自`Sprite`类， **_但不太建议设置透明度！会穿帮！！！_** 支持显示文字，自动适应文字内容的宽度和高度
+    1. `Dialog`类，继承自`Sprite`类， **_可以用透明度了！不会穿帮！_** 支持显示文字，自动适应文字内容的宽度和高度
         - `Dialog(cvs,x,y,tx,ty,e,tailBottomWidth,layer,text)`（构造函数）
             > `cvs`是所在场景\
             > `x`和`y`是中心点（主体的）的坐标\
@@ -105,4 +105,30 @@
         - `Dialog.setTailPos(tx,ty)`（设置尾巴坐标）
         - `Dialog.setE(e)`（设置离心率）
         - `Dialog.setText(t)`（设置内容）
+- 动态加载模块:
+    1. `Resource`类，支持同时异步加载多个资源
+        - `Resource(urls)`（构造函数）
+            > `urls`为要加载的资源的信息\
+            > `urls`应是一个由对象组成的数组，格式如下：
+            > ```javascript
+            > [
+            >     {
+            >         name: "resource1", //资源名称
+            >         type: "image", //资源类型（image或者audio）
+            >         value: "./foo.png" //资源的地址（相对位置也可）
+            >     },
+            >     ... //其他的资源，以此类推
+            > ]
+            > ```
+        - `Resource.areOurResourcesReady()`（获取是否加载完毕所有资源）
+            > 只有全部加载完毕才会返回`true`\
+            > 加载失败或者没有加载完都返回`false`
+        - `Resource.fail`（加载失败标志）
+            > `false`时为正常，可能正在加载或者加载完毕\
+            > `true`时说明加载出错，console会有信息
+        - `Resource.getResource(name)`（获取资源引用）
+            > 返回名为`name`的资源\
+            > 没有全部加载完毕时返回`null`\
+            > 加载失败返回`null`
+
 
