@@ -140,8 +140,14 @@ class Button extends Sprite.Sprite{
     }
     getImg(){
         if (!this.clickable) return this.img_initial;
-        if (this.status==1) return this.img_onMouseOver;
-        else if (this.status==2) return this.img_onClick;
+        if (this.status==1){
+            if (this.img_onMouseOver==null) return this.img_initial;
+            else return this.img_onMouseOver;
+        }
+        else if (this.status==2){
+            if (this.img_onClick==null) return this.img_initial;
+            else return this.img_onClick;
+        }
         else return this.img_initial;
     }
 }
