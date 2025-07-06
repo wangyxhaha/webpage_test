@@ -49,8 +49,10 @@ var reslist=[
 var res=new Resource.Resource(reslist);
 
 function cb(){
-    console.log("press down button");
+    console.log("onload");
 }
+
+res.onload=cb;
 
 function main(){
     console.log("loading successfully");
