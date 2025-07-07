@@ -43,9 +43,9 @@ class Button extends Sprite{
     draw(){
         this.canvasContext.globalAlpha=this.transparentAlpha;
         this.canvasContext.drawImage(this.getImg(),this.x,this.y);
-        this.canvasContext.strokeStyle="black";
-        this.canvasContext.lineWidth=3;
-        this.canvasContext.strokeRect(this.x+this.boxX,this.y+this.boxY,this.boxWidth,this.boxHeight);
+        // this.canvasContext.strokeStyle="black";
+        // this.canvasContext.lineWidth=3;
+        // this.canvasContext.strokeRect(this.x+this.boxX,this.y+this.boxY,this.boxWidth,this.boxHeight);
         this.canvasContext.globalAlpha=1;
     }
     setDraggable(d){

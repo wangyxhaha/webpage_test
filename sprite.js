@@ -14,6 +14,9 @@ class Sprite{
         this.x=x;
         this.y=y;
     }
+    getPosition(){
+        return {x:this.x,y:this.y};
+    }
     setTransparentAlpha(a){
         if (a>=0 && a<=1) this.transparentAlpha=a;
     }
