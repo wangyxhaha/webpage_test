@@ -7,6 +7,7 @@ function logicalEvtChange(cvs,e){
     var rect=cvs.canvas.getBoundingClientRect();
     // var relativeX=(e.clientX-rect.left)/cvs.canvas.clientWidth*cvs.logicalWidth;
     // var relativeY=(e.clientY-rect.top)/cvs.canvas.clientHeight*cvs.logicalHeight;
+    console.log(`rect.left=${rect.left}, rect.top=${rect.top}`);
     var relativeX=(e.clientX-rect.left)/rect.width*cvs.logicalWidth;
     var relativeY=(e.clientY-rect.top)/rect.height*cvs.logicalHeight;
     // console.log(cvs.canvas.style.x,cvs.canvas.style.y,relativeX,relativeY);
@@ -135,7 +136,7 @@ export class CanvasScene{ //不同场景（可以方便切换）
     }
     mouseMoveCallBack(evt){
         var logicalPos=logicalEvtChange(this,evt);
-        console.log(logicalPos);
+        // console.log(logicalPos);
         if (this.clickFocusPoint!=-1){
             this.mouseMoveCallBackArray[this.clickFocusPoint].func(logicalPos);
             return;
@@ -152,7 +153,7 @@ export class CanvasScene{ //不同场景（可以方便切换）
             else this.mouseMoveCallBackArray[i].func({x:Infinity,y:Infinity});
             // this.mouseMoveCallBackArray[i].func(logicalPos);
         }
-        if (t) console.log("mm t=true");
+        // if (t) console.log("mm t=true");
     }
     mouseDownCallBack(evt){
         var logicalPos=logicalEvtChange(this,evt);
