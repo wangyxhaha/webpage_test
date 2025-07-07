@@ -61,10 +61,10 @@
         - `Sprite.cancelMovement()`（取消已有的移动）
 - 按钮：一种封装好的可绘制对象，支持一些鼠标（或触摸）交互
     1. `Button`类为按钮类，继承自`Sprite`类，支持`Sprite`类的一切功能（大概吧，只要没冲突），支持鼠标（或触摸）悬停（触摸不存在悬停）、点击、触发回调函数等，可设置是否可点击、是否可拖动（也可以当作一般对象使用）
-        - `Button(cvs,x,y,boxHeight,boxWidth,layer,img_initial,img_onMouseOver,img_onClick,buttonDownCallBack,buttonUpCallBack,boxX=0,boxY=0)`（构造函数）
+        - `Button(cvs,x,y,boxWidth,boxHeight,layer,img_initial,img_onMouseOver,img_onClick,buttonDownCallBack,buttonUpCallBack,boxX=0,boxY=0)`（构造函数）
             > `cvs`为对应的`CanvasScene`\
             > `x`、`y`分别为左上角的x坐标和y坐标（x轴由画布左上角水平指向右，y轴由画布左上角竖直指向下）\
-            > `boxHeight`、`boxWidth`为判定区域的高度与宽度\
+            > `boxWidth`、`boxHeight`为判定区域的高度与宽度\
             > `layer`为所在图层\
             > `img_initial`为初始状态图片\
             > `img_onMouseOver`为鼠标悬停时图片，被设置为不可点击时不会切换至这个图片\
@@ -132,6 +132,23 @@
             > 返回名为`name`的资源\
             > 没有全部加载完毕时返回`null`\
             > 加载失败返回`null`
+- 动画：
+    1. `Animation`类可以让管理动画更方便一些，且已被`Button`类支持
+        - `Animation(imgList,interval)`（构造函数）
+            > `imgList`为由`Image`对象组成的数组，按顺序表示动画的每一帧（用`Resource.getResource(name)`获取的图片就是`Image`对象）\
+            > `interval`表示帧间隔时间，单位为ms
+        - `Animation.start()`（播放函数）
+            > 使用后从当前帧开始播放（初始时为第一帧）
+        - `Animation.pause()`（暂停函数）
+            > 使用后在当前正在播放的帧暂停（重置计时，再度播放时仍需再经过一个完整帧间隔时间）
+        - `Animation.reset()`（重置函数）
+            > 使用后停止播放并回到第一帧
+        - `Animation.to(t)`（跳到到指定帧）
+            > **_注意！不会检查参数是否合法_**
+        - `Animation.nowFrame()`（获取当前帧）
+            > 获取的是目前在第几帧（数字）
+        - `Animation.image`（当前帧）
+            > 是当前的帧（无论是否在播放）
 
 ## 关卡制作规范
 为了保证在整合关卡时的统一性，所以制定如下规则：
