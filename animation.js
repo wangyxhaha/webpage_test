@@ -22,6 +22,12 @@ class Animation{
         this.pause();
         this.now=0;
     }
+    to(t){
+        this.now=t;
+    }
+    nowFrame(){
+        return this.now;
+    }
     get image(){
         return this.imgList[this.now];
     }
