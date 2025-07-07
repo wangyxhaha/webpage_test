@@ -234,13 +234,15 @@ function build(canvas){
     dat_left_scene_gong1.setDraggable(true);
 
     var dat_left_scene_candle=new Button(canvas.scene("dat_left_scene"),405,365,99,191,30,res.getResource("candle"),null,null,()=>{},()=>{
-        if (isIn(dat_left_scene_wonu1.getPosition()) && flag1){
-            dat_left_scene_candle.setTransparentAlpha(0);
-            dat_left_scene_candle.setDraggable(false);
-            dat_left_scene_candle.setClickable(false);
-            dat_left_scene_fire.setTransparentAlpha(1);
+        if (isIn(dat_left_scene_candle.getPosition())){
+            if (flag1){
+                dat_left_scene_candle.setTransparentAlpha(0);
+                dat_left_scene_candle.setDraggable(false);
+                dat_left_scene_candle.setClickable(false);
+                dat_left_scene_fire.setTransparentAlpha(1);
+            }
+            else dat_left_scene_candle.setPostition(405,365);
         }
-        else dat_left_scene_candle.setPostition(405,365);
     });
     dat_left_scene_candle.setDraggable(true);
 
