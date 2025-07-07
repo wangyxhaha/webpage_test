@@ -5,8 +5,10 @@
 
 function logicalEvtChange(cvs,e){
     var rect=cvs.canvas.getBoundingClientRect();
-    var relativeX=(e.clientX-rect.left)/cvs.canvas.clientWidth*cvs.logicalWidth;
-    var relativeY=(e.clientY-rect.top)/cvs.canvas.clientHeight*cvs.logicalHeight;
+    // var relativeX=(e.clientX-rect.left)/cvs.canvas.clientWidth*cvs.logicalWidth;
+    // var relativeY=(e.clientY-rect.top)/cvs.canvas.clientHeight*cvs.logicalHeight;
+    var relativeX=(e.clientX-rect.left)/rect.width*cvs.logicalWidth;
+    var relativeY=(e.clientY-rect.top)/rect.height*cvs.logicalHeight;
     // console.log(cvs.canvas.style.x,cvs.canvas.style.y,relativeX,relativeY);
     // console.log("lec!",cvs.canvas.clientWidth,':',cvs.canvas.clientHeight,cvs.logicalWidth,':',cvs.logicalHeight);
     return {x:relativeX,y:relativeY};
