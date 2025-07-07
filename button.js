@@ -1,7 +1,8 @@
 "use strict"
 import Sprite from "./sprite.js";
+import Animation from "./animation.js";
 
-class Button extends Sprite.Sprite{
+class Button extends Sprite{
     constructor(cvs,x,y,boxWidth,boxHeight,layer,img_initial,img_onMouseOver,img_onClick,buttonDownCallBack,buttonUpCallBack,boxX=0,boxY=0){
         super(cvs,x,y); //获取所在位置的坐标
         // console.log(this.canvas);
@@ -142,19 +143,21 @@ class Button extends Sprite.Sprite{
         return false;
     }
     getImg(){
-        if (!this.clickable) return this.img_initial;
-        if (this.status==1){
-            if (this.img_onMouseOver==null) return this.img_initial;
-            else return this.img_onMouseOver;
+        var temp;
+        if (!this.clickable) temp=this.img_initial;
+        else if (this.status==1){
+            if (this.img_onMouseOver==null) temp=this.img_initial;
+            else temp=this.img_onMouseOver;
         }
         else if (this.status==2){
-            if (this.img_onClick==null) return this.img_initial;
-            else return this.img_onClick;
+            if (this.img_onClick==null) temp=this.img_initial;
+            else temp=this.img_onClick;
         }
-        else return this.img_initial;
+        else temp=this.img_initial;
+        if (temp instanceof HTMLImageElement) return temp;
+        else if (temp instanceof Animation) return temp.image;
+        else throw `unknown type of image`;
     }
 }
 
-export default{
-    Button
-}
+export default Button;

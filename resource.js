@@ -74,6 +74,4 @@ class Resource{ //用来读取关卡并加载资源，生成对应对象
     }
 }
 
-export default{
-    Resource
-}
+export default Resource;
