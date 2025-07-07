@@ -6,7 +6,7 @@ import Button from "./button.js";
 import Input from "./input.js";
 import Dialog from "./dialog.js";
 
-var canvas=new Canvas.Canvas("gameCanvas",935,935)
+var canvas=new Canvas("gameCanvas",935,935)
 
 import("./dat/dat.js")
     .then(module=>{
