@@ -13,9 +13,11 @@
         body,head{
             overflow: hidden;
             background: #000;
+            width: 100%;
+            height: 100%;
         }
         #gameContainer{
-            position: relative;
+            /* position: relative; */
             width: 100vw;
             height: 100vh;
             display: flex;
@@ -23,10 +25,11 @@
             align-items: center;
         }
         #gameCanvas{
-            flex: 1;
+            /* flex: 1; */
+            aspect-ratio: 1;
             display: block;
-            max-width: 100vw;
-            max-height: 100vh;
+            width: 100vmin;
+            height: 100vmin;
             justify-content: center;
             object-fit: contain;
         }
