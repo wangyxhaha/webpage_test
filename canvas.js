@@ -7,7 +7,7 @@ function logicalEvtChange(cvs,e){
     var rect=cvs.canvas.getBoundingClientRect();
     // var relativeX=(e.clientX-rect.left)/cvs.canvas.clientWidth*cvs.logicalWidth;
     // var relativeY=(e.clientY-rect.top)/cvs.canvas.clientHeight*cvs.logicalHeight;
-    console.log(rect);
+    // console.log(rect);
     var relativeX=(e.clientX-rect.left)/rect.width*cvs.logicalWidth;
     var relativeY=(e.clientY-rect.top)/rect.height*cvs.logicalHeight;
     // console.log(cvs.canvas.style.x,cvs.canvas.style.y,relativeX,relativeY);
@@ -226,7 +226,4 @@ export class CanvasScene{ //不同场景（可以方便切换）
     }
 }
 
-export default{
-    Canvas,
-    CanvasScene
-}
+export default Canvas;
