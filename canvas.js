@@ -133,6 +133,7 @@ export class CanvasScene{ //不同场景（可以方便切换）
     }
     mouseMoveCallBack(evt){
         var logicalPos=logicalEvtChange(this,evt);
+        console.log(logicalPos);
         if (this.clickFocusPoint!=-1){
             this.mouseMoveCallBackArray[this.clickFocusPoint].func(logicalPos);
             return;
@@ -153,7 +154,6 @@ export class CanvasScene{ //不同场景（可以方便切换）
     }
     mouseDownCallBack(evt){
         var logicalPos=logicalEvtChange(this,evt);
-        console.log(logicalPos);
         // if (this.clickFocusPoint!=-1){
         //     this.mouseDownCallBackArray[this.clickFocusPoint].func(logicalPos);
         //     return;
