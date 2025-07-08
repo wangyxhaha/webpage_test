@@ -41,11 +41,13 @@ class Button extends Sprite{
         // console.log(this.img_onClick);
     }
     draw(){
+        var temp=this.getImg();
+        if (temp==null) return;
         this.canvasContext.globalAlpha=this.transparentAlpha;
-        this.canvasContext.drawImage(this.getImg(),this.x,this.y);
-        this.canvasContext.strokeStyle="black";
-        this.canvasContext.lineWidth=3;
-        this.canvasContext.strokeRect(this.x+this.boxX,this.y+this.boxY,this.boxWidth,this.boxHeight);
+        this.canvasContext.drawImage(temp,this.x,this.y);
+        // this.canvasContext.strokeStyle="black";
+        // this.canvasContext.lineWidth=3;
+        // this.canvasContext.strokeRect(this.x+this.boxX,this.y+this.boxY,this.boxWidth,this.boxHeight);
         this.canvasContext.globalAlpha=1;
     }
     setDraggable(d){
@@ -156,7 +158,7 @@ class Button extends Sprite{
         else temp=this.img_initial;
         if (temp instanceof HTMLImageElement) return temp;
         else if (temp instanceof Animation) return temp.image;
-        else throw `unknown type of image`;
+        else if (temp!=null) throw `unknown type of image`;
     }
 }
 

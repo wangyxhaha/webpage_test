@@ -17,6 +17,11 @@ class Input extends Sprite{
         this.inputElement.addEventListener("blur",this.disable.bind(this)); //用于检测失去焦点
         this.timeHandler.flag=true;
         this.oninput=false;
+        this.fillColor="red";
+        // this.strokeColor="blue";
+        this.lineWidth=2;
+        this.textAlign="start";
+        this.font="Arial";
         setInterval(this.timeHandler.bind(this),500); //用来处理光标周期性闪烁
     }
     timeHandler(){
@@ -24,20 +29,28 @@ class Input extends Sprite{
         // console.log("switch cursor");
     }
     draw(){
+        // console.log(this.inputElement.value);
         this.canvasContext.globalAlpha=this.transparentAlpha;
         // 设置文本样式
-        this.canvasContext.font=`${this.fontHeight}px Arial`;          // 字体大小和类型
-        this.canvasContext.fillStyle='red';            // 填充颜色
-        this.canvasContext.strokeStyle='blue';         // 描边颜色
-        this.canvasContext.lineWidth=2;                // 描边宽度
-        this.canvasContext.textAlign="start";
+        this.canvasContext.font=`${this.fontHeight}px ${this.font}`;          // 字体大小和类型
+        this.canvasContext.fillStyle=this.fillColor;            // 填充颜色
+        // this.canvasContext.strokeStyle='blue';         // 描边颜色
+        this.canvasContext.lineWidth=this.lineWidth;                // 描边宽度
+        this.canvasContext.textAlign=this.textAlign;
         this.canvasContext.textBaseline="alphabetic";
         this.canvasContext.fillText(this.inputElement.value,this.x,this.y);
         // this.canvasContext.strock
         // console.log("draw input");
         if (this.oninput && this.timeHandler.flag){
-            var w=this.canvasContext.measureText(this.inputElement.value.substring(0,this.inputElement.selectionStart)); //获取到光标位置的内容的宽度
-            this.canvasContext.fillRect(this.x+w.width,this.y-this.fontHeight,2,this.fontHeight);
+            if (this.textAlign=="start"){
+                var w=this.canvasContext.measureText(this.inputElement.value.substring(0,this.inputElement.selectionStart)); //获取到光标位置的内容的宽度
+                this.canvasContext.fillRect(this.x+w.width,this.y-this.fontHeight,2,this.fontHeight);
+            }
+            else if (this.textAlign=="center"){
+                var w=this.canvasContext.measureText(this.inputElement.value.substring(0,this.inputElement.selectionStart)); //获取到光标位置的内容的宽度
+                var allw=this.canvasContext.measureText(this.inputElement.value); //读取全部的长度
+                this.canvasContext.fillRect(this.x+w.width-allw.width/2,this.y-this.fontHeight,2,this.fontHeight);
+            }
         }
         this.canvasContext.globalAlpha=1;
     }
@@ -58,6 +71,24 @@ class Input extends Sprite{
         }
         // else this.inputElement.value=this.inputElement.value+evt.key;
         console.log("smcb:",evt.key,evt.keyCode,this.inputElement.value);
+    }
+    setFillColor(color){
+        this.fillColor=color;
+    }
+    setLineWidth(width){
+        this.lineWidth=width;
+    }
+    setTextAlign(align){
+        this.textAlign=align;
+    }
+    setFontHeight(height){
+        this.fontHeight=height;
+    }
+    setFont(font){
+        this.font=font;
+    }
+    clear(){
+        this.inputElement.value="";
     }
 }
 
