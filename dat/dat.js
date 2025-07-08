@@ -152,6 +152,7 @@ function build(canvas){
     dat_answer_box.setFillColor("black");
     dat_answer_box.setFontHeight(40);
     dat_answer_box.setFont("黑体");
+    dat_answer_box.clear();
     var dat_answer_box_fake_button=new Button(canvas.scene("dat_door_scene"),362,395,180,98,2,null,null,null,()=>{},()=>dat_answer_box.enable());
     dat_answer_box_fake_button.setClickable(false);
 

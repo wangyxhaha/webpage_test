@@ -87,6 +87,9 @@ class Input extends Sprite{
     setFont(font){
         this.font=font;
     }
+    clear(){
+        this.inputElement.value="";
+    }
 }
 
 export default Input;
