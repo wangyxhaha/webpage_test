@@ -110,6 +110,7 @@ export class CanvasScene{ //不同场景（可以方便切换）
     draw(){
         // document.getElementById("information").innerHTML=this.clickFocusPoint;
         if (this.background!=null) this.canvasContext.drawImage(this.background,0,0,this.logicalWidth,this.logicalHeight);
+        else this.canvasContext.clearRect(0,0,this.canvas.width,this.canvas.height);
         this.objectToDraw.sort(function(a,b){
             return a.layer-b.layer;
         });
