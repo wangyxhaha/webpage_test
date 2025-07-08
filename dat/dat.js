@@ -153,8 +153,20 @@ function build(canvas){
     dat_answer_box.setFontHeight(40);
     dat_answer_box.setFont("黑体");
     dat_answer_box.clear();
-    var dat_answer_box_fake_button=new Button(canvas.scene("dat_door_scene"),362,395,180,98,2,null,null,null,()=>{},()=>dat_answer_box.enable());
+    var dat_answer_box_fake_button=new Button(canvas.scene("dat_door_scene"),362,395,180,98,2,null,null,null,()=>{},()=>{
+        dat_answer_box.enable();
+        dat_answer_box_fake_disable_button.setClickable(true);
+        dat_answer_box_fake_disable_button.setIgnoreClickEven(false);
+    });
     dat_answer_box_fake_button.setClickable(false);
+
+    var dat_answer_box_fake_disable_button=new Button(canvas.scene("dat_door_scene"),0,0,935,935,2,null,null,null,()=>{},()=>{
+        dat_answer_box.disable();
+        dat_answer_box_fake_disable_button.setClickable(false);
+        dat_answer_box_fake_disable_button.setIgnoreClickEven(true);
+    });
+    dat_answer_box_fake_disable_button.setClickable(false);
+    dat_answer_box_fake_disable_button.setIgnoreClickEven(true);
 
     var fire_animation=new Animation([res.getResource("fire1"),res.getResource("fire2")],333);
     var dat_left_scene_fire=new Button(canvas.scene("dat_left_scene"),0,0,0,0,1,fire_animation,null,null,()=>{},()=>{});
