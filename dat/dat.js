@@ -3,8 +3,8 @@
 import Resource from "../resource.js"
 import Canvas from "../canvas.js";
 import Button from "../button.js";
-// import Input from "./input.js";
 import Animation from "../animation.js";
+import Input from "../input.js";
 
 var cfg=[ //所需素材的信息
     {
@@ -51,6 +51,11 @@ var cfg=[ //所需素材的信息
         name: "down_arrow",
         type: "image",
         value: "./dat/data/下.png"
+    },
+    {
+        name: "lock",
+        type: "image",
+        value: "./dat/data/锁.png"
     },
     {
         name: "fire1",
@@ -136,7 +141,20 @@ function build(canvas){
     var dat_door_scene_up_arrow=new Button(canvas.scene("dat_door_scene"),0,0,88,46,0,res.getResource("up_arrow"),null,null,()=>{},()=>canvas.changeScene("dat_top_scene"),416,114);
     var dat_top_scene_down_arrow=new Button(canvas.scene("dat_top_scene"),0,0,88,46,0,res.getResource("down_arrow"),null,null,()=>{},()=>canvas.changeScene("dat_door_scene"),416,833);
     
-    
+    var dat_door_scene_figure=new Button(canvas.scene("dat_door_scene"),0,0,0,0,1,res.getResource("dat_figure"),null,null,()=>{},()=>{});
+    dat_door_scene_figure.setClickable(false);
+
+    var dat_door_scene_lock=new Button(canvas.scene("dat_door_scene"),0,0,0,0,1,res.getResource("lock"),null,null,()=>{},()=>{});
+    dat_door_scene_lock.setClickable(false);
+
+    var dat_answer_box=new Input(canvas.scene("dat_door_scene"),"gameInput",453,468,1);
+    dat_answer_box.setTextAlign("center");
+    dat_answer_box.setFillColor("black");
+    dat_answer_box.setFontHeight(40);
+    dat_answer_box.setFont("黑体");
+    var dat_answer_box_fake_button=new Button(canvas.scene("dat_door_scene"),362,395,180,98,2,null,null,null,()=>{},()=>dat_answer_box.enable());
+    dat_answer_box_fake_button.setClickable(false);
+
     var fire_animation=new Animation([res.getResource("fire1"),res.getResource("fire2")],333);
     var dat_left_scene_fire=new Button(canvas.scene("dat_left_scene"),0,0,0,0,1,fire_animation,null,null,()=>{},()=>{});
     fire_animation.start();
@@ -240,6 +258,8 @@ function build(canvas){
                 dat_left_scene_candle.setDraggable(false);
                 dat_left_scene_candle.setClickable(false);
                 dat_left_scene_fire.setTransparentAlpha(1);
+                dat_door_scene_lock.setTransparentAlpha(0);
+                dat_answer_box_fake_button.setClickable(true);
             }
             else dat_left_scene_candle.setPostition(405,365);
         }
@@ -249,6 +269,7 @@ function build(canvas){
 
 
     canvas.changeScene("dat_door_scene");
+    // dat_answer_box.enable();
 }
 
 var res;
