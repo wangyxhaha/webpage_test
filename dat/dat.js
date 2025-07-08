@@ -5,6 +5,7 @@ import Canvas from "../canvas.js";
 import Button from "../button.js";
 import Animation from "../animation.js";
 import Input from "../input.js";
+import "../buttonPlugin.js";
 
 var cfg=[ //所需素材的信息
     {
@@ -121,6 +122,11 @@ var cfg=[ //所需素材的信息
         name: "candle",
         type: "image",
         value: "./dat/data/蜡烛.png"
+    },
+    {
+        name: "undo",
+        type: "image",
+        value: "./dat/data/撤销.png"
     }
 ]
 
@@ -213,6 +219,7 @@ function build(canvas){
             dat_left_scene_wonu1.setClickable(false);
             check1();
         }
+        dat_left_scene_wonu1.stayIn();
     });
     dat_left_scene_wonu1.setDraggable(true);
 
@@ -225,6 +232,7 @@ function build(canvas){
             dat_left_scene_suanla1.setClickable(false);
             check1();
         }
+        dat_left_scene_suanla1.stayIn();
     });
     dat_left_scene_suanla1.setDraggable(true);
 
@@ -237,6 +245,7 @@ function build(canvas){
             dat_left_scene_jiangshi1.setClickable(false);
             check1();
         }
+        dat_left_scene_jiangshi1.stayIn();
     });
     dat_left_scene_jiangshi1.setDraggable(true);
 
@@ -249,6 +258,7 @@ function build(canvas){
             dat_left_scene_xian1.setClickable(false);
             check1();
         }
+        dat_left_scene_xian1.stayIn();
     });
     dat_left_scene_xian1.setDraggable(true);
 
@@ -261,6 +271,7 @@ function build(canvas){
             dat_left_scene_gong1.setClickable(false);
             check1();
         }
+        dat_left_scene_gong1.stayIn();
     });
     dat_left_scene_gong1.setDraggable(true);
 
@@ -279,7 +290,15 @@ function build(canvas){
     });
     dat_left_scene_candle.setDraggable(true);
 
-
+    var dat_left_scene_undo=new Button(canvas.scene("dat_left_scene"),757,61,113,113,40,res.getResource("undo"),null,null,()=>{},()=>{
+        dat_left_scene_wonu1.setPostition(123,153);
+        dat_left_scene_suanla1.setPostition(228,213);
+        dat_left_scene_jiangshi1.setPostition(685,39);
+        dat_left_scene_xian1.setPostition(487,117);
+        dat_left_scene_gong1.setPostition(524,233);
+        dat_left_scene_candle.setPostition(405,365);
+    })
+    dat_left_scene_undo.setTransparentAlpha(0.5);
 
     canvas.changeScene("dat_door_scene");
     // dat_answer_box.enable();
