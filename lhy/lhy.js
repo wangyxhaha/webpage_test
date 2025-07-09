@@ -236,11 +236,11 @@ function build(canvas){
     lhy_door_scene_figure.setClickable(false);
 
     //右场景拖动模块
-    var cnt=0;
+    var right_cnt=0;
     var right_flag=false;
 
     function right_check(){
-        if(cnt==7) right_flag=true;
+        if(right_cnt==7) right_flag=true;
     }
 
     var lhy_right_scene_text=new Button(canvas.scene("lhy_right_scene"),0,0,0,0,11,res.getResource("youwenzi"),null,null,()=>{},()=>{});
@@ -252,7 +252,7 @@ function build(canvas){
     lhy_right_scene_daoxian1_final.setTransparentAlpha(0);
     var lhy_right_scene_daoxian1=new Button(canvas.scene("lhy_right_scene"),635,699,88,99,21,res.getResource("daoxian1"),null,null,()=>{},()=>{
         if (isIn(lhy_right_scene_daoxian1.getPosition(),345,580,88,99)){
-            cnt++;
+            right_cnt++;
             lhy_right_scene_daoxian1_final.setTransparentAlpha(1);
             lhy_right_scene_daoxian1.setTransparentAlpha(0);
             lhy_right_scene_daoxian1.setDraggable(false);
@@ -267,7 +267,7 @@ function build(canvas){
     lhy_right_scene_daoxian2_final.setTransparentAlpha(0);
     var lhy_right_scene_daoxian2=new Button(canvas.scene("lhy_right_scene"),602,748,72,105,21,res.getResource("daoxian2"),null,null,()=>{},()=>{
         if (isIn(lhy_right_scene_daoxian2.getPosition(),541,579,72,105)){
-            cnt++;
+            right_cnt++;
             lhy_right_scene_daoxian2_final.setTransparentAlpha(1);
             lhy_right_scene_daoxian2.setTransparentAlpha(0);
             lhy_right_scene_daoxian2.setDraggable(false);
@@ -282,7 +282,7 @@ function build(canvas){
     lhy_right_scene_dianyuan_final.setTransparentAlpha(0);
     var lhy_right_scene_dianyuan=new Button(canvas.scene("lhy_right_scene"),508,396,118,228,21,res.getResource("dianyuan"),null,null,()=>{},()=>{
         if (isIn(lhy_right_scene_dianyuan.getPosition(),290,248,118,228)){
-            cnt++;
+            right_cnt++;
             lhy_right_scene_dianyuan_final.setTransparentAlpha(1);
             lhy_right_scene_dianyuan.setTransparentAlpha(0);
             lhy_right_scene_dianyuan.setDraggable(false);
@@ -297,7 +297,7 @@ function build(canvas){
     lhy_right_scene_dianzu_final.setTransparentAlpha(0);
     var lhy_right_scene_dianzu=new Button(canvas.scene("lhy_right_scene"),168,136,174,85,21,res.getResource("dianzu"),null,null,()=>{},()=>{
         if (isIn(lhy_right_scene_dianzu.getPosition(),407,637,174,85)){
-            cnt++;
+            right_cnt++;
             lhy_right_scene_dianzu_final.setTransparentAlpha(1);
             lhy_right_scene_dianzu.setTransparentAlpha(0);
             lhy_right_scene_dianzu.setDraggable(false);
@@ -312,7 +312,7 @@ function build(canvas){
     lhy_right_scene_heibi_final.setTransparentAlpha(0);
     var lhy_right_scene_heibi=new Button(canvas.scene("lhy_right_scene"),632,109,78,149,21,res.getResource("heibi"),null,null,()=>{},()=>{
         if (isIn(lhy_right_scene_heibi.getPosition(),574,479,78,149)){
-            cnt++;
+            right_cnt++;
             lhy_right_scene_heibi_final.setTransparentAlpha(1);
             lhy_right_scene_heibi.setTransparentAlpha(0);
             lhy_right_scene_heibi.setDraggable(false);
@@ -327,7 +327,7 @@ function build(canvas){
     lhy_right_scene_hongbi_final.setTransparentAlpha(0);
     var lhy_right_scene_hongbi=new Button(canvas.scene("lhy_right_scene"),744,181,68,158,21,res.getResource("hongbi"),null,null,()=>{},()=>{
         if (isIn(lhy_right_scene_hongbi.getPosition(),314,454,68,158)){
-            cnt++;
+            right_cnt++;
             lhy_right_scene_hongbi_final.setTransparentAlpha(1);
             lhy_right_scene_hongbi.setTransparentAlpha(0);
             lhy_right_scene_hongbi.setDraggable(false);
@@ -342,7 +342,7 @@ function build(canvas){
     lhy_right_scene_huabian_final.setTransparentAlpha(0);
     var lhy_right_scene_huabian=new Button(canvas.scene("lhy_right_scene"),84,518,152,286,21,res.getResource("huabian"),null,null,()=>{},()=>{
         if (isIn(lhy_right_scene_huabian.getPosition(),564,237,152,286)){
-            cnt++;
+            right_cnt++;
             lhy_right_scene_huabian_final.setTransparentAlpha(1);
             lhy_right_scene_huabian.setTransparentAlpha(0);
             lhy_right_scene_huabian.setDraggable(false);
@@ -353,6 +353,83 @@ function build(canvas){
     lhy_right_scene_huabian.setDraggable(true);
 
     //左场景点击模块
+
+    var left_cnt=0;
+    var left_flag=false;
+
+    var lhy_left_scene_dui1=new Button(canvas.scene("lhy_left_scene"),0,0,0,0,11,res.getResource("dui1"),null,null,()=>{},()=>{});
+    lhy_left_scene_dui1.setClickable(false);
+    lhy_left_scene_dui1.setTransparentAlpha(0);
+
+    var lhy_left_scene_dui2=new Button(canvas.scene("lhy_left_scene"),0,0,0,0,11,res.getResource("dui2"),null,null,()=>{},()=>{});
+    lhy_left_scene_dui2.setClickable(false);
+    lhy_left_scene_dui2.setTransparentAlpha(0);
+
+    var lhy_left_scene_dui3=new Button(canvas.scene("lhy_left_scene"),0,0,0,0,11,res.getResource("dui3"),null,null,()=>{},()=>{});
+    lhy_left_scene_dui3.setClickable(false);
+    lhy_left_scene_dui3.setTransparentAlpha(0);
+
+    var lhy_left_scene_dui4=new Button(canvas.scene("lhy_left_scene"),0,0,0,0,11,res.getResource("dui4"),null,null,()=>{},()=>{});
+    lhy_left_scene_dui4.setClickable(false);
+    lhy_left_scene_dui4.setTransparentAlpha(0);
+
+    var lhy_left_scene_dui5=new Button(canvas.scene("lhy_left_scene"),0,0,0,0,11,res.getResource("dui5"),null,null,()=>{},()=>{});
+    lhy_left_scene_dui5.setClickable(false);
+    lhy_left_scene_dui5.setTransparentAlpha(0);
+
+    function left_check(){
+        if(left_cnt==5) left_flag=true;
+    }
+
+    var lhy_left_scene_cuo1=new Button(canvas.scene("lhy_left_scene"),388,334,50,49,11,res.getResource("cuo1"),null,null,()=>{
+        left_cnt++;
+        lhy_left_scene_cuo1.setClickable(false);
+        lhy_left_scene_cuo1.setTransparentAlpha(0);
+        lhy_left_scene_dui1.setTransparentAlpha(1);
+        left_check();
+    },()=>{});
+    lhy_left_scene_cuo1.setClickable(true);
+    lhy_left_scene_cuo1.setTransparentAlpha(1);
+
+    var lhy_left_scene_cuo2=new Button(canvas.scene("lhy_left_scene"),459,576,43,46,11,res.getResource("cuo2"),null,null,()=>{
+        left_cnt++;
+        lhy_left_scene_cuo2.setClickable(false);
+        lhy_left_scene_cuo2.setTransparentAlpha(0);
+        lhy_left_scene_dui2.setTransparentAlpha(1);
+        left_check();
+    },()=>{});
+    lhy_left_scene_cuo2.setClickable(true);
+    lhy_left_scene_cuo2.setTransparentAlpha(1);
+
+    var lhy_left_scene_cuo3=new Button(canvas.scene("lhy_left_scene"),379,651,36,38,11,res.getResource("cuo3"),null,null,()=>{
+        left_cnt++;
+        lhy_left_scene_cuo3.setClickable(false);
+        lhy_left_scene_cuo3.setTransparentAlpha(0);
+        lhy_left_scene_dui3.setTransparentAlpha(1);
+        left_check();
+    },()=>{});
+    lhy_left_scene_cuo3.setClickable(true);
+    lhy_left_scene_cuo3.setTransparentAlpha(1);
+
+    var lhy_left_scene_cuo4=new Button(canvas.scene("lhy_left_scene"),358,669,43,45,11,res.getResource("cuo4"),null,null,()=>{
+        left_cnt++;
+        lhy_left_scene_cuo4.setClickable(false);
+        lhy_left_scene_cuo4.setTransparentAlpha(0);
+        lhy_left_scene_dui4.setTransparentAlpha(1);
+        left_check();
+    },()=>{});
+    lhy_left_scene_cuo4.setClickable(true);
+    lhy_left_scene_cuo4.setTransparentAlpha(1);
+
+    var lhy_left_scene_cuo5=new Button(canvas.scene("lhy_left_scene"),670,472,36,33,11,res.getResource("cuo5"),null,null,()=>{
+        left_cnt++;
+        lhy_left_scene_cuo5.setClickable(false);
+        lhy_left_scene_cuo5.setTransparentAlpha(0);
+        lhy_left_scene_dui5.setTransparentAlpha(1);
+        left_check();
+    },()=>{});
+    lhy_left_scene_cuo5.setClickable(true);
+    lhy_left_scene_cuo5.setTransparentAlpha(1);
 
     //上场景音乐模块
 
