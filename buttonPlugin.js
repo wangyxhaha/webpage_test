@@ -8,6 +8,5 @@ Button.prototype.stayIn=function(){
         this.x=this.canvas.width-this.boxX-this.boxWidth;
     if (this.y+this.boxY<0) this.y=-this.boxY;
     else if (this.y+this.boxY+this.boxHeight>this.canvas.height)
-        this.y=this.canvas.height-this.boxY-this.boxHeight;
-    
+        this.y=this.canvas.height-this.boxY-this.boxHeight;   
 }
