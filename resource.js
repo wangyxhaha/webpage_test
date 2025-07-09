@@ -39,7 +39,7 @@ class Resource{ //用来读取关卡并加载资源，生成对应对象
                     new Promise((resolve,reject)=>{
                         this.resource[urls[i].name]=new Audio();
                         this.resource[urls[i].name].src=urls[i].value;
-                        this.resource[urls[i].name].onload=()=>resolve();
+                        this.resource[urls[i].name].oncanplaythrough=()=>resolve();
                         this.resource[urls[i].name].onerror=()=>reject(`Audio loading error, name:${urls[i].name}, url:${urls[i].value}`);
                     })
                     .catch(err=>{
