@@ -188,7 +188,12 @@ var cfg=[
         name: "lock",
         type: "image",
         value: "./lhy/data/锁.png"
-    }
+    }/*,
+    {
+        name: "lhy_top_music",
+        type: "audio",
+        value: "./lhy/data/bgm.mp3"
+    }*/
 ]
 
 function isIn(p,lx,ly,l,h){ //是否在检测框内
@@ -432,6 +437,13 @@ function build(canvas){
     lhy_left_scene_cuo5.setTransparentAlpha(1);
 
     //上场景音乐模块
+
+    var lhy_top_scene_button=new Button(canvas.scene("lhy_top_scene"),0,412,935,135,11,res.getResource("qinxian"),null,null,()=>{
+        //play music
+        lhy_top_scene_button.setClickable(false);
+    },()=>{});
+    lhy_top_scene_button.setClickable(true);
+    lhy_top_scene_button.setTransparentAlpha(1);
 
     canvas.changeScene("lhy_door_scene");
 }
