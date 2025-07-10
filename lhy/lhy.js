@@ -7,6 +7,7 @@ import Button from "../button.js";
 import Animation from "../animation.js";
 import Input from "../input.js";
 import "../buttonPlugin.js";
+import Music from "../music.js";
 
 var cfg=[
     {
@@ -188,9 +189,24 @@ var cfg=[
         name: "lock",
         type: "image",
         value: "./lhy/data/锁.png"
-    }/*,
+    },
     {
-        name: "lhy_top_music",
+        name: "-1",
+        type: "image",
+        value: "./lhy/data/-1.png"
+    },
+    {
+        name: "-2",
+        type: "image",
+        value: "./lhy/data/-2.png"
+    },
+    {
+        name: "-3",
+        type: "image",
+        value: "./lhy/data/-3.png"
+    }/*
+    {
+        name: "bgm",
         type: "audio",
         value: "./lhy/data/bgm.mp3"
     }*/
@@ -245,7 +261,13 @@ function build(canvas){
     var right_flag=false;
 
     function right_check(){
-        if(right_cnt==7) right_flag=true;
+        if(right_cnt==7){
+            right_flag=true;
+            if(left_flag){
+                lhy_door_scene_lock.setTransparentAlpha(0);
+                lhy_answer_box_fake_button.setClickable(true);
+            }
+        }
     }
 
     var lhy_right_scene_text=new Button(canvas.scene("lhy_right_scene"),0,0,0,0,11,res.getResource("youwenzi"),null,null,()=>{},()=>{});
@@ -383,7 +405,13 @@ function build(canvas){
     lhy_left_scene_dui5.setTransparentAlpha(0);
 
     function left_check(){
-        if(left_cnt==5) left_flag=true;
+        if(left_cnt==8){
+            left_flag=true;
+            if(right_flag){
+                lhy_door_scene_lock.setTransparentAlpha(0);
+                lhy_answer_box_fake_button.setClickable(true);
+            }
+        }
     }
 
     var lhy_left_scene_cuo1=new Button(canvas.scene("lhy_left_scene"),388,334,50,49,11,res.getResource("cuo1"),null,null,()=>{
@@ -436,10 +464,39 @@ function build(canvas){
     lhy_left_scene_cuo5.setClickable(true);
     lhy_left_scene_cuo5.setTransparentAlpha(1);
 
+    var lhy_left_scene_jian1=new Button(canvas.scene("lhy_left_scene"),710,447,64,75,11,res.getResource("-1"),null,null,()=>{
+        left_cnt++;
+        lhy_left_scene_jian1.setClickable(false);
+        lhy_left_scene_jian1.setTransparentAlpha(0);
+        left_check();
+    },()=>{});
+    lhy_left_scene_jian1.setClickable(true);
+    lhy_left_scene_jian1.setTransparentAlpha(1);
+
+    var lhy_left_scene_jian2=new Button(canvas.scene("lhy_left_scene"),709,289,75,66,11,res.getResource("-2"),null,null,()=>{
+        left_cnt++;
+        lhy_left_scene_jian2.setClickable(false);
+        lhy_left_scene_jian2.setTransparentAlpha(0);
+        left_check();
+    },()=>{});
+    lhy_left_scene_jian2.setClickable(true);
+    lhy_left_scene_jian2.setTransparentAlpha(1);
+
+    var lhy_left_scene_jian3=new Button(canvas.scene("lhy_left_scene"),677,639,71,61,11,res.getResource("-3"),null,null,()=>{
+        left_cnt++;
+        lhy_left_scene_jian3.setClickable(false);
+        lhy_left_scene_jian3.setTransparentAlpha(0);
+        left_check();
+    },()=>{});
+    lhy_left_scene_jian3.setClickable(true);
+    lhy_left_scene_jian3.setTransparentAlpha(1);
+
+
     //上场景音乐模块
 
     var lhy_top_scene_button=new Button(canvas.scene("lhy_top_scene"),0,412,935,135,11,res.getResource("qinxian"),null,null,()=>{
-        //play music
+        //var lhy_top_scene_music=new Music(res.getResource("bgm"));
+        //lhy_top_scene_music.play();
         lhy_top_scene_button.setClickable(false);
     },()=>{});
     lhy_top_scene_button.setClickable(true);
