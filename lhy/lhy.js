@@ -204,12 +204,12 @@ var cfg=[
         name: "-3",
         type: "image",
         value: "./lhy/data/-3.png"
-    }/*
+    },
     {
         name: "bgm",
         type: "audio",
         value: "./lhy/data/bgm.mp3"
-    }*/
+    }
 ]
 
 function isIn(p,lx,ly,l,h){ //是否在检测框内
@@ -495,8 +495,8 @@ function build(canvas){
     //上场景音乐模块
 
     var lhy_top_scene_button=new Button(canvas.scene("lhy_top_scene"),0,412,935,135,11,res.getResource("qinxian"),null,null,()=>{
-        //var lhy_top_scene_music=new Music(res.getResource("bgm"));
-        //lhy_top_scene_music.play();
+        var lhy_top_scene_music=new Music(res.getResource("bgm"));
+        lhy_top_scene_music.play();
         lhy_top_scene_button.setClickable(false);
     },()=>{});
     lhy_top_scene_button.setClickable(true);

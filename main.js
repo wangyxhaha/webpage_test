@@ -8,7 +8,7 @@ import Dialog from "./dialog.js";
 
 var canvas=new Canvas("gameCanvas",935,935)
 
-import("./lhy/lhy.js")
+import("./fmh/fmh.js")
     .then(module=>{
         module.default.init(canvas);
     });
