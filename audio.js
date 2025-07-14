@@ -5,6 +5,7 @@ class MyAudio/*!!!!!*/{
     constructor(audioBuffer){
         this.audioBuffer=audioBuffer;
         this.firstTime=true;
+        this.playing=false;
     }
     play(from=0){
         if (!this.firstTime) this.src.stop();
@@ -13,9 +14,11 @@ class MyAudio/*!!!!!*/{
         this.src.buffer=this.audioBuffer;
         this.src.connect(MyAudio.audioContext.destination);
         this.src.start(0,from);
+        this.playing=true;
     }
     stop(){
-        this.src.stop();
+        if (this.playing) this.src.stop();
+        this.playing=false;
     }
 }
 
