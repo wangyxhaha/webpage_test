@@ -28,3 +28,13 @@ Sprite.prototype.floatUp=function(targetX,targetY,time,startX=targetX,startY=tar
         // console.log(`endTime:${endTime}, nowTime${new Date().valueOf()}`);
     },16.7)
 };
+
+Sprite.prototype.shakeHorizontally=function(time=500,A=20,f=6){ //水平震动
+    var startTime=performance.now();
+    var update=()=>{
+        let nowTime=performance.now();
+        this.offsetX=A*Math.sin(Math.PI*(nowTime-startTime)/time)*Math.sin(2*Math.PI*f*(nowTime-startTime)/1000);
+        if (nowTime<startTime+time) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+}

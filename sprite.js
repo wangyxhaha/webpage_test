@@ -4,11 +4,27 @@ class Sprite{
     constructor(cvs,x,y,visible=true){
         this.canvas=cvs.canvas; //获取所在的canvas
         this.canvasContext=cvs.canvasContext; //获取所在canvas的绘图上下文
-        this.x=x;
-        this.y=y;
+        // this.x=x;
+        // this.y=y;
+        this.trueX=x;
+        this.trueY=y;
+        this.offsetX=0;
+        this.offsetY=0;
         this.visible=visible;
         this.transparentAlpha=1.0;
         this.nowMover=null;
+    }
+    get x(){
+        return this.trueX+this.offsetX;
+    }
+    get y(){
+        return this.trueY+this.offsetY;
+    }
+    set x(m){
+        this.trueX=m;
+    }
+    set y(m){
+        this.trueY=m;
     }
     setPostition(x,y){
         this.x=x;
