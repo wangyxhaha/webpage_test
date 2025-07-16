@@ -57,12 +57,12 @@ var cfg=[ //所需素材的信息
         name: "lock",
         type: "image",
         value: "./nmy/data/锁.png"
-    },
+    }/*,
     {
         name: "undo",
         type: "image",
         value: "./nmy/data/撤销.png"
-    },
+    }*/,
     {
         name: "record1",
         type: "image",
@@ -162,12 +162,28 @@ var cfg=[ //所需素材的信息
         name: "451",
         type: "audio",
         value: "./nmy/data/451.mp3"
+    },
+    {
+        name: "hammer",
+        type: "image",
+        value: "./nmy/data/扭锤子.png"
+    },
+    {
+        name: "pillow",
+        type: "image",
+        value: "./nmy/data/扭枕头.png"
+    },
+    {
+        name: "broken_blocker",
+        type: "image",
+        value: "./nmy/data/扭挡住相框的.png"
+    },
+    {
+        name: "van_figure",
+        type: "image",
+        value: "./nmy/data/van在扭房间.png"
     }
 ]
-
-function isIn(p){ //218 701 704 934
-    return p.x>=218-100 && p.x<=704 && p.y>=701-100 && p.y<=934;
-}
 
 function build(canvas){
     console.log("build");
@@ -208,6 +224,31 @@ function build(canvas){
     });
     nmy_answer_box_fake_disable_button.setClickable(false);
     nmy_answer_box_fake_disable_button.setIgnoreClickEven(true);
+
+    var nmy_door_scene_broken_blocker=new Button(canvas.scene("nmy_door_scene"),0,0,0,0,1,res.getResource("broken_blocker"),null,null,()=>{},()=>{});
+    nmy_door_scene_broken_blocker.setClickable(false);
+    nmy_door_scene_broken_blocker.setTransparentAlpha(0);
+
+    var nmy_door_scene_hammer_detecter=new Button(canvas.scene("nmy_door_scene"),158,369,98,76,0,null,null,null,()=>{},()=>{});
+    //158 369 256 445
+
+    var nmy_door_scene_van_figure=new Button(canvas.scene("nmy_door_scene"),0,0,0,0,1,res.getResource("van_figure"),null,null,()=>{},()=>{});
+    nmy_door_scene_van_figure.setClickable(false);
+    nmy_door_scene_van_figure.setTransparentAlpha(0);
+
+    var nmy_door_scene_hammer=new Button(canvas.scene("nmy_door_scene"),149,795,117,53,6,res.getResource("hammer"),null,null,()=>{},()=>{
+        if (nmy_door_scene_hammer.isCoincide(nmy_door_scene_hammer_detecter)){
+            nmy_door_scene_hammer.setTransparentAlpha(0);
+            nmy_door_scene_hammer.setClickable(0);
+            nmy_door_scene_broken_blocker.setTransparentAlpha(1);
+            nmy_door_scene_van_figure.floatUp(0,0,500,-300,-300);
+        }
+    });
+    nmy_door_scene_hammer.setDraggable(true);
+    var nmy_door_scene_pillow=new Button(canvas.scene("nmy_door_scene"),84,764,229,86,7,res.getResource("pillow"),null,null,()=>{},()=>{});
+    nmy_door_scene_pillow.setDraggable(true);
+    //149 795 266 848
+    //84 764 313 850
 
     var nmy_right_scene_record1=new Button(canvas.scene("nmy_right_scene"),0,0,304,304,-1,res.getResource("record1"),null,null,()=>{},()=>{stopAllMusic();res.getResource("xuededubai").play();},315,303);
     // nmy_right_scene_record1.setClickable(false);
