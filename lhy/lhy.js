@@ -7,7 +7,7 @@ import Button from "../button.js";
 import Animation from "../animation.js";
 import Input from "../input.js";
 import "../buttonPlugin.js";
-import Music from "../music.js";
+import "../spritePlugin.js";
 
 var cfg=[
     {
@@ -227,7 +227,10 @@ function build(canvas){
     var lhy_left_scene_right_arrow=new Button(canvas.scene("lhy_left_scene"),0,0,57,89,0,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("lhy_door_scene"),777,443);
     var lhy_right_scene_left_arrow=new Button(canvas.scene("lhy_right_scene"),0,0,57,89,0,res.getResource("left_arrow"),null,null,()=>{},()=>canvas.changeScene("lhy_door_scene"),98,443);
     var lhy_door_scene_up_arrow=new Button(canvas.scene("lhy_door_scene"),0,0,88,46,0,res.getResource("up_arrow"),null,null,()=>{},()=>canvas.changeScene("lhy_top_scene"),416,114);
-    var lhy_top_scene_down_arrow=new Button(canvas.scene("lhy_top_scene"),0,0,88,46,0,res.getResource("down_arrow"),null,null,()=>{},()=>canvas.changeScene("lhy_door_scene"),416,833);
+    var lhy_top_scene_down_arrow=new Button(canvas.scene("lhy_top_scene"),0,0,88,46,0,res.getResource("down_arrow"),null,null,()=>{},()=>{
+        canvas.changeScene("lhy_door_scene");
+        res.getResource("bgm").stop();
+    },416,833);
     
     var lhy_door_scene_lock=new Button(canvas.scene("lhy_door_scene"),0,0,0,0,1,res.getResource("lock"),null,null,()=>{},()=>{});
     lhy_door_scene_lock.setClickable(false);
@@ -495,8 +498,7 @@ function build(canvas){
     //上场景音乐模块
 
     var lhy_top_scene_button=new Button(canvas.scene("lhy_top_scene"),0,412,935,135,11,res.getResource("qinxian"),null,null,()=>{
-        var lhy_top_scene_music=new Music(res.getResource("bgm"));
-        lhy_top_scene_music.play();
+        res.getResource("bgm").play();
         lhy_top_scene_button.setClickable(false);
     },()=>{});
     lhy_top_scene_button.setClickable(true);

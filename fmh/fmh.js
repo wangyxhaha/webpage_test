@@ -59,6 +59,11 @@ var cfg=[
         name: "lock",
         type: "image",
         value: "./fmh/data/锁.png"
+    },
+    {
+        name: "top_bgm",
+        type: "audio",
+        value: "./fmh/data/上课铃.mp3"
     }
 ]
 
@@ -98,6 +103,10 @@ function build(canvas){
     });
     fmh_answer_box_fake_disable_button.setClickable(false);
     fmh_answer_box_fake_disable_button.setIgnoreClickEven(true);
+
+    var fmh_door_scene_clock=new Button(canvas.scene("fmh_door_scene"),370,162,155,155,11,null,null,null,()=>{
+        //钟表指针
+    },()=>{});
 
     canvas.changeScene("fmh_door_scene");
 }
