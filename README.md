@@ -116,7 +116,7 @@
             > [
             >     {
             >         name: "resource1", //资源名称
-            >         type: "image", //资源类型（image或者audio）
+            >         type: "image", //资源类型（image或者audio或者gif，gif会被加载为Animation类）
             >         value: "./foo.png" //资源的地址（相对位置也可）
             >     },
             >     ... //其他的资源，以此类推
@@ -134,9 +134,9 @@
             > 加载失败返回`null`
 - 动画：
     1. `Animation`类可以让管理动画更方便一些，且已被`Button`类支持
-        - `Animation(imgList,interval)`（构造函数）
-            > `imgList`为由`Image`对象组成的数组，按顺序表示动画的每一帧（用`Resource.getResource(name)`获取的图片就是`Image`对象）\
-            > `interval`表示帧间隔时间，单位为ms
+        - `Animation(imgList)`（构造函数）
+            > `imgList`为由`{image:<Image>,interval:<number>}`对象组成的数组，按顺序表示动画的每一帧及其帧间隔事件\
+            > `interval`单位为ms
         - `Animation.start()`（播放函数）
             > 使用后从当前帧开始播放（初始时为第一帧）
         - `Animation.pause()`（暂停函数）
