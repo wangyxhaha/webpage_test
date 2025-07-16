@@ -241,7 +241,7 @@ function build(canvas){
             nmy_door_scene_hammer.setTransparentAlpha(0);
             nmy_door_scene_hammer.setClickable(0);
             nmy_door_scene_broken_blocker.setTransparentAlpha(1);
-            nmy_door_scene_van_figure.floatUp(0,0,500,-300,-300);
+            nmy_door_scene_van_figure.floatUp(0,0,1000,-300,-300);
         }
     });
     nmy_door_scene_hammer.setDraggable(true);
