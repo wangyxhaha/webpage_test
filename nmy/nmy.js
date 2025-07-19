@@ -182,6 +182,21 @@ var cfg=[ //所需素材的信息
         name: "van_figure",
         type: "image",
         value: "./nmy/data/van在扭房间.png"
+    },
+    {
+        name: "miku",
+        type: "image",
+        value: "./nmy/data/扭初音.png"
+    },
+    {
+        name: "miku_saying",
+        type: "image",
+        value: "./nmy/data/初音说的话.png"
+    },
+    {
+        name: "soyo_saying",
+        type: "audio",
+        value: "./nmy/data/为什么要演奏春日影.mp3"
     }
 ]
 
@@ -193,7 +208,7 @@ function build(canvas){
     canvas.createNewScene("nmy_left_scene",res.getResource("nmy_left_bg"));
     var nmy_door_scene_left_arrow=new Button(canvas.scene("nmy_door_scene"),0,0,57,89,5,res.getResource("left_arrow"),null,null,()=>{},()=>canvas.changeScene("nmy_left_scene"),98,443);
     var nmy_door_scene_right_arrow=new Button(canvas.scene("nmy_door_scene"),0,0,57,89,5,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("nmy_right_scene"),777,443);
-    var nmy_left_scene_right_arrow=new Button(canvas.scene("nmy_left_scene"),0,0,57,89,0,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("nmy_door_scene"),777,443);
+    var nmy_left_scene_right_arrow=new Button(canvas.scene("nmy_left_scene"),0,0,57,89,5,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("nmy_door_scene"),777,443);
     var nmy_right_scene_left_arrow=new Button(canvas.scene("nmy_right_scene"),-100,0,57,89,0,res.getResource("left_arrow"),null,null,()=>{},()=>{stopAllMusic();canvas.changeScene("nmy_door_scene");},98,443);
     var nmy_door_scene_up_arrow=new Button(canvas.scene("nmy_door_scene"),0,0,88,46,5,res.getResource("up_arrow"),null,null,()=>{},()=>canvas.changeScene("nmy_top_scene"),416,114);
     var nmy_top_scene_down_arrow=new Button(canvas.scene("nmy_top_scene"),0,0,88,46,0,res.getResource("down_arrow"),null,null,()=>{},()=>canvas.changeScene("nmy_door_scene"),416,833);
@@ -316,7 +331,25 @@ function build(canvas){
     });
     nmy_right_scene_yorushika5.setDraggable(true);
 
+    var miku_saying_wait=false;
+
+    var nmy_left_scene_miku_saying=new Button(canvas.scene("nmy_left_scene"),0,0,0,0,2,res.getResource("miku_saying"),null,null,()=>{},()=>{});
+    nmy_left_scene_miku_saying.setClickable(false);
+    nmy_left_scene_miku_saying.setTransparentAlpha(0);
+    var nmy_left_scene_miku=new Button(canvas.scene("nmy_left_scene"),0,0,545,467,1,res.getResource("miku"),null,null,()=>{},()=>{
+        if (miku_saying_wait) return;
+        nmy_left_scene_miku_saying.floatUp(0,0,300);
+        miku_saying_wait=true;
+        setTimeout(()=>{
+            nmy_left_scene_miku_saying.setTransparentAlpha(0);
+            miku_saying_wait=false;
+        },2500);
+    },329,456);
     
+    var nmy_left_scene_soyo_fake_button=new Button(canvas.scene("nmy_left_scene"),0,0,263,147,2,null,null,null,()=>{},()=>{
+        res.getResource("soyo_saying").play();
+    },95,284);
+
     canvas.changeScene("nmy_door_scene");
     // nmy_answer_box.enable();
 }
