@@ -242,7 +242,7 @@ function build(canvas){
 
     var nmy_door_scene_broken_blocker=new Button(canvas.scene("nmy_door_scene"),0,0,0,0,1,res.getResource("broken_blocker"),null,null,()=>{},()=>{});
     nmy_door_scene_broken_blocker.setClickable(false);
-    nmy_door_scene_broken_blocker.setTransparentAlpha(0);
+    nmy_door_scene_broken_blocker.setTransparentAlpha(1);
 
     var nmy_door_scene_hammer_detecter=new Button(canvas.scene("nmy_door_scene"),158,369,98,76,0,null,null,null,()=>{},()=>{});
     //158 369 256 445
@@ -255,7 +255,7 @@ function build(canvas){
         if (nmy_door_scene_hammer.isCoincide(nmy_door_scene_hammer_detecter)){
             nmy_door_scene_hammer.setTransparentAlpha(0);
             nmy_door_scene_hammer.setClickable(0);
-            nmy_door_scene_broken_blocker.setTransparentAlpha(1);
+            nmy_door_scene_broken_blocker.setTransparentAlpha(0);
             nmy_door_scene_van_figure.floatUp(0,0,1000,-300,-300);
         }
     });
