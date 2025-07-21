@@ -99,6 +99,11 @@ var cfg=[
         name: "talking3",
         type: "image",
         value: "./fmh/data/van语录3.png"
+    },
+    {
+        name: "late",
+        type: "image",
+        value: "./fmh/data/来晚了.png"
     }
 ]
 
@@ -140,15 +145,18 @@ function build(canvas){
     fmh_answer_box_fake_disable_button.setIgnoreClickEven(true);
 
     var cnt=1;
+    var fmh_door_scene_figure_late=new Button(canvas.scene("fmh_door_scene"),0,0,0,0,11,res.getResource("late"),null,null,()=>{},()=>{});
+    fmh_door_scene_figure_late.setTransparentAlpha(0);
     var fmh_door_scene_figure_talking1=new Button(canvas.scene("fmh_door_scene"),0,0,0,0,11,res.getResource("talking1"),null,null,()=>{},()=>{});
     fmh_door_scene_figure_talking1.setTransparentAlpha(0);
     var fmh_door_scene_figure_talking2=new Button(canvas.scene("fmh_door_scene"),0,0,0,0,11,res.getResource("talking2"),null,null,()=>{},()=>{});
     fmh_door_scene_figure_talking2.setTransparentAlpha(0);
     var fmh_door_scene_figure_talking3=new Button(canvas.scene("fmh_door_scene"),0,0,0,0,11,res.getResource("talking3"),null,null,()=>{},()=>{});
     fmh_door_scene_figure_talking3.setTransparentAlpha(0);
-    var fmh_door_scene_figure=new Button(canvas.scene("fmh_door_scene"),550,577,298,344,11,res.getResource("fmh_figure"),null,null,()=>{
+    var fmh_door_scene_figure=new Button(canvas.scene("fmh_door_scene"),940,577,298,344,11,res.getResource("fmh_figure"),null,null,()=>{
         cnt++;
         if(cnt==4) cnt=1;
+        fmh_door_scene_figure_late.setTransparentAlpha(0);
         switch(cnt){
             case 1:
                 fmh_door_scene_figure_talking1.setTransparentAlpha(1);
@@ -188,7 +196,8 @@ function build(canvas){
         res.getResource("bgm").play();
         fmh_door_scene_figure.setTransparentAlpha(1);
         fmh_door_scene_figure.setClickable(true);
-        fmh_door_scene_figure_talking1.setTransparentAlpha(1);
+        fmh_door_scene_figure.slideTo(550,577,0.2);
+        fmh_door_scene_figure_late.setTransparentAlpha(1);
     },()=>{});
     fmh_door_scene_clock.setClickable(true);
 
