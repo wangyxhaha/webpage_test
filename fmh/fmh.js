@@ -141,12 +141,12 @@ function build(canvas){
 
     var cnt=1;
     var fmh_door_scene_figure_talking1=new Button(canvas.scene("fmh_door_scene"),0,0,0,0,11,res.getResource("talking1"),null,null,()=>{},()=>{});
-    fmh_door_scene_figure_talking1.setTransparentAlpha(1);
+    fmh_door_scene_figure_talking1.setTransparentAlpha(0);
     var fmh_door_scene_figure_talking2=new Button(canvas.scene("fmh_door_scene"),0,0,0,0,11,res.getResource("talking2"),null,null,()=>{},()=>{});
     fmh_door_scene_figure_talking2.setTransparentAlpha(0);
     var fmh_door_scene_figure_talking3=new Button(canvas.scene("fmh_door_scene"),0,0,0,0,11,res.getResource("talking3"),null,null,()=>{},()=>{});
     fmh_door_scene_figure_talking3.setTransparentAlpha(0);
-    var fmh_door_scene_figure=new Button(canvas.scene("fmh_door_scene"),580,577,298,344,11,res.getResource("fmh_figure"),null,null,()=>{
+    var fmh_door_scene_figure=new Button(canvas.scene("fmh_door_scene"),550,577,298,344,11,res.getResource("fmh_figure"),null,null,()=>{
         cnt++;
         if(cnt==4) cnt=1;
         switch(cnt){
@@ -164,7 +164,8 @@ function build(canvas){
                 break;
         }
     },()=>{});
-    fmh_door_scene_figure.setClickable(true);
+    fmh_door_scene_figure.setClickable(false);
+    fmh_door_scene_figure.setTransparentAlpha(0);
 
     var fmh_door_scene_clock_shi=new Button(canvas.scene("fmh_door_scene"),0,0,0,0,11,res.getResource("shizhen"),null,null,()=>{},()=>{});
     fmh_door_scene_clock_shi.setClickable(false);
@@ -185,6 +186,9 @@ function build(canvas){
         fmh_door_scene_lock.setTransparentAlpha(0);
         fmh_answer_box_fake_button.setClickable(true);
         res.getResource("bgm").play();
+        fmh_door_scene_figure.setTransparentAlpha(1);
+        fmh_door_scene_figure.setClickable(true);
+        fmh_door_scene_figure_talking1.setTransparentAlpha(1);
     },()=>{});
     fmh_door_scene_clock.setClickable(true);
 
