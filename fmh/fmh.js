@@ -61,9 +61,44 @@ var cfg=[
         value: "./fmh/data/锁.png"
     },
     {
-        name: "top_bgm",
+        name: "bgm",
         type: "audio",
         value: "./fmh/data/上课铃.mp3"
+    },
+    {
+        name: "fenzhen",
+        type: "image",
+        value: "./fmh/data/van分针.png"
+    },
+    {
+        name: "fenzhenF",
+        type: "image",
+        value: "./fmh/data/van分针F.png"
+    },
+    {
+        name: "shizhen",
+        type: "image",
+        value: "./fmh/data/van时针.png"
+    },
+    {
+        name: "fmh_figure",
+        type: "image",
+        value: "./fmh/data/van形象.png"
+    },
+    {
+        name: "talking1",
+        type: "image",
+        value: "./fmh/data/van语录1.png"
+    },
+    {
+        name: "talking2",
+        type: "image",
+        value: "./fmh/data/van语录2.png"
+    },
+    {
+        name: "talking3",
+        type: "image",
+        value: "./fmh/data/van语录3.png"
     }
 ]
 
@@ -104,9 +139,56 @@ function build(canvas){
     fmh_answer_box_fake_disable_button.setClickable(false);
     fmh_answer_box_fake_disable_button.setIgnoreClickEven(true);
 
-    var fmh_door_scene_clock=new Button(canvas.scene("fmh_door_scene"),370,162,155,155,11,null,null,null,()=>{
-        //钟表指针
+    var cnt=1;
+    var fmh_door_scene_figure_talking1=new Button(canvas.scene("fmh_door_scene"),0,0,0,0,11,res.getResource("talking1"),null,null,()=>{},()=>{});
+    fmh_door_scene_figure_talking1.setTransparentAlpha(1);
+    var fmh_door_scene_figure_talking2=new Button(canvas.scene("fmh_door_scene"),0,0,0,0,11,res.getResource("talking2"),null,null,()=>{},()=>{});
+    fmh_door_scene_figure_talking2.setTransparentAlpha(0);
+    var fmh_door_scene_figure_talking3=new Button(canvas.scene("fmh_door_scene"),0,0,0,0,11,res.getResource("talking3"),null,null,()=>{},()=>{});
+    fmh_door_scene_figure_talking3.setTransparentAlpha(0);
+    var fmh_door_scene_figure=new Button(canvas.scene("fmh_door_scene"),580,577,298,344,11,res.getResource("fmh_figure"),null,null,()=>{
+        cnt++;
+        if(cnt==4) cnt=1;
+        switch(cnt){
+            case 1:
+                fmh_door_scene_figure_talking1.setTransparentAlpha(1);
+                fmh_door_scene_figure_talking3.setTransparentAlpha(0);
+                break;
+            case 2:
+                fmh_door_scene_figure_talking2.setTransparentAlpha(1);
+                fmh_door_scene_figure_talking1.setTransparentAlpha(0);
+                break;
+            case 3:
+                fmh_door_scene_figure_talking3.setTransparentAlpha(1);
+                fmh_door_scene_figure_talking2.setTransparentAlpha(0);
+                break;
+        }
     },()=>{});
+    fmh_door_scene_figure.setClickable(true);
+
+    var fmh_door_scene_clock_shi=new Button(canvas.scene("fmh_door_scene"),0,0,0,0,11,res.getResource("shizhen"),null,null,()=>{},()=>{});
+    fmh_door_scene_clock_shi.setClickable(false);
+    fmh_door_scene_clock_shi.setTransparentAlpha(1);
+
+    var fmh_door_scene_clock_fen=new Button(canvas.scene("fmh_door_scene"),0,0,0,0,11,res.getResource("fenzhen"),null,null,()=>{},()=>{});
+    fmh_door_scene_clock_fen.setClickable(false);
+    fmh_door_scene_clock_fen.setTransparentAlpha(1);
+
+    var fmh_door_scene_clock_fen_final=new Button(canvas.scene("fmh_door_scene"),445,243,20,54,11,res.getResource("fenzhenF"),null,null,()=>{},()=>{});
+    fmh_door_scene_clock_fen_final.setClickable(false);
+    fmh_door_scene_clock_fen_final.setTransparentAlpha(0);
+
+    var fmh_door_scene_clock=new Button(canvas.scene("fmh_door_scene"),370,162,155,155,21,null,null,null,()=>{
+        fmh_door_scene_clock_fen_final.setTransparentAlpha(1);
+        fmh_door_scene_clock_fen.setTransparentAlpha(0);
+        fmh_door_scene_clock.setClickable(false);
+        fmh_door_scene_lock.setTransparentAlpha(0);
+        fmh_answer_box_fake_button.setClickable(true);
+        res.getResource("bgm").play();
+    },()=>{});
+    fmh_door_scene_clock.setClickable(true);
+
+    var fmh_right_scene_light=new Button(canvas.scene("fmh_right_scene"),0,0,0,0,11,res.getResource("fmh_light"),null,null,()=>{},()=>{});
 
     canvas.changeScene("fmh_door_scene");
 }
