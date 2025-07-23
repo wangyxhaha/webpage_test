@@ -42,7 +42,7 @@ var cfg=[ //所需素材的信息
     {
         name: "gy_left_bg",
         type: "image",
-        value: "./gy/data/高原左底图.jpg"
+        value: "./gy/data/格子.jpg"
     },
     {
         name: "left_arrow",
@@ -159,11 +159,12 @@ function build(canvas){
     gy_right_scene_genshin.setClickable(false);
     gy_right_scene_genshin.setTransparentAlpha(0);
 
-    var gy_door_scene_liekai=new Button(canvas.scene("gy_door_scene"),323,342,65,66,6,res.getResource("liekai"),null,null,()=>{},()=>{
+    var gy_door_scene_liekai=new Button(canvas.scene("gy_left_scene"),323,342,65,66,6,res.getResource("liekai"),null,null,()=>{},()=>{
         let p=gy_door_scene_liekai.getPosition();
         if (p.x<=30 && p.x>=-30 && p.y<=30 && p.y>=-30){
             gy_door_scene_lock.setTransparentAlpha(0);
             gy_answer_box_fake_button.setClickable(true);
+            gy_door_scene_liekai.setPostition(0,0);
         }
         else{
             gy_door_scene_lock.setTransparentAlpha(1);
