@@ -28,6 +28,7 @@ class Animation{
         //     this.now++;
         //     if (this.now==this.imgList.length) this.now=0;
         // },this.interval);
+        this.nextFrameTime=performance.now()+this.imgList[0].interval;
         this.playStatus=true;
     }
     pause(){
