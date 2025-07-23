@@ -93,12 +93,16 @@ function build(canvas){
     canvas.createNewScene("gy_left_scene",res.getResource("gy_left_bg"));
     var gy_door_scene_left_arrow=new Button(canvas.scene("gy_door_scene"),0,0,57,89,5,res.getResource("left_arrow"),null,null,()=>{},()=>canvas.changeScene("gy_left_scene"),98,443);
     var gy_door_scene_right_arrow=new Button(canvas.scene("gy_door_scene"),0,0,57,89,5,res.getResource("right_arrow"),null,null,()=>{},()=>{
+        gy_right_scene_hit_rocket.setTransparentAlpha(0);
+        gy_right_scene_genshin.setTransparentAlpha(1);
         gy_hit_rocket_animation.reset();
-        gy_hit_rocket_animation.start();
-        gy_right_scene_genshin.setTransparentAlpha(0);
-        setTimeout(()=>gy_hit_rocket_animation.pause(),350);
-        setTimeout(()=>gy_right_scene_genshin.floatUp(0,0,500),1000);
-        setTimeout(()=>gy_right_scene_genshin.setTransparentAlpha(0),2500);
+        gy_right_scene_genshin.floatUp(0,0,500);
+        setTimeout(()=>{
+            gy_right_scene_genshin.setTransparentAlpha(0);
+            gy_right_scene_hit_rocket.setTransparentAlpha(1);
+            gy_hit_rocket_animation.start();
+        },1000);
+        setTimeout(()=>gy_hit_rocket_animation.pause(),1350);
         canvas.changeScene("gy_right_scene");
     },777,443);
     var gy_left_scene_right_arrow=new Button(canvas.scene("gy_left_scene"),0,0,57,89,0,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("gy_door_scene"),777,443);
