@@ -136,6 +136,7 @@ function build(canvas){
             setTimeout(()=>{
                 zws_door_scene_saying2.setTransparentAlpha(0);
                 zws_door_scene_saying3.setTransparentAlpha(0);
+                flag=3;
             },4000);
         }
     },777,443);
@@ -143,8 +144,19 @@ function build(canvas){
     var zws_door_scene_up_arrow=new Button(canvas.scene("zws_door_scene"),0,0,88,46,5,res.getResource("up_arrow"),null,null,()=>{},()=>canvas.changeScene("zws_top_scene"),416,114);
     var zws_top_scene_down_arrow=new Button(canvas.scene("zws_top_scene"),0,0,88,46,0,res.getResource("down_arrow"),null,null,()=>{},()=>canvas.changeScene("zws_door_scene"),416,833);
 
-    var zws_door_scene_zws_figure=new Button(canvas.scene("zws_door_scene"),0,0,0,0,1,res.getResource("zws_figure"),null,null,()=>{},()=>{});
-    zws_door_scene_zws_figure.setClickable(false);
+    var saying1wait=false;
+
+    var zws_door_scene_zws_figure=new Button(canvas.scene("zws_door_scene"),0,0,175,264,1,res.getResource("zws_figure"),null,null,()=>{},()=>{
+        if (flag==1 || flag==2) return;
+        if (saying1wait) return;
+        saying1wait=true;
+        zws_door_scene_saying1.floatUp(0,0,300);
+        setTimeout(()=>{
+            zws_door_scene_saying1.setTransparentAlpha(0);
+            saying1wait=false;
+        },2000);
+    },608,288);
+    // zws_door_scene_zws_figure.setClickable(false);
 
     var zws_door_scene_zty_figure=new Button(canvas.scene("zws_door_scene"),0,0,0,0,1,res.getResource("zty_figure"),null,null,()=>{},()=>{});
     zws_door_scene_zty_figure.setTransparentAlpha(0);
@@ -161,6 +173,7 @@ function build(canvas){
 
     var zws_door_scene_saying1=new Button(canvas.scene("zws_door_scene"),0,0,0,0,3,res.getResource("saying1"),null,null,()=>{},()=>{});
     zws_door_scene_saying1.setClickable(false);
+    zws_door_scene_saying1.setTransparentAlpha(0);
 
     var zws_door_scene_saying2=new Button(canvas.scene("zws_door_scene"),0,0,0,0,3,res.getResource("saying2"),null,null,()=>{},()=>{});
     zws_door_scene_saying2.setClickable(false);
