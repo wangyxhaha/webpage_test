@@ -81,10 +81,6 @@ var cfg=[ //所需素材的信息
     }
 ]
 
-function isIn(p){ //218 701 704 934
-    return p.x>=218-100 && p.x<=704 && p.y>=701-100 && p.y<=934;
-}
-
 function build(canvas){
     console.log("build");
     canvas.createNewScene("gy_door_scene",res.getResource("gy_door"));
@@ -109,14 +105,6 @@ function build(canvas){
     var gy_right_scene_left_arrow=new Button(canvas.scene("gy_right_scene"),0,0,57,89,0,res.getResource("left_arrow"),null,null,()=>{},()=>canvas.changeScene("gy_door_scene"),98,443);
     var gy_door_scene_up_arrow=new Button(canvas.scene("gy_door_scene"),0,0,88,46,5,res.getResource("up_arrow"),null,null,()=>{},()=>canvas.changeScene("gy_top_scene"),416,114);
     var gy_top_scene_down_arrow=new Button(canvas.scene("gy_top_scene"),0,0,88,46,0,res.getResource("down_arrow"),null,null,()=>{},()=>canvas.changeScene("gy_door_scene"),416,833);
-    
-    var gy_door_scene_saying1=new Button(canvas.scene("gy_door_scene"),0,0,0,0,4,res.getResource("gy_saying1"),null,null,()=>{},()=>{});
-    gy_door_scene_saying1.setIgnoreClickEven(true);
-    gy_door_scene_saying1.setTransparentAlpha(0);
-
-    var gy_door_scene_saying2=new Button(canvas.scene("gy_door_scene"),0,0,0,0,4,res.getResource("gy_saying2"),null,null,()=>{},()=>{});
-    gy_door_scene_saying2.setIgnoreClickEven(true);
-    gy_door_scene_saying2.setTransparentAlpha(0);
 
     var gy_door_scene_lock=new Button(canvas.scene("gy_door_scene"),0,0,0,0,1,res.getResource("lock"),null,null,()=>{},()=>{});
     gy_door_scene_lock.setClickable(false);
