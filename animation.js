@@ -2,7 +2,6 @@
 
 class Animation{
     constructor(imgList){
-        console.log(imgList);
         this.imgList=imgList;
         // this.interval=interval;
         this.now=0;
@@ -15,8 +14,7 @@ class Animation{
                 return;
             }
             if (currentTime>=this.nextFrameTime){
-                this.now++;
-                if (this.now==this.imgList.length) this.now=0;
+                this.now=(this.now+1)%this.imgList.length;
                 this.nextFrameTime=currentTime+this.imgList[this.now].interval;
             }
             requestAnimationFrame(this.playAnimation);
@@ -48,6 +46,11 @@ class Animation{
     }
     get image(){
         return this.imgList[this.now].image;
+    }
+    nextFrame(){
+        this.now=(this.now+1)%this.imgList.length;
+        this.nextFrameTime=performance.now()+this.imgList[this.now].interval;
+        console.log(this.now);
     }
 }
 
