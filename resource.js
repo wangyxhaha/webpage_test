@@ -50,10 +50,22 @@ class Resource{ //用来读取关卡并加载资源，生成对应对象
                             let uint8Array = new Uint8Array(buffer);
                             let reader=new GifReader(uint8Array);
                             let frameArray=new Array();
-                            let pixels=new Uint8Array(reader.width*reader.height*4);
+                            let prepixels=new Uint8Array(reader.width*reader.height*4);
                             for (let j=0;j<reader.numFrames();j++){
+                                let pixels=new Uint8Array(reader.width*reader.height*4);
                                 reader.decodeAndBlitFrameRGBA(j,pixels);
-                                // frameArray.push(new ImageData(pixels.buffer,reader.width,reader.height));
+                                let disposal= j===0 ? 1 : reader.frameInfo(j-1).disposal;
+                                if (disposal===1){
+                                    for (let k=0,kl=pixels.length;k<kl;k+=4){
+                                        if (pixels[k+3]===0){
+                                            pixels[k]=prepixels[k];
+                                            pixels[k+1]=prepixels[k+1];
+                                            pixels[k+2]=prepixels[k+2];
+                                            pixels[k+3]=prepixels[k+3];
+                                        }
+                                    }
+                                }
+                                prepixels=pixels;
                                 let clampedPixels = new Uint8ClampedArray(pixels); // 明确转为 Uint8ClampedArray
                                 let imgData=new ImageData(clampedPixels, reader.width, reader.height)
                                 let tempCanvas=new OffscreenCanvas(imgData.width,imgData.height);
@@ -66,7 +78,7 @@ class Resource{ //用来读取关卡并加载资源，生成对应对象
                                     img.src=imgURL;
                                     img.onload=()=>resolve();
                                 });
-                                frameArray.push({image:img,interval:Math.max(reader.frameInfo(j).delay*10,100)});
+                                frameArray.push({image:img,interval:Math.max(reader.frameInfo(j).delay*10,10)});
                             }
                             this.resource[urls[i].name]=new Animation(frameArray);
                         }
