@@ -45,10 +45,11 @@ class Button extends Sprite{
         if (temp==null) return;
         this.canvasContext.globalAlpha=this.transparentAlpha;
         this.canvasContext.drawImage(temp,this.x,this.y);
-        // this.canvasContext.strokeStyle="black";
+        this.canvasContext.globalAlpha=1;
+
+        // this.canvasContext.strokeStyle="red";
         // this.canvasContext.lineWidth=3;
         // this.canvasContext.strokeRect(this.x+this.boxX,this.y+this.boxY,this.boxWidth,this.boxHeight);
-        this.canvasContext.globalAlpha=1;
     }
     setDraggable(d){
         this.draggable=d;
@@ -86,7 +87,7 @@ class Button extends Sprite{
             this.status=2;
             this.mouseDownRelativeX=pos.x-this.x; //被按下，设置按钮坐标和鼠标坐标的相对位置
             this.mouseDownRelativeY=pos.y-this.y;
-            if (this.clickable) this.buttonDownCallBack();
+            if (this.clickable) this.buttonDownCallBack(pos);
             return true;
         }
         return false;
@@ -98,7 +99,7 @@ class Button extends Sprite{
         if (pos.x>=this.x+this.boxX && pos.x<=this.x+this.boxWidth+this.boxX &&
             pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxHeight+this.boxY){ //判定点击是否在判定区内
             this.status=1;
-            if (this.clickable) this.buttonUpCallBack();
+            if (this.clickable) this.buttonUpCallBack(pos);
             return true;
         }
         // this.status=0
@@ -126,7 +127,7 @@ class Button extends Sprite{
             this.status=2;
             this.mouseDownRelativeX=pos.x-this.x; //被按下，设置按钮坐标和触摸位置坐标的相对位置
             this.mouseDownRelativeY=pos.y-this.y;
-            if (this.clickable) this.buttonDownCallBack();
+            if (this.clickable) this.buttonDownCallBack(pos);
             return true;
         }
         return false;
@@ -138,7 +139,7 @@ class Button extends Sprite{
         if (pos.x>=this.x+this.boxX && pos.x<=this.x+this.boxWidth+this.boxX &&
             pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxHeight+this.boxY){ //判定点击是否在判定区内
             this.status=0;
-            if (this.clickable) this.buttonUpCallBack();
+            if (this.clickable) this.buttonUpCallBack(pos);
             return true;
         }
         // this.status=0;

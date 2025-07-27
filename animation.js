@@ -50,7 +50,7 @@ class Animation{
     nextFrame(){
         this.now=(this.now+1)%this.imgList.length;
         this.nextFrameTime=performance.now()+this.imgList[this.now].interval;
-        console.log(this.now);
+        // console.log(this.now);
     }
 }
 

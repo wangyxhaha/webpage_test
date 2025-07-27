@@ -3,6 +3,8 @@
 // var megumi=new Image();
 // megumi.src="./Megumi.jpg";
 
+import Animation from "./animation.js";
+
 function logicalEvtChange(cvs,e){
     var rect=cvs.canvas.getBoundingClientRect();
     // var relativeX=(e.clientX-rect.left)/cvs.canvas.clientWidth*cvs.logicalWidth;
@@ -34,8 +36,11 @@ class Canvas{
         this.canvas.addEventListener("touchmove",this.touchMoveCallBack.bind(this),{passive:false}) //设置对触摸移动的监听
         this.canvas.addEventListener("touchstart",this.touchStartCallBack.bind(this),{passive:false}) //设置对触摸屏按下的监听
         this.canvas.addEventListener("touchend",this.touchEndCallBack.bind(this)) //设置对触摸屏松开的监听
-        setInterval(this.draw.bind(this),16.7);
-        // this.sceneArray["scene2"]=new CanvasScene(canvasid,height,width,hitori);
+        this.mainLoop=()=>{
+            this.draw();
+            requestAnimationFrame(this.mainLoop);
+        };
+        requestAnimationFrame(this.mainLoop);
     }
     draw(){
         this.sceneArray[this.nowScene].draw();
@@ -109,8 +114,14 @@ export class CanvasScene{ //不同场景（可以方便切换）
     }
     draw(){
         // document.getElementById("information").innerHTML=this.clickFocusPoint;
-        if (this.background!=null) this.canvasContext.drawImage(this.background,0,0,this.logicalWidth,this.logicalHeight);
-        else this.canvasContext.clearRect(0,0,this.canvas.width,this.canvas.height);
+        this.canvasContext.clearRect(0,0,this.canvas.width,this.canvas.height);
+        if (this.background!=null){
+            let temp;
+            if (this.background instanceof HTMLImageElement) temp=this.background;
+            else if (this.background instanceof Animation) temp=this.background.image;
+            else throw `unknown type of image(in background)`;
+            this.canvasContext.drawImage(temp,0,0,this.logicalWidth,this.logicalHeight);
+        }
         this.objectToDraw.sort(function(a,b){
             return a.layer-b.layer;
         });
