@@ -119,6 +119,21 @@ var cfg=[
         name: "poster6",
         type: "image",
         value: "./zty/data/海报6.png"
+    },
+    {
+        name: "jiaozi1",
+        type: "image",
+        value: "./zty/data/饺子表情1.png"
+    },
+    {
+        name: "jiaozi2",
+        type: "image",
+        value: "./zty/data/饺子表情2.png"
+    },
+    {
+        name: "jiaoziF",
+        type: "image",
+        value: "./zty/data/饺子炸了.png"
     }
 ]
 
@@ -193,7 +208,8 @@ function build(canvas){
 
     //右场景电影
 
-    var cnt=1;
+    var cnt_right=1;
+
     var zty_right_scene_poster1=new Button(canvas.scene("zty_right_scene"),0,-700,0,0,11,res.getResource("poster1"),null,null,()=>{},()=>{});
     var zty_right_scene_poster2=new Button(canvas.scene("zty_right_scene"),0,-700,0,0,12,res.getResource("poster2"),null,null,()=>{},()=>{});
     var zty_right_scene_poster3=new Button(canvas.scene("zty_right_scene"),0,-700,0,0,13,res.getResource("poster3"),null,null,()=>{},()=>{});
@@ -210,11 +226,11 @@ function build(canvas){
 
 
     var zty_right_scene_searching=new Button(canvas.scene("zty_right_scene"),532,337,33,31,11,res.getResource("searching"),null,null,()=>{
-        if(cnt<=6) searching(cnt);
+        if(cnt_right<=6) searching(cnt_right);
     },()=>{});
 
     function searching(id){
-        if(cnt==6){
+        if(cnt_right==6){
             zty_right_scene_searching.setClickable(false);
             zty_door_scene_lock.setTransparentAlpha(0);
             zty_answer_box_fake_button.setClickable(true);            
@@ -227,9 +243,28 @@ function build(canvas){
             case 5:zty_right_scene_poster5.slideTo(0,0,0.5);break;
             case 6:zty_right_scene_poster6.slideTo(0,0,0.5);break;
         }
-        cnt++;
+        cnt_right++;
     }
-    
+
+    //上场景饺子
+
+    var cnt_top=0;
+
+    var zty_top_scene_dumpling_press=new Button(canvas.scene("zty_top_scene"),0,0,0,0,31,res.getResource("jiaozi1"),null,null,()=>{},()=>{});
+    zty_top_scene_dumpling_press.setTransparentAlpha(0);
+
+    var zty_top_scene_dumpling_explode=new Button(canvas.scene("zty_top_scene"),0,0,0,0,21,res.getResource("jiaoziF"),null,null,()=>{},()=>{});
+    zty_top_scene_dumpling_explode.setTransparentAlpha(0);
+
+    var zty_top_scene_dumpling_original=new Button(canvas.scene("zty_top_scene"),0,0,141,217,21,res.getResource("jiaozi2"),null,res.getResource("jiaozi1"),()=>{
+        cnt_top++;
+        if(cnt_top==10){
+            zty_top_scene_dumpling_original.setClickable(false);
+            zty_top_scene_dumpling_original.setTransparentAlpha(0);
+            zty_top_scene_dumpling_explode.setTransparentAlpha(1);
+        }
+    },()=>{},350,372);
+
     canvas.changeScene("zty_door_scene");
 }
 
