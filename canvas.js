@@ -213,10 +213,10 @@ export class CanvasScene{ //不同场景（可以方便切换）
     touchStartCallBack(evt){
         evt.preventDefault();
         var logicalPos=logicalEvtChange(this,evt.touches[0]);
-        // if (this.clickFocusPoint!=-1){ //因为触摸屏有多指点击，有必要限制一下有焦点时的点击
-        //     this.touchStartCallBackArray[this.clickFocusPoint].func(logicalPos);
-        //     return;
-        // }
+        if (this.clickFocusPoint!=-1){ //因为触摸屏有多指点击，有必要限制一下有焦点时的点击
+            this.touchStartCallBackArray[this.clickFocusPoint].func(logicalPos);
+            return;
+        }
         for (var i in this.touchStartCallBackArray){
             if (this.touchStartCallBackArray[i].func(logicalPos)){
                 this.clickFocusPoint=i;
@@ -230,7 +230,7 @@ export class CanvasScene{ //不同场景（可以方便切换）
         if (this.clickFocusPoint!=-1){
             if (this.touchEndCallBackArray[this.clickFocusPoint].func(logicalPos)){
                 this.clickFocusPoint=-1;
-                console.log("!");
+                // console.log("!");
             }
             return;
         }

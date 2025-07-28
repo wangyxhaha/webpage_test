@@ -390,6 +390,7 @@ function build(canvas){
 
     var xsy_right_scene_fake_button=[
         new Button(canvas.scene("xsy_right_scene"),49,109,202,271,2,null,null,null,foo.bind(null,0,0),(pos)=>{
+            if (linesAccomplished[0]) return;
             if (xsy_right_scene_fake_button[4].isPositionIn(pos)){
                 linesAccomplished[0]=true;
                 xsy_right_scene_fake_button[0].setDraggable(false);
@@ -401,6 +402,7 @@ function build(canvas){
             check();
         }),
         new Button(canvas.scene("xsy_right_scene"),296,118,322,248,2,null,null,null,foo.bind(null,1,1),(pos)=>{
+            if (linesAccomplished[1]) return;
             if (xsy_right_scene_fake_button[5].isPositionIn(pos)){
                 linesAccomplished[1]=true;
                 xsy_right_scene_fake_button[1].setDraggable(false);
@@ -412,6 +414,7 @@ function build(canvas){
             check();
         }),
         new Button(canvas.scene("xsy_right_scene"),667,117,223,246,2,null,null,null,foo.bind(null,2,2),(pos)=>{
+            if (linesAccomplished[2]) return;
             if (xsy_right_scene_fake_button[3].isPositionIn(pos)){
                 linesAccomplished[2]=true;
                 xsy_right_scene_fake_button[2].setDraggable(false);
@@ -423,6 +426,7 @@ function build(canvas){
             check();
         }),
         new Button(canvas.scene("xsy_right_scene"),79,572,219,172,2,null,null,null,foo.bind(null,3,2),(pos)=>{
+            if (linesAccomplished[2]) return;
             if (xsy_right_scene_fake_button[2].isPositionIn(pos)){
                 linesAccomplished[2]=true;
                 xsy_right_scene_fake_button[3].setDraggable(false);
@@ -434,6 +438,7 @@ function build(canvas){
             check();
         }),
         new Button(canvas.scene("xsy_right_scene"),357,570,219,172,2,null,null,null,foo.bind(null,4,0),(pos)=>{
+            if (linesAccomplished[0]) return;
             if (xsy_right_scene_fake_button[0].isPositionIn(pos)){
                 linesAccomplished[0]=true;
                 xsy_right_scene_fake_button[0].setDraggable(false);
@@ -445,6 +450,7 @@ function build(canvas){
             check();
         }),
         new Button(canvas.scene("xsy_right_scene"),630,567,219,172,2,null,null,null,foo.bind(null,5,1),(pos)=>{
+            if (linesAccomplished[1]) return;
             if (xsy_right_scene_fake_button[1].isPositionIn(pos)){
                 linesAccomplished[1]=true;
                 xsy_right_scene_fake_button[1].setDraggable(false);
