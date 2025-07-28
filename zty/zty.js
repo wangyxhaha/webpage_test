@@ -159,7 +159,7 @@ function build(canvas){
     zty_answer_box.setFontHeight(40);
     zty_answer_box.setFont("黑体");
     zty_answer_box.clear();
-    var zty_answer_box_fake_button=new Button(canvas.scene("zty_door_scene"),362,395,180,98,2,null,null,null,()=>{},()=>{
+    var zty_answer_box_fake_button=new Button(canvas.scene("zty_door_scene"),362,395,180,98,32,null,null,null,()=>{},()=>{
         zty_answer_box.enable();
         zty_answer_box_fake_disable_button.setClickable(true);
         zty_answer_box_fake_disable_button.setIgnoreClickEven(false);
@@ -256,7 +256,7 @@ function build(canvas){
     var zty_top_scene_dumpling_explode=new Button(canvas.scene("zty_top_scene"),0,0,0,0,21,res.getResource("jiaoziF"),null,null,()=>{},()=>{});
     zty_top_scene_dumpling_explode.setTransparentAlpha(0);
 
-    var zty_top_scene_dumpling_original=new Button(canvas.scene("zty_top_scene"),0,0,141,217,21,res.getResource("jiaozi2"),null,res.getResource("jiaozi1"),()=>{
+    var zty_top_scene_dumpling_original=new Button(canvas.scene("zty_top_scene"),0,0,217,141,21,res.getResource("jiaozi2"),null,res.getResource("jiaozi1"),()=>{
         cnt_top++;
         if(cnt_top==10){
             zty_top_scene_dumpling_original.setClickable(false);
