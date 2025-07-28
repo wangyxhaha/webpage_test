@@ -276,6 +276,7 @@ function build(canvas){
         xsy_door_scene_figure.setTransparentAlpha(status ? 1 : 0);
         xsy_left_scene_luminous_dye.setTransparentAlpha(status ? 1 : 0);
         xsy_left_scene_luminous_dye.setDraggable(status ? 1 : 0);
+        xsy_left_scene_luminous_dye.setClickable(status ? 1 : 0);
         xsy_left_scene_nmy_figure.setTransparentAlpha(status ? 1 : 0);
         for (let i=0;i<3;i++) xsy_right_scene_a[i].setTransparentAlpha(status ? 1 : 0);
         for (let i=0;i<3;i++) xsy_right_scene_b[i].setTransparentAlpha(status ? 1 : 0);
