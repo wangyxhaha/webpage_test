@@ -6,6 +6,7 @@ import Button from "../button.js";
 import Animation from "../animation.js";
 import Input from "../input.js";
 import "../buttonPlugin.js";
+import "../spritePlugin.js"
 
 var cfg=[ //所需素材的信息
     {
@@ -127,6 +128,16 @@ var cfg=[ //所需素材的信息
         name: "undo",
         type: "image",
         value: "./dat/data/撤销.png"
+    },
+    {
+        name: "dat_saying1",
+        type: "image",
+        value: "./dat/data/dat语录1.png"
+    },
+    {
+        name: "dat_saying2",
+        type: "image",
+        value: "./dat/data/dat语录2.png"
     }
 ]
 
@@ -140,15 +151,38 @@ function build(canvas){
     canvas.createNewScene("dat_top_scene",res.getResource("dat_top"));
     canvas.createNewScene("dat_right_scene",res.getResource("dat_right_bg"));
     canvas.createNewScene("dat_left_scene",res.getResource("dat_left_bg"));
-    var dat_door_scene_left_arrow=new Button(canvas.scene("dat_door_scene"),0,0,57,89,0,res.getResource("left_arrow"),null,null,()=>{},()=>canvas.changeScene("dat_left_scene"),98,443);
-    var dat_door_scene_right_arrow=new Button(canvas.scene("dat_door_scene"),0,0,57,89,0,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("dat_right_scene"),777,443);
+    var dat_door_scene_left_arrow=new Button(canvas.scene("dat_door_scene"),0,0,57,89,5,res.getResource("left_arrow"),null,null,()=>{},()=>canvas.changeScene("dat_left_scene"),98,443);
+    var dat_door_scene_right_arrow=new Button(canvas.scene("dat_door_scene"),0,0,57,89,5,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("dat_right_scene"),777,443);
     var dat_left_scene_right_arrow=new Button(canvas.scene("dat_left_scene"),0,0,57,89,0,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("dat_door_scene"),777,443);
     var dat_right_scene_left_arrow=new Button(canvas.scene("dat_right_scene"),0,0,57,89,0,res.getResource("left_arrow"),null,null,()=>{},()=>canvas.changeScene("dat_door_scene"),98,443);
-    var dat_door_scene_up_arrow=new Button(canvas.scene("dat_door_scene"),0,0,88,46,0,res.getResource("up_arrow"),null,null,()=>{},()=>canvas.changeScene("dat_top_scene"),416,114);
+    var dat_door_scene_up_arrow=new Button(canvas.scene("dat_door_scene"),0,0,88,46,5,res.getResource("up_arrow"),null,null,()=>{},()=>canvas.changeScene("dat_top_scene"),416,114);
     var dat_top_scene_down_arrow=new Button(canvas.scene("dat_top_scene"),0,0,88,46,0,res.getResource("down_arrow"),null,null,()=>{},()=>canvas.changeScene("dat_door_scene"),416,833);
     
-    var dat_door_scene_figure=new Button(canvas.scene("dat_door_scene"),0,0,0,0,1,res.getResource("dat_figure"),null,null,()=>{},()=>{});
-    dat_door_scene_figure.setClickable(false);
+    var dat_door_scene_saying1=new Button(canvas.scene("dat_door_scene"),0,0,0,0,4,res.getResource("dat_saying1"),null,null,()=>{},()=>{});
+    dat_door_scene_saying1.setIgnoreClickEven(true);
+    dat_door_scene_saying1.setTransparentAlpha(0);
+
+    var dat_door_scene_saying2=new Button(canvas.scene("dat_door_scene"),0,0,0,0,4,res.getResource("dat_saying2"),null,null,()=>{},()=>{});
+    dat_door_scene_saying2.setIgnoreClickEven(true);
+    dat_door_scene_saying2.setTransparentAlpha(0);
+
+    var sayingCnt=0;
+    var sayingWait=false;
+    var dat_door_scene_figure=new Button(canvas.scene("dat_door_scene"),0,0,322,432,1,res.getResource("dat_figure"),null,null,()=>{},()=>{
+        if (sayingWait) return;
+        if (sayingCnt%2==0){
+            dat_door_scene_saying1.floatUp(0,0,300);
+            setTimeout(()=>dat_door_scene_saying1.setTransparentAlpha(0),2000);
+        }
+        else{
+            dat_door_scene_saying2.floatUp(0,0,300);
+            setTimeout(()=>dat_door_scene_saying2.setTransparentAlpha(0),2000);
+        }
+        sayingCnt++;
+        sayingWait=true;
+        setTimeout(()=>sayingWait=false,2500);
+    },537,441);
+    // dat_door_scene_figure.setClickable(false);
 
     var dat_door_scene_lock=new Button(canvas.scene("dat_door_scene"),0,0,0,0,1,res.getResource("lock"),null,null,()=>{},()=>{});
     dat_door_scene_lock.setClickable(false);
@@ -166,7 +200,7 @@ function build(canvas){
     });
     dat_answer_box_fake_button.setClickable(false);
 
-    var dat_answer_box_fake_disable_button=new Button(canvas.scene("dat_door_scene"),0,0,935,935,2,null,null,null,()=>{},()=>{
+    var dat_answer_box_fake_disable_button=new Button(canvas.scene("dat_door_scene"),0,0,935,935,10,null,null,null,()=>{},()=>{
         dat_answer_box.disable();
         dat_answer_box_fake_disable_button.setClickable(false);
         dat_answer_box_fake_disable_button.setIgnoreClickEven(true);
@@ -174,7 +208,17 @@ function build(canvas){
     dat_answer_box_fake_disable_button.setClickable(false);
     dat_answer_box_fake_disable_button.setIgnoreClickEven(true);
 
-    var fire_animation=new Animation([res.getResource("fire1"),res.getResource("fire2")],333);
+    var fire_animation=new Animation(
+        [
+            {
+                image: res.getResource("fire1"),
+                interval: 333
+            },
+            {
+                image: res.getResource("fire2"),
+                interval: 333
+            }
+        ]);
     var dat_left_scene_fire=new Button(canvas.scene("dat_left_scene"),0,0,0,0,1,fire_animation,null,null,()=>{},()=>{});
     fire_animation.start();
     dat_left_scene_fire.setClickable(false);

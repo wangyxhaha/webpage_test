@@ -1,7 +1,7 @@
 "use strict"
 
 class MyAudio/*!!!!!*/{
-    static audioContext=new AudioContext();
+    static audioContext=new AudioContext({latencyHint: 'interactive'});
     constructor(audioBuffer){
         this.audioBuffer=audioBuffer;
         this.firstTime=true;
@@ -21,5 +21,7 @@ class MyAudio/*!!!!!*/{
         this.playing=false;
     }
 }
+
+MyAudio.audioContext.resume();
 
 export default MyAudio;
