@@ -18,3 +18,7 @@ Button.prototype.isCoincide=function(anotherButton){
     if (this.y+this.boxY+this.boxHeight<=anotherButton.y+anotherButton.boxY) return false;
     return true;
 }
+
+Button.prototype.isPositionIn=function(pos){
+    return pos.x>=this.x+this.boxX && pos.x<=this.x+this.boxX+this.boxWidth && pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxY+this.boxHeight;
+}

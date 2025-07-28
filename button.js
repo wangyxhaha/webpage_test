@@ -42,13 +42,14 @@ class Button extends Sprite{
     }
     draw(){
         var temp=this.getImg();
-        if (temp==null) return;
-        this.canvasContext.globalAlpha=this.transparentAlpha;
-        this.canvasContext.drawImage(temp,this.x,this.y);
-        // this.canvasContext.strokeStyle="black";
+        if (temp!=null){
+            this.canvasContext.globalAlpha=this.transparentAlpha;
+            this.canvasContext.drawImage(temp,this.x,this.y);
+            this.canvasContext.globalAlpha=1;
+        }
+        // this.canvasContext.strokeStyle="red";
         // this.canvasContext.lineWidth=3;
         // this.canvasContext.strokeRect(this.x+this.boxX,this.y+this.boxY,this.boxWidth,this.boxHeight);
-        this.canvasContext.globalAlpha=1;
     }
     setDraggable(d){
         this.draggable=d;
@@ -69,14 +70,17 @@ class Button extends Sprite{
         if (this.status==2 && this.draggable){ //如果可拖动且目前为摁下状态，更新位置
             this.x=pos.x-this.mouseDownRelativeX;
             this.y=pos.y-this.mouseDownRelativeY;
+            // console.log("mm3",this.status);
             return true;
         }
         if (pos.x>=this.x+this.boxX && pos.x<=this.x+this.boxWidth+this.boxX &&
             pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxHeight+this.boxY){ //判定点击是否在判定区内
             if (this.status!=2) this.status=1;
+            // console.log("mm3",this.status);
             return true;
         }
         this.status=0;
+        // console.log("mm3",this.status);
         return false;
     }
     mouseDownCallBack(pos){ //处理鼠标按下事件
@@ -86,37 +90,48 @@ class Button extends Sprite{
             this.status=2;
             this.mouseDownRelativeX=pos.x-this.x; //被按下，设置按钮坐标和鼠标坐标的相对位置
             this.mouseDownRelativeY=pos.y-this.y;
-            if (this.clickable) this.buttonDownCallBack();
+            if (this.clickable) this.buttonDownCallBack(pos);
+            // console.log("md");
             return true;
         }
         return false;
     }
     mouseUpCallBack(pos){ //处理鼠标松开事件
         // console.log("mouse up",pos);
+        // console.log("mu1");
         if (this.ignoreClickEvent) return false;
-        if (this.status!=2) return false;
-        if (pos.x>=this.x+this.boxX && pos.x<=this.x+this.boxWidth+this.boxX &&
-            pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxHeight+this.boxY){ //判定点击是否在判定区内
-            this.status=1;
-            if (this.clickable) this.buttonUpCallBack();
-            return true;
-        }
+        // console.log("mu2");
+        // if (this.status!=2) return false;
+        // if (pos.x>=this.x+this.boxX && pos.x<=this.x+this.boxWidth+this.boxX &&
+        //     pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxHeight+this.boxY){ //判定点击是否在判定区内
+        //     this.status=1;
+        //     if (this.clickable) this.buttonUpCallBack(pos);
+        //     console.log("mu");
+        //     return true;
+        // }
+        this.status=1;
+        if (this.clickable) this.buttonUpCallBack(pos);
+        // console.log("mu3");
+        return true;
         // this.status=0
-        return false;
+        // return false;
     }
     touchMoveCallBack(pos){ //处理触摸移动事件
         if (this.ignoreClickEvent) return false;
         if (this.status==2 && this.draggable){ //如果可拖动且目前为摁下状态，更新位置
             this.x=pos.x-this.mouseDownRelativeX;
             this.y=pos.y-this.mouseDownRelativeY;
+            // console.log("tm1",this.status);
             return true;
         }
         if (pos.x>=this.x+this.boxX && pos.x<=this.x+this.boxWidth+this.boxX &&
             pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxHeight+this.boxY){ //判定点击是否在判定区内
             this.status=2;
+            // console.log("tm2",this.status);
             return true;
         }
         this.status=0;
+        // console.log("tm3",this.status);
         return false;
     }
     touchStartCallBack(pos){ //处理触摸屏按下事件
@@ -126,23 +141,31 @@ class Button extends Sprite{
             this.status=2;
             this.mouseDownRelativeX=pos.x-this.x; //被按下，设置按钮坐标和触摸位置坐标的相对位置
             this.mouseDownRelativeY=pos.y-this.y;
-            if (this.clickable) this.buttonDownCallBack();
+            if (this.clickable) this.buttonDownCallBack(pos);
+            // console.log("ts",this.status);
             return true;
         }
         return false;
     }
     touchEndCallBack(pos){ //处理触摸屏松开事件
         // console.log(pos);
+        // console.log("te1");
         if (this.ignoreClickEvent) return false;
-        if (this.status!=2) return false;
-        if (pos.x>=this.x+this.boxX && pos.x<=this.x+this.boxWidth+this.boxX &&
-            pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxHeight+this.boxY){ //判定点击是否在判定区内
-            this.status=0;
-            if (this.clickable) this.buttonUpCallBack();
-            return true;
-        }
-        // this.status=0;
-        return false;
+        // console.log("te2",this.status);
+        // if (this.status!=2) return false;
+        // if (pos.x>=this.x+this.boxX && pos.x<=this.x+this.boxWidth+this.boxX &&
+        //     pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxHeight+this.boxY){ //判定点击是否在判定区内
+        //     this.status=0;
+        //     if (this.clickable) this.buttonUpCallBack(pos);
+        //     console.log("te");
+        //     return true;
+        // }
+        // // this.status=0;
+        // return false;
+        this.status=1;
+        if (this.clickable) this.buttonUpCallBack(pos);
+        // console.log("te3");
+        return true;
     }
     getImg(){
         var temp;
