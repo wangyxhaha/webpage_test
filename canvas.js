@@ -183,10 +183,8 @@ export class CanvasScene{ //不同场景（可以方便切换）
     mouseUpCallBack(evt){
         var logicalPos=logicalEvtChange(this,evt);
         if (this.clickFocusPoint!=-1){ //无焦点时松开判定无效
-            if (this.mouseUpCallBackArray[this.clickFocusPoint].func(logicalPos)){
-                this.clickFocusPoint=-1;
-                console.log("!");
-            }
+            this.mouseUpCallBackArray[this.clickFocusPoint].func(logicalPos);
+            this.clickFocusPoint=-1;
             return;
         }
         // for (var i in this.mouseUpCallBackArray){
@@ -228,10 +226,8 @@ export class CanvasScene{ //不同场景（可以方便切换）
         evt.preventDefault();
         var logicalPos=logicalEvtChange(this,evt.changedTouches[0]);
         if (this.clickFocusPoint!=-1){
-            if (this.touchEndCallBackArray[this.clickFocusPoint].func(logicalPos)){
-                this.clickFocusPoint=-1;
-                // console.log("!");
-            }
+            this.touchEndCallBackArray[this.clickFocusPoint].func(logicalPos);
+            this.clickFocusPoint=-1;
             return;
         }
         // for (var i in this.touchEndCallBackArray){

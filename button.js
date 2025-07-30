@@ -47,9 +47,9 @@ class Button extends Sprite{
             this.canvasContext.drawImage(temp,this.x,this.y);
             this.canvasContext.globalAlpha=1;
         }
-        // this.canvasContext.strokeStyle="red";
-        // this.canvasContext.lineWidth=3;
-        // this.canvasContext.strokeRect(this.x+this.boxX,this.y+this.boxY,this.boxWidth,this.boxHeight);
+        this.canvasContext.strokeStyle="red";
+        this.canvasContext.lineWidth=3;
+        this.canvasContext.strokeRect(this.x+this.boxX,this.y+this.boxY,this.boxWidth,this.boxHeight);
     }
     setDraggable(d){
         this.draggable=d;
@@ -101,20 +101,20 @@ class Button extends Sprite{
         // console.log("mu1");
         if (this.ignoreClickEvent) return false;
         // console.log("mu2");
-        // if (this.status!=2) return false;
-        // if (pos.x>=this.x+this.boxX && pos.x<=this.x+this.boxWidth+this.boxX &&
-        //     pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxHeight+this.boxY){ //判定点击是否在判定区内
-        //     this.status=1;
-        //     if (this.clickable) this.buttonUpCallBack(pos);
-        //     console.log("mu");
-        //     return true;
-        // }
-        this.status=1;
-        if (this.clickable) this.buttonUpCallBack(pos);
-        // console.log("mu3");
-        return true;
-        // this.status=0
-        // return false;
+        if (this.status!=2) return false;
+        if (pos.x>=this.x+this.boxX && pos.x<=this.x+this.boxWidth+this.boxX &&
+            pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxHeight+this.boxY){ //判定点击是否在判定区内
+            this.status=1;
+            if (this.clickable) this.buttonUpCallBack(pos);
+            console.log("mu");
+            return true;
+        }
+        // this.status=1;
+        // if (this.clickable) this.buttonUpCallBack(pos);
+        // // console.log("mu3");
+        // return true;
+        this.status=0
+        return false;
     }
     touchMoveCallBack(pos){ //处理触摸移动事件
         if (this.ignoreClickEvent) return false;
@@ -152,20 +152,16 @@ class Button extends Sprite{
         // console.log("te1");
         if (this.ignoreClickEvent) return false;
         // console.log("te2",this.status);
-        // if (this.status!=2) return false;
-        // if (pos.x>=this.x+this.boxX && pos.x<=this.x+this.boxWidth+this.boxX &&
-        //     pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxHeight+this.boxY){ //判定点击是否在判定区内
-        //     this.status=0;
-        //     if (this.clickable) this.buttonUpCallBack(pos);
-        //     console.log("te");
-        //     return true;
-        // }
-        // // this.status=0;
-        // return false;
-        this.status=1;
-        if (this.clickable) this.buttonUpCallBack(pos);
-        // console.log("te3");
-        return true;
+        if (this.status!=2) return false;
+        if (pos.x>=this.x+this.boxX && pos.x<=this.x+this.boxWidth+this.boxX &&
+            pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxHeight+this.boxY){ //判定点击是否在判定区内
+            this.status=0;
+            if (this.clickable) this.buttonUpCallBack(pos);
+            console.log("te");
+            return true;
+        }
+        this.status=0;
+        return false;
     }
     getImg(){
         var temp;
