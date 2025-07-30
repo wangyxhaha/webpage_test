@@ -19,7 +19,7 @@ var cfg=[
     {
         name: "top_bg2",
         type: "image",
-        value: "./byz/data/冰毒顶2.jpg"
+        value: "./byz/data/病毒顶2.jpg"
     },
     {
         name: "door_bg_red",
@@ -106,7 +106,7 @@ var cfg=[
     {
         name: "figure_ear_head2",
         type: "image",
-        value: "./byz/data/病毒耳机上.png"
+        value: "./byz/data/病毒耳机下.png"
     },
     {
         name: "ear",
@@ -156,6 +156,10 @@ var cfg=[
     }
 ]
 
+function checkPosition(p){
+    return p.x>=613-50 && p.x<=737 && p.y>=419-50 && p.y<=519;
+}
+
 function build(canvas){
     console.log("build");
 
@@ -172,7 +176,7 @@ function build(canvas){
             image: res.getResource("door_bg_green"),
             interval: Infinity
         }
-    ])
+    ]);
     var left_scene=new Animation([
         {
             image: res.getResource("left_bg_red"),
@@ -186,7 +190,7 @@ function build(canvas){
             image: res.getResource("left_bg_green"),
             interval: Infinity
         }
-    ])
+    ]);
     var right_scene=new Animation([
         {
             image: res.getResource("right_bg_red"),
@@ -200,7 +204,7 @@ function build(canvas){
             image: res.getResource("right_bg_green"),
             interval: Infinity
         }
-    ])
+    ]);
     var top_scene=new Animation([
         {
             image: res.getResource("top_bg1"),
@@ -210,16 +214,22 @@ function build(canvas){
             image: res.getResource("top_bg2"),
             interval: Infinity
         }
-    ])
+    ]);
 
     function switchColour(){
-        
+        door_scene.nextFrame();
+        left_scene.nextFrame();
+        right_scene.nextFrame();
     }
 
     canvas.createNewScene("byz_door_scene",door_scene);
     canvas.createNewScene("byz_top_scene",top_scene);
     canvas.createNewScene("byz_left_scene",left_scene);
     canvas.createNewScene("byz_right_scene",right_scene);
+
+    var byz_door_scene_light=new Button(canvas.scene("byz_door_scene"),651,0,55,56,31,res.getResource("light1"),null,res.getResource("light2"),()=>{
+        switchColour();
+    },()=>{},0,477);
 
     var byz_door_scene_left_arrow=new Button(canvas.scene("byz_door_scene"),0,0,57,89,21,res.getResource("left_arrow"),null,null,()=>{},()=>canvas.changeScene("byz_left_scene"),98,443);
     var byz_door_scene_right_arrow=new Button(canvas.scene("byz_door_scene"),0,0,57,89,21,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("byz_right_scene"),777,443);
@@ -253,6 +263,85 @@ function build(canvas){
     byz_answer_box_fake_disable_button.setIgnoreClickEven(true);
 
     //门场景耳机
+
+    var figure_original_movearm=new Animation([
+        {
+            image: res.getResource("figure_original_arm1"),
+            interval: 500
+        },
+        {
+            image: res.getResource("figure_original_arm2"),
+            interval: 500
+        }
+    ]);
+    var figure_ear_movearm=new Animation([
+        {
+            image: res.getResource("figure_ear_arm1"),
+            interval: 500
+        },
+        {
+            image: res.getResource("figure_ear_arm2"),
+            interval: 500
+        }
+    ]);
+    var figure_ear_movehead=new Animation([
+        {
+            image: res.getResource("figure_ear_head1"),
+            interval: 1000
+        },
+        {
+            image: res.getResource("figure_ear_head2"),
+            interval: 1000
+        }
+    ]);
+
+    var byz_door_scene_figure_original_movearm=new Button(canvas.scene("byz_door_scene"),0,0,0,0,21,figure_original_movearm,null,null,()=>{},()=>{});
+    byz_door_scene_figure_original_movearm.setTransparentAlpha(0);
+
+    var byz_door_scene_figure_original=new Button(canvas.scene("byz_door_scene"),0,0,214,430,22,res.getResource("figure_original"),null,null,()=>{
+        byz_door_scene_figure_original.setTransparentAlpha(0);
+        byz_door_scene_figure_original_movearm.setTransparentAlpha(1);
+        figure_original_movearm.start();
+        setTimeout(()=>{
+            byz_door_scene_figure_original.setTransparentAlpha(1);
+            byz_door_scene_figure_original_movearm.setTransparentAlpha(0);
+            figure_original_movearm.reset();
+        },2000);
+    },()=>{},575,420);
+
+    
+
+    var byz_door_scene_ear=new Button(canvas.scene("byz_door_scene"),305,838,64,59,31,res.getResource("ear"),null,null,()=>{},()=>{
+        if(checkPosition(byz_door_scene_ear.getPosition())){
+            byz_door_scene_figure_original.setTransparentAlpha(0);
+            byz_door_scene_figure_original.setClickable(false);
+            //byz_door_scene_figure_ear_movehead.setTransparentAlpha(1);
+            //byz_door_scene_figure_ear_movehead.setClickable(true);
+            figure_ear_movehead.start();
+            byz_door_scene_ear.setTransparentAlpha(0);
+            byz_door_scene_ear.setDraggable(false);
+
+            var byz_door_scene_figure_ear_movearm=new Button(canvas.scene("byz_door_scene"),0,0,0,0,23,figure_ear_movearm,null,null,()=>{},()=>{});
+            byz_door_scene_figure_ear_movearm.setTransparentAlpha(0);
+
+            var byz_door_scene_figure_ear_movehead=new Button(canvas.scene("byz_door_scene"),0,0,214,430,24,figure_ear_movehead,null,null,()=>{
+                //console.log("2");
+                byz_door_scene_figure_ear_movehead.setTransparentAlpha(0);
+                byz_door_scene_figure_ear_movehead.setClickable(false);
+                byz_door_scene_figure_ear_movearm.setTransparentAlpha(1);
+                figure_ear_movearm.start();
+                setTimeout(()=>{
+                    byz_door_scene_figure_ear_movehead.setTransparentAlpha(1);
+                    byz_door_scene_figure_ear_movehead.setClickable(true);
+                    byz_door_scene_figure_ear_movearm.setTransparentAlpha(0);
+                    figure_ear_movearm.reset();
+                },2000);
+            },()=>{},575,420);
+            byz_door_scene_figure_ear_movehead.setTransparentAlpha(1);
+            byz_door_scene_figure_ear_movehead.setClickable(true);            
+        }
+    });
+    byz_door_scene_ear.setDraggable(true);
 
 
     //右场景灯光解密
