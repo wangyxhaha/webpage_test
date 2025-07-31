@@ -1,0 +1,7 @@
+import turtle
+from time import sleep
+turtle.setup(935,935)
+turtle.penup()
+turtle.setposition(-336,-334)
+sleep(5)
+turtle.pendown
