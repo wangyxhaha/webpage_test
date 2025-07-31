@@ -227,7 +227,7 @@ function build(canvas){
     canvas.createNewScene("byz_left_scene",left_scene);
     canvas.createNewScene("byz_right_scene",right_scene);
 
-    var byz_door_scene_light=new Button(canvas.scene("byz_door_scene"),651,0,55,56,31,res.getResource("light1"),null,res.getResource("light2"),()=>{
+    var byz_door_scene_light=new Button(canvas.scene("byz_door_scene"),251,0,55,56,31,res.getResource("light1"),null,res.getResource("light2"),()=>{
         switchColour();
     },()=>{},0,477);
 
@@ -308,8 +308,6 @@ function build(canvas){
             figure_original_movearm.reset();
         },2000);
     },()=>{},575,420);
-
-    
 
     var byz_door_scene_ear=new Button(canvas.scene("byz_door_scene"),305,838,64,59,31,res.getResource("ear"),null,null,()=>{},()=>{
         if(checkPosition(byz_door_scene_ear.getPosition())){
