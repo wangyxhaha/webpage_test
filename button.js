@@ -106,7 +106,7 @@ class Button extends Sprite{
             pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxHeight+this.boxY){ //判定点击是否在判定区内
             this.status=1;
             if (this.clickable) this.buttonUpCallBack(pos);
-            console.log("mu");
+            // console.log("mu");
             return true;
         }
         // this.status=1;
@@ -157,7 +157,7 @@ class Button extends Sprite{
             pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxHeight+this.boxY){ //判定点击是否在判定区内
             this.status=0;
             if (this.clickable) this.buttonUpCallBack(pos);
-            console.log("te");
+            // console.log("te");
             return true;
         }
         this.status=0;
