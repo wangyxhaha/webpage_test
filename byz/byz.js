@@ -352,14 +352,19 @@ function build(canvas){
 
     document.body.appendChild(pw);
 
-    var byz_top_scene_anwser_box=new Input(canvas.scene("byz_top_scene"),"passwordInput",173,441,11);
-    byz_top_scene_anwser_box.setTextAlign("center");
+    var byz_top_scene_anwser_box=new Input(canvas.scene("byz_top_scene"),"passwordInput",180,441,11);
+    byz_top_scene_anwser_box.setTextAlign("start");
     byz_top_scene_anwser_box.setFillColor("black");
     byz_top_scene_anwser_box.setFontHeight(40);
     byz_top_scene_anwser_box.setFont("黑体");
-    byz_top_scene_anwser_box.clear();
+    //byz_top_scene_anwser_box.clear();
 
     byz_top_scene_anwser_box.enable();
+    byz_top_scene_anwser_box.setTransparentAlpha(0);
+
+    var tmp=byz_top_scene_anwser_box.inputElement.value;
+
+    
 
     canvas.changeScene("byz_door_scene");
 }
