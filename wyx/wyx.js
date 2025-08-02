@@ -32,6 +32,11 @@ var cfg=[ //所需素材的信息
         value: "./wyx/data/wyx左底图.jpg"
     },
     {
+        name: "wyx_easter_egg",
+        type: "image",
+        value: "./wyx/data/wyx迷宫彩蛋.jpg"
+    },
+    {
         name: "left_arrow",
         type: "image",
         value: "./wyx/data/左.png"
@@ -189,7 +194,7 @@ turtle.@option=F@@insert=forward@(@number=40@)@move=4@
 turtle.@option=L@@insert=left@(@number=90@)@turn=R@
 turtle.@option=F@@insert=forward@(@number=60@)@move=5@
 turtle.@option=L@@insert=left@(@number=90@)@turn=U@
-turtle.@option=F@@insert=forward@(@number=70@)@move=6@
+turtle.@option=F@@insert=forward@(@special=0@
 turtle.@option=L@@insert=left@(@number=90@)@turn=L@
 turtle.@option=F@@insert=forward@(@number=40@)@move=7@
 turtle.@option=R@@insert=right@(@number=90@)@turn=U@
@@ -205,6 +210,7 @@ function build(canvas){
     canvas.createNewScene("wyx_top_scene",res.getResource("wyx_top"));
     canvas.createNewScene("wyx_right_scene",res.getResource("wyx_right_bg"));
     canvas.createNewScene("wyx_left_scene",res.getResource("wyx_left_bg"));
+    canvas.createNewScene("wyx_easter_egg",res.getResource("wyx_easter_egg"));
     var wyx_door_scene_left_arrow=new Button(canvas.scene("wyx_door_scene"),0,0,57,89,5,res.getResource("left_arrow"),null,null,()=>{},()=>canvas.changeScene("wyx_left_scene"),98,443);
     var wyx_door_scene_right_arrow=new Button(canvas.scene("wyx_door_scene"),0,0,57,89,5,res.getResource("right_arrow"),null,null,()=>{},()=>{
         canvas.changeScene("wyx_right_scene");
@@ -239,6 +245,12 @@ function build(canvas){
     wyx_answer_box_fake_disable_button.setClickable(false);
     wyx_answer_box_fake_disable_button.setIgnoreClickEven(true);
 
+    var wyx_easter_egg_resolve;
+    var wyx_easter_egg_fake_button=new Button(canvas.scene("wyx_easter_egg"),0,0,935,935,10,null,null,null,()=>{},()=>{
+        wyx_easter_egg_resolve();
+        canvas.changeScene("wyx_right_scene");
+    });
+
     var fooFlag=false;
     const initalX=50;
     const initalY=300;
@@ -252,6 +264,7 @@ function build(canvas){
         let nowChara=0;
         let targetTime=performance.now();
         const standardDelay=50;
+        let running=true;
         let loop=async()=>{ //主循环
             if (targetTime<=performance.now()){
                 if (codes[nowChara]==='\n'){ //处理换行
@@ -271,7 +284,7 @@ function build(canvas){
                         case "option":{
                             console.log("option");
                             nowChara+=8;
-                            await chooseOption(codes.substring(nowChara,codes.indexOf('@',nowChara)),initalX+codeLines[codeLines.length-1].getWidth().width,initalY);
+                            await chooseOption([codes.substring(nowChara,codes.indexOf('@',nowChara))],initalX+codeLines[codeLines.length-1].getWidth().width,initalY);
                             nowChara+=2;
                             break;
                         }
@@ -292,7 +305,7 @@ function build(canvas){
                             let numstring=codes.substring(nowChara+8,atIndex);
                             let num=parseInt(numstring);
                             if (num===NaN) throw `codes number at ${nowChara}: Not an int`;
-                            await inputNum(num,initalX+codeLines[codeLines.length-1].getWidth().width,initalY);
+                            await inputNum([num],initalX+codeLines[codeLines.length-1].getWidth().width,initalY);
                             nowChara=atIndex+1;
                             break;
                         }
@@ -342,6 +355,19 @@ function build(canvas){
                             nowChara=atIndex+1;
                             break;
                         }
+                        case "special":{
+                            let atIndex=codes.indexOf('@',nowChara+9);
+                            let numstring=codes.substring(nowChara+9,atIndex);
+                            let num=parseInt(numstring);
+                            if (num===NaN) throw `codes special at ${nowChara}: Not an int`;
+                            nowChara=atIndex+1;
+                            await specialCommand[num](nowChara,initalX+codeLines[codeLines.length-1].getWidth().width,initalY);
+                            break;
+                        }
+                        case "end":{
+                            running=false;
+                            break;
+                        }
                         default:
                             throw `unknown command "${command}"`;
                     }
@@ -351,10 +377,39 @@ function build(canvas){
                     targetTime=performance.now()+standardDelay;
                 }
             }
-            requestAnimationFrame(loop);
+            if (running) requestAnimationFrame(loop);
         }
         requestAnimationFrame(loop);
     }
+
+    var specialCommand=[
+        async function(nowChara,x,y){
+            let result=await inputNum([20,70],x,y);
+            if (result===20){
+                codes=codes.substring(0,nowChara)+")@move=11@\nturtle.@special=1@"+codes.substring(nowChara);
+            }
+            else if (result===70){
+                codes=codes.substring(0,nowChara)+")@move=6@"+codes.substring(nowChara);
+            }
+            else await specialCommand[0](nowChara,x,y);
+        },
+        async function(nowChara,x,y){
+            let result=await chooseOption(['F','R'],x,y);
+            if (result==='F'){
+                codes=codes.substring(0,nowChara)+"@insert=forward@(@number=50@)@move=6@"+codes.substring(nowChara);
+            }
+            else if (result==='R'){
+                codes=codes.substring(0,nowChara)+"@insert=right@(@number=90@)@turn=R@\nturtle.@option=F@@insert=forward@(@number=30@)@move=12@@special=2@\nturtle.@option=B@@insert=backward@(@number=30@)@move=11@\nturtle.@option=L@@insert=left@(@number=90@)@turn=U@\nturtle.@option=F@@insert=forward@(@number=50@)@move=6@"+codes.substring(nowChara);
+            }
+            else await specialCommand[1](nowChara,x,y);
+        },
+        async function(nowChara,x,y){
+            await new Promise(resolve=>{
+                wyx_easter_egg_resolve=resolve;
+                canvas.changeScene("wyx_easter_egg");
+            });
+        }
+    ]
 
     var optionResolves=[null,null,null,null];
 
@@ -432,10 +487,11 @@ function build(canvas){
         wyx_right_scene_code_option_forward.setIgnoreClickEven(true);
         wyx_right_scene_code_option_backward.setIgnoreClickEven(true);
 
-        if (result!=ans){
+        if (ans.every(v=>v!==result)){
             codeLines[codeLines.length-1].shakeHorizontally();
             await chooseOption(ans,x,y);
         }
+        return result;
     }
 
 
@@ -453,7 +509,7 @@ function build(canvas){
         // console.log(`${i}`);
     }));
     wyx_right_scene_number_keyboard.push(new Button(canvas.scene("wyx_right_scene"),0,0,100,100,5,res.getResource("ok"),null,null,()=>{},()=>{
-        if (wyx_right_scene_fake_text.value*1===inputNumAnswer) OKresolve();
+        if (inputNumAnswer===null || inputNumAnswer.some(v=>v===wyx_right_scene_fake_text.value*1)) OKresolve();
         else{
             codeLines[codeLines.length-1].shakeHorizontally();
             wyx_right_scene_fake_text.clear();
@@ -485,7 +541,7 @@ function build(canvas){
             OKresolve=resolve;
         })
 
-        codeLines[codeLines.length-1].value+=ans;
+        if (ans!==null) codeLines[codeLines.length-1].value+=wyx_right_scene_fake_text.value;
 
         for (let i=0;i<11;i++){
             wyx_right_scene_number_keyboard[i].setClickable(false);
@@ -493,6 +549,7 @@ function build(canvas){
             wyx_right_scene_number_keyboard[i].setTransparentAlpha(0);
         }
         wyx_right_scene_fake_text.setTransparentAlpha(0);
+        return wyx_right_scene_fake_text.value*1;
     }
 
     var destinations=[
@@ -506,7 +563,9 @@ function build(canvas){
         {x:491,y:449,line:true},
         {x:491,y:265,line:true},
         {x:855,y:265,line:true},
-        {x:855,y:107,line:true}
+        {x:855,y:107,line:true},
+        {x:737,y:761,line:true},
+        {x:934,y:761,line:true}
     ];
 
     var turtle=new Animation([
