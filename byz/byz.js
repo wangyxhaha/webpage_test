@@ -243,7 +243,7 @@ function build(canvas){
     
     var byz_answer_box=new Input(canvas.scene("byz_door_scene"),"gameInput",453,468,1);
     byz_answer_box.setTextAlign("center");
-    byz_answer_box.setFillColor("black");
+    byz_answer_box.setFillColor("white");
     byz_answer_box.setFontHeight(40);
     byz_answer_box.setFont("黑体");
     byz_answer_box.clear();
@@ -342,9 +342,24 @@ function build(canvas){
     byz_door_scene_ear.setDraggable(true);
 
 
-    //右场景灯光解密
+    //上场景答题
 
+    //TODO 使用DOM动态注册input标签
 
+    const pw=document.createElement('input');
+    pw.id="passwordInput";
+    pw.maxLength="9";
+
+    document.body.appendChild(pw);
+
+    var byz_top_scene_anwser_box=new Input(canvas.scene("byz_top_scene"),"passwordInput",173,441,11);
+    byz_top_scene_anwser_box.setTextAlign("center");
+    byz_top_scene_anwser_box.setFillColor("black");
+    byz_top_scene_anwser_box.setFontHeight(40);
+    byz_top_scene_anwser_box.setFont("黑体");
+    byz_top_scene_anwser_box.clear();
+
+    byz_top_scene_anwser_box.enable();
 
     canvas.changeScene("byz_door_scene");
 }
