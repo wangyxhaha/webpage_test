@@ -88,20 +88,6 @@ class Resource{ //用来读取关卡并加载资源，生成对应对象
                     })()
                 );
             }
-            // else if (urls[i].type=="audio"){
-            //     this.promiseArray.push( //通过Promise数组和Promise.all来统一加载
-            //         new Promise((resolve,reject)=>{
-            //             this.resource[urls[i].name]=new Audio();
-            //             this.resource[urls[i].name].src=urls[i].value;
-            //             this.resource[urls[i].name].oncanplaythrough=()=>resolve();
-            //             this.resource[urls[i].name].onerror=()=>reject(`Audio loading error, name:${urls[i].name}, url:${urls[i].value}`);
-            //         })
-            //         .catch(err=>{
-            //             this.fail=true;
-            //             console.log(`ERROR information:${err}\n${err.stack}`)
-            //         })
-            //     );
-            // }
             else if (urls[i].type=="audio"){
                 this.promiseArray.push( //通过Promise数组和Promise.all来统一加载
                     (async ()=>{
@@ -113,6 +99,23 @@ class Resource{ //用来读取关卡并加载资源，生成对应对象
                             let buffer=await response.arrayBuffer();
                             let audioBuffer=await MyAudio.audioContext.decodeAudioData(buffer);
                             this.resource[urls[i].name]=new MyAudio(audioBuffer);
+                        }
+                        catch(err){
+                            throw `File:${urls[i].value}, Message:${err.message}\n${err.stack}}`;
+                        }
+                    })()
+                );
+            }
+            else if (urls[i].type=="font"){
+                this.promiseArray.push( //通过Promise数组和Promise.all来统一加载
+                    (async ()=>{
+                        try{
+                            this.resource[urls[i].name]=new FontFace(urls[i].name,`url(${urls[i].value})`);
+                            return new Promise(async resolve=>{
+                                await this.resource[urls[i].name].load();
+                                document.fonts.add(this.resource[urls[i].name]);
+                                resolve();
+                            });
                         }
                         catch(err){
                             throw `File:${urls[i].value}, Message:${err.message}\n${err.stack}}`;

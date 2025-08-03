@@ -175,6 +175,46 @@ var cfg=[ //所需素材的信息
         name: "turtle_right",
         type: "image",
         value: "./wyx/data/turtle_right.png"
+    },
+    {
+        name: "brush",
+        type: "image",
+        value: "./wyx/data/wyx刷子白.png"
+    },
+    {
+        name: "brush_black",
+        type: "image",
+        value: "./wyx/data/wyx刷子黑.png"
+    },
+    {
+        name: "printmaking_uncolored",
+        type: "image",
+        value: "./wyx/data/wyx版画未上色.png"
+    },
+    {
+        name: "printmaking_colored",
+        type: "image",
+        value: "./wyx/data/wyx版画上色.png"
+    },
+    {
+        name: "paper",
+        type: "image",
+        value: "./wyx/data/wyx白纸.png"
+    },
+    {
+        name: "printmaking_final",
+        type: "image",
+        value: "./wyx/data/wyx版画最终.png"
+    },
+    {
+        name: "ink",
+        type: "image",
+        value: "./wyx/data/wyx油漆桶.png"
+    },
+    {
+        name: "consola",
+        type: "font",
+        value: "./wyx/data/consola.ttf"
     }
 ]
 
@@ -282,14 +322,14 @@ function build(canvas){
                     let command=codes.substring(nowChara+1,codes.indexOf('=',nowChara));
                     switch (command){
                         case "option":{
-                            console.log("option");
+                            // console.log("option");
                             nowChara+=8;
                             await chooseOption([codes.substring(nowChara,codes.indexOf('@',nowChara))],initalX+codeLines[codeLines.length-1].getWidth().width,initalY);
                             nowChara+=2;
                             break;
                         }
                         case "delete":{
-                            console.log("delete");
+                            // console.log("delete");
                             let atIndex=codes.indexOf('@',nowChara+8);
                             let numstring=codes.substring(nowChara+8,atIndex);
                             let num=parseInt(numstring);
@@ -326,7 +366,7 @@ function build(canvas){
                             break;
                         }
                         case "turn":{
-                            console.log("option");
+                            // console.log("option");
                             nowChara+=6;
                             switch (codes[nowChara]){
                                 case 'R':
@@ -350,7 +390,7 @@ function build(canvas){
                             let numstring=codes.substring(nowChara+7,atIndex);
                             let num=parseInt(numstring);
                             if (num===NaN) throw `codes sleep at ${nowChara}: Not an int`;
-                            console.log(`sleep=${num}(${numstring})`);
+                            // console.log(`sleep=${num}(${numstring})`);
                             targetTime=performance.now()+num;
                             nowChara=atIndex+1;
                             break;
@@ -606,7 +646,7 @@ function build(canvas){
             lines[lines.length-1].setTransparentAlpha(1);
         }
         let loop=()=>{
-            console.log(wyx_right_scene_turtle.getPosition(),(startP.x-destinations[des].x)**2+(startP.y-destinations[des].y)**2);
+            // console.log(wyx_right_scene_turtle.getPosition(),(startP.x-destinations[des].x)**2+(startP.y-destinations[des].y)**2);
             let nowTime=performance.now();
             let s=v/1000*(nowTime-startTime);
             if (s>=distance){
