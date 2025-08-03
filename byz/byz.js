@@ -349,7 +349,7 @@ function build(canvas){
 
     const pw=document.createElement('input');
     pw.id="passwordInput";
-    pw.maxLength="4";
+    pw.maxLength="9";
 
     const style=document.createElement('style');
     //style.type='text/css';
@@ -376,19 +376,40 @@ function build(canvas){
 
     var byz_top_scene_fake_button=new Button(canvas.scene("byz_top_scene"),167,400,255,81,23,null,null,null,()=>{},()=>{
         byz_top_scene_anwser_box.enable();
-        byz_top_scene_fake_button.setClickable(false);
+        //byz_top_scene_fake_button.setClickable(false);
         byz_top_scene_bg_button.setClickable(true);
-        //tmp=byz_top_scene_anwser_box.inputElement.value;
+        setInterval(()=>{
+            tmp=byz_top_scene_anwser_box.inputElement.value;
+            tmp=tmp.split('').join(' ');
+            byz_top_scene_anwser_text_blue.value=tmp;
+        },100);
     });
     byz_top_scene_fake_button.setClickable(true);
+
+    const observer=new MutationObserver(()=>{
+        tmp=byz_top_scene_anwser_box.inputElement.value;
+    });
+
+    /*
+    const proxy=new Proxy(byz_top_scene_anwser_box.inputElement,{
+        set(target,property,value){
+            if(property === 'value'){
+                const oldValue=target[property];
+                target[property]=value;
+                tmp=value;
+                console.log('值已更新：${oldValue} => ${value}');
+                return true;
+            }
+            return Reflect.set(...arguments);
+        }
+    });*/
+
+    
 
     var byz_top_scene_bg_button=new Button(canvas.scene("byz_top_scene"),0,0,935,935,22,null,null,null,()=>{},()=>{
         byz_top_scene_anwser_box.disable();
         byz_top_scene_bg_button.setClickable(true);
         byz_top_scene_fake_button.setClickable(true);
-        tmp=byz_top_scene_anwser_box.inputElement.value;
-        var fl=tmp[0]+" "+tmp[1]+" "+tmp[2]+" "+tmp[3];
-        byz_top_scene_anwser_text_blue.value=fl;
     });
     byz_top_scene_bg_button.setClickable(false);
 
@@ -412,6 +433,7 @@ function build(canvas){
     byz_top_scene_anwser_text_red.setFillColor("#ce3933");
     byz_top_scene_anwser_text_red.setFont("Consolas");
     byz_top_scene_anwser_text_red.setFontHeight(55);
+    //byz_top_scene_anwser_text_blue.style.letterSpacing="2px";
 
     canvas.changeScene("byz_top_scene");
     //canvas.changeScene("byz_door_scene");
