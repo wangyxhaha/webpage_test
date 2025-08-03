@@ -8,6 +8,7 @@ import Animation from "../animation.js";
 import Input from "../input.js";
 import "../buttonPlugin.js";
 import Music from "../music.js";
+import Text from "../text.js";
 
 var cfg=[
     //background
@@ -348,25 +349,72 @@ function build(canvas){
 
     const pw=document.createElement('input');
     pw.id="passwordInput";
-    pw.maxLength="9";
+    pw.maxLength="4";
 
+    const style=document.createElement('style');
+    //style.type='text/css';
+    style.innerHTML=`
+        #passwordInput{
+            position: fixed;
+            top: -100px;
+            opacity: 0;
+            height: 0;
+        }
+    `;
+    
+    document.head.appendChild(style);
     document.body.appendChild(pw);
 
-    var byz_top_scene_anwser_box=new Input(canvas.scene("byz_top_scene"),"passwordInput",180,441,11);
+    var byz_top_scene_anwser_box=new Input(canvas.scene("byz_top_scene"),"passwordInput",190,460,11);
     byz_top_scene_anwser_box.setTextAlign("start");
     byz_top_scene_anwser_box.setFillColor("black");
     byz_top_scene_anwser_box.setFontHeight(40);
     byz_top_scene_anwser_box.setFont("黑体");
     //byz_top_scene_anwser_box.clear();
 
-    byz_top_scene_anwser_box.enable();
+    var tmp="";
+
+    var byz_top_scene_fake_button=new Button(canvas.scene("byz_top_scene"),167,400,255,81,23,null,null,null,()=>{},()=>{
+        byz_top_scene_anwser_box.enable();
+        byz_top_scene_fake_button.setClickable(false);
+        byz_top_scene_bg_button.setClickable(true);
+        //tmp=byz_top_scene_anwser_box.inputElement.value;
+    });
+    byz_top_scene_fake_button.setClickable(true);
+
+    var byz_top_scene_bg_button=new Button(canvas.scene("byz_top_scene"),0,0,935,935,22,null,null,null,()=>{},()=>{
+        byz_top_scene_anwser_box.disable();
+        byz_top_scene_bg_button.setClickable(true);
+        byz_top_scene_fake_button.setClickable(true);
+        tmp=byz_top_scene_anwser_box.inputElement.value;
+        var fl=tmp[0]+" "+tmp[1]+" "+tmp[2]+" "+tmp[3];
+        byz_top_scene_anwser_text_blue.value=fl;
+    });
+    byz_top_scene_bg_button.setClickable(false);
+
+    //byz_top_scene_anwser_box.enable();
     byz_top_scene_anwser_box.setTransparentAlpha(0);
 
-    var tmp=byz_top_scene_anwser_box.inputElement.value;
+    //测试位置使用
+    var byz_top_scene_anwser_text_blue=new Text(canvas.scene("byz_top_scene"),190,460,12);
+    byz_top_scene_anwser_text_blue.setFillColor("#4234d1");
+    byz_top_scene_anwser_text_blue.setFont("Consolas");
+    byz_top_scene_anwser_text_blue.setFontHeight(55);
 
-    
+    var byz_top_scene_anwser_text_green=new Text(canvas.scene("byz_top_scene"),460,460,12);
+    byz_top_scene_anwser_text_green.value="O R";
+    byz_top_scene_anwser_text_green.setFillColor("#45cc42");
+    byz_top_scene_anwser_text_green.setFont("Consolas");
+    byz_top_scene_anwser_text_green.setFontHeight(55);
 
-    canvas.changeScene("byz_door_scene");
+    var byz_top_scene_anwser_text_red=new Text(canvas.scene("byz_top_scene"),600,460,12);
+    byz_top_scene_anwser_text_red.value="D I E";
+    byz_top_scene_anwser_text_red.setFillColor("#ce3933");
+    byz_top_scene_anwser_text_red.setFont("Consolas");
+    byz_top_scene_anwser_text_red.setFontHeight(55);
+
+    canvas.changeScene("byz_top_scene");
+    //canvas.changeScene("byz_door_scene");
 }
 
 var res;
