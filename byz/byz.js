@@ -349,7 +349,7 @@ function build(canvas){
 
     const pw=document.createElement('input');
     pw.id="passwordInput";
-    pw.maxLength="9";
+    pw.maxLength="4";
 
     const style=document.createElement('style');
     //style.type='text/css';
