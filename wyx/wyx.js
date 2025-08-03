@@ -212,7 +212,7 @@ var cfg=[ //所需素材的信息
         value: "./wyx/data/wyx油漆桶.png"
     },
     {
-        name: "consola",
+        name: "Consolas",
         type: "font",
         value: "./wyx/data/consola.ttf"
     }
