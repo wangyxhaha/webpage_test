@@ -220,7 +220,7 @@ var cfg=[ //所需素材的信息
 
 var codes=
 `#这个就是一个很简单的编程@sleep=3000@@delete=12@填入正确的代码吧@sleep=3000@@delete=8@相信你可以的@sleep=3000@@delete=7@import turtle
-turtle.setup(935,935)
+turtle.setup(935,935)@special=3@
 turtle.penup()
 turtle.goto(-336,-334)@move=0@
 turtle.pendown()
@@ -242,7 +242,7 @@ turtle.@option=F@@insert=forward@(@number=40@)@move=8@
 turtle.@option=R@@insert=right@(@number=90@)@turn=R@
 turtle.@option=F@@insert=forward@(@number=60@)@move=9@
 turtle.@option=L@@insert=left@(@number=90@)@turn=U@
-turtle.@option=F@@insert=forward@(@number=30@)@move=10@`
+turtle.@option=F@@insert=forward@(@number=30@)@move=10@@end=@`
 
 function build(canvas){
     console.log("build");
@@ -256,7 +256,7 @@ function build(canvas){
         canvas.changeScene("wyx_right_scene");
         foo();
     },777,443);
-    var wyx_left_scene_right_arrow=new Button(canvas.scene("wyx_left_scene"),0,0,57,89,0,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("wyx_door_scene"),777,443);
+    var wyx_left_scene_right_arrow=new Button(canvas.scene("wyx_left_scene"),0,0,57,89,10,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("wyx_door_scene"),777,443);
     var wyx_right_scene_left_arrow=new Button(canvas.scene("wyx_right_scene"),0,0,57,89,0,res.getResource("left_arrow"),null,null,()=>{},()=>canvas.changeScene("wyx_door_scene"),98,443);
     var wyx_door_scene_up_arrow=new Button(canvas.scene("wyx_door_scene"),0,0,88,46,5,res.getResource("up_arrow"),null,null,()=>{},()=>canvas.changeScene("wyx_top_scene"),416,114);
     var wyx_top_scene_down_arrow=new Button(canvas.scene("wyx_top_scene"),0,0,88,46,0,res.getResource("down_arrow"),null,null,()=>{},()=>canvas.changeScene("wyx_door_scene"),416,833);
@@ -291,6 +291,7 @@ function build(canvas){
         canvas.changeScene("wyx_right_scene");
     });
 
+    var mazeFlag=false;
     var fooFlag=false;
     const initalX=50;
     const initalY=300;
@@ -406,6 +407,8 @@ function build(canvas){
                         }
                         case "end":{
                             running=false;
+                            mazeFlag=true;
+                            check();
                             break;
                         }
                         default:
@@ -448,6 +451,9 @@ function build(canvas){
                 wyx_easter_egg_resolve=resolve;
                 canvas.changeScene("wyx_easter_egg");
             });
+        },
+        async function(){
+            wyx_right_scene_turtle.setTransparentAlpha(1);
         }
     ]
 
@@ -630,6 +636,7 @@ function build(canvas){
     var wyx_right_scene_turtle=new Button(canvas.scene("wyx_right_scene"),468,468,0,0,0,turtle,null,null,()=>{},()=>{});
     wyx_right_scene_turtle.setClickable(false);
     wyx_right_scene_turtle.setIgnoreClickEven(true);
+    wyx_right_scene_turtle.setTransparentAlpha(0);
     var lines=[];
 
     async function moveTurtle(des){
@@ -666,6 +673,67 @@ function build(canvas){
             moveReslove=resolve;
             requestAnimationFrame(loop);
         });
+    }
+
+    var brush=new Animation([
+        {
+            image: res.getResource("brush"),
+            interval: Infinity
+        },
+        {
+            image: res.getResource("brush_black"),
+            interval: Infinity
+        }
+    ]);
+    var brushFlag=false;
+    var wyx_left_scene_brush=new Button(canvas.scene("wyx_left_scene"),749,300,72,111,3,brush,null,null,()=>{},()=>{
+        if (wyx_left_scene_brush.isCoincide(wyx_left_scene_ink)){
+            brushFlag=true;
+            brush.to(1);
+        }
+        if (brushFlag && wyx_left_scene_brush.isCoincide(wyx_left_scene_printmaking_uncolored)){
+            colorLevel=Math.min(colorLevel+1,5);
+            wyx_left_scene_printmaking_colored.setTransparentAlpha(colorLevel/5);
+        }
+        wyx_left_scene_brush.setPostition(749,300);
+    });
+    wyx_left_scene_brush.setDraggable(true);
+
+    var wyx_left_scene_ink=new Button(canvas.scene("wyx_left_scene"),0,0,126,156,1,res.getResource("ink"),null,null,()=>{},()=>{},721,81);
+    wyx_left_scene_ink.setClickable(false);
+
+    var colorLevel=0;
+    var wyx_left_scene_printmaking_uncolored=new Button(canvas.scene("wyx_left_scene"),0,0,335,393,0,res.getResource("printmaking_uncolored"),null,null,()=>{},()=>{},173,64);
+    wyx_left_scene_printmaking_uncolored.setClickable(false);
+
+    var wyx_left_scene_printmaking_colored=new Button(canvas.scene("wyx_left_scene"),0,0,335,393,1,res.getResource("printmaking_colored"),null,null,()=>{},()=>{},173,64);
+    wyx_left_scene_printmaking_colored.setClickable(false);
+    wyx_left_scene_printmaking_colored.setTransparentAlpha(0);
+
+    var printmaking_final_flag=false;
+    var wyx_left_scene_paper=new Button(canvas.scene("wyx_left_scene"),172,497,338,393,2,res.getResource("paper"),null,null,()=>{},()=>{
+        if (colorLevel==5 && wyx_left_scene_paper.isCoincide(wyx_left_scene_printmaking_uncolored)){
+            wyx_left_scene_paper.setTransparentAlpha(0);
+            wyx_left_scene_printmaking_final.floatUp(0,0,1000);
+            printmaking_final_flag=true;
+            check();
+        }
+        else{
+            wyx_left_scene_paper.setPostition(172,497);
+        }
+    });
+    wyx_left_scene_paper.setDraggable(true);
+
+    var wyx_left_scene_printmaking_final=new Button(canvas.scene("wyx_left_scene"),0,0,0,0,4,res.getResource("printmaking_final"),null,null,()=>{},()=>{});
+    wyx_left_scene_printmaking_final.setClickable(false);
+    wyx_left_scene_printmaking_final.setIgnoreClickEven(true);
+    wyx_left_scene_printmaking_final.setTransparentAlpha(0);
+
+    function check(){
+        if (printmaking_final_flag && mazeFlag){
+            wyx_answer_box_fake_button.setClickable(true);
+            wyx_door_scene_lock.setTransparentAlpha(0);
+        }
     }
 
     canvas.changeScene("wyx_door_scene");
