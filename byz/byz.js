@@ -154,6 +154,11 @@ var cfg=[
         name: "lock",
         type: "image",
         value: "./byz/data/锁.png"
+    },
+    {
+        name: "Consolas",
+        type: "font",
+        value: "./wyx/data/consola.ttf"
     }
 ]
 
