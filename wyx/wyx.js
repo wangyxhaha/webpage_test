@@ -32,6 +32,11 @@ var cfg=[ //所需素材的信息
         value: "./wyx/data/wyx左底图.jpg"
     },
     {
+        name: "wyx_easter_egg",
+        type: "image",
+        value: "./wyx/data/wyx迷宫彩蛋.jpg"
+    },
+    {
         name: "left_arrow",
         type: "image",
         value: "./wyx/data/左.png"
@@ -170,12 +175,52 @@ var cfg=[ //所需素材的信息
         name: "turtle_right",
         type: "image",
         value: "./wyx/data/turtle_right.png"
+    },
+    {
+        name: "brush",
+        type: "image",
+        value: "./wyx/data/wyx刷子白.png"
+    },
+    {
+        name: "brush_black",
+        type: "image",
+        value: "./wyx/data/wyx刷子黑.png"
+    },
+    {
+        name: "printmaking_uncolored",
+        type: "image",
+        value: "./wyx/data/wyx版画未上色.png"
+    },
+    {
+        name: "printmaking_colored",
+        type: "image",
+        value: "./wyx/data/wyx版画上色.png"
+    },
+    {
+        name: "paper",
+        type: "image",
+        value: "./wyx/data/wyx白纸.png"
+    },
+    {
+        name: "printmaking_final",
+        type: "image",
+        value: "./wyx/data/wyx版画最终.png"
+    },
+    {
+        name: "ink",
+        type: "image",
+        value: "./wyx/data/wyx油漆桶.png"
+    },
+    {
+        name: "Consolas",
+        type: "font",
+        value: "./wyx/data/consola.ttf"
     }
 ]
 
 var codes=
 `#这个就是一个很简单的编程@sleep=3000@@delete=12@填入正确的代码吧@sleep=3000@@delete=8@相信你可以的@sleep=3000@@delete=7@import turtle
-turtle.setup(935,935)
+turtle.setup(935,935)@special=3@
 turtle.penup()
 turtle.goto(-336,-334)@move=0@
 turtle.pendown()
@@ -189,7 +234,7 @@ turtle.@option=F@@insert=forward@(@number=40@)@move=4@
 turtle.@option=L@@insert=left@(@number=90@)@turn=R@
 turtle.@option=F@@insert=forward@(@number=60@)@move=5@
 turtle.@option=L@@insert=left@(@number=90@)@turn=U@
-turtle.@option=F@@insert=forward@(@number=70@)@move=6@
+turtle.@option=F@@insert=forward@(@special=0@
 turtle.@option=L@@insert=left@(@number=90@)@turn=L@
 turtle.@option=F@@insert=forward@(@number=40@)@move=7@
 turtle.@option=R@@insert=right@(@number=90@)@turn=U@
@@ -197,7 +242,7 @@ turtle.@option=F@@insert=forward@(@number=40@)@move=8@
 turtle.@option=R@@insert=right@(@number=90@)@turn=R@
 turtle.@option=F@@insert=forward@(@number=60@)@move=9@
 turtle.@option=L@@insert=left@(@number=90@)@turn=U@
-turtle.@option=F@@insert=forward@(@number=30@)@move=10@`
+turtle.@option=F@@insert=forward@(@number=30@)@move=10@@end=@`
 
 function build(canvas){
     console.log("build");
@@ -205,12 +250,13 @@ function build(canvas){
     canvas.createNewScene("wyx_top_scene",res.getResource("wyx_top"));
     canvas.createNewScene("wyx_right_scene",res.getResource("wyx_right_bg"));
     canvas.createNewScene("wyx_left_scene",res.getResource("wyx_left_bg"));
+    canvas.createNewScene("wyx_easter_egg",res.getResource("wyx_easter_egg"));
     var wyx_door_scene_left_arrow=new Button(canvas.scene("wyx_door_scene"),0,0,57,89,5,res.getResource("left_arrow"),null,null,()=>{},()=>canvas.changeScene("wyx_left_scene"),98,443);
     var wyx_door_scene_right_arrow=new Button(canvas.scene("wyx_door_scene"),0,0,57,89,5,res.getResource("right_arrow"),null,null,()=>{},()=>{
         canvas.changeScene("wyx_right_scene");
         foo();
     },777,443);
-    var wyx_left_scene_right_arrow=new Button(canvas.scene("wyx_left_scene"),0,0,57,89,0,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("wyx_door_scene"),777,443);
+    var wyx_left_scene_right_arrow=new Button(canvas.scene("wyx_left_scene"),0,0,57,89,10,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("wyx_door_scene"),777,443);
     var wyx_right_scene_left_arrow=new Button(canvas.scene("wyx_right_scene"),0,0,57,89,0,res.getResource("left_arrow"),null,null,()=>{},()=>canvas.changeScene("wyx_door_scene"),98,443);
     var wyx_door_scene_up_arrow=new Button(canvas.scene("wyx_door_scene"),0,0,88,46,5,res.getResource("up_arrow"),null,null,()=>{},()=>canvas.changeScene("wyx_top_scene"),416,114);
     var wyx_top_scene_down_arrow=new Button(canvas.scene("wyx_top_scene"),0,0,88,46,0,res.getResource("down_arrow"),null,null,()=>{},()=>canvas.changeScene("wyx_door_scene"),416,833);
@@ -239,6 +285,13 @@ function build(canvas){
     wyx_answer_box_fake_disable_button.setClickable(false);
     wyx_answer_box_fake_disable_button.setIgnoreClickEven(true);
 
+    var wyx_easter_egg_resolve;
+    var wyx_easter_egg_fake_button=new Button(canvas.scene("wyx_easter_egg"),0,0,935,935,10,null,null,null,()=>{},()=>{
+        wyx_easter_egg_resolve();
+        canvas.changeScene("wyx_right_scene");
+    });
+
+    var mazeFlag=false;
     var fooFlag=false;
     const initalX=50;
     const initalY=300;
@@ -252,6 +305,7 @@ function build(canvas){
         let nowChara=0;
         let targetTime=performance.now();
         const standardDelay=50;
+        let running=true;
         let loop=async()=>{ //主循环
             if (targetTime<=performance.now()){
                 if (codes[nowChara]==='\n'){ //处理换行
@@ -269,14 +323,14 @@ function build(canvas){
                     let command=codes.substring(nowChara+1,codes.indexOf('=',nowChara));
                     switch (command){
                         case "option":{
-                            console.log("option");
+                            // console.log("option");
                             nowChara+=8;
-                            await chooseOption(codes.substring(nowChara,codes.indexOf('@',nowChara)),initalX+codeLines[codeLines.length-1].getWidth().width,initalY);
+                            await chooseOption([codes.substring(nowChara,codes.indexOf('@',nowChara))],initalX+codeLines[codeLines.length-1].getWidth().width,initalY);
                             nowChara+=2;
                             break;
                         }
                         case "delete":{
-                            console.log("delete");
+                            // console.log("delete");
                             let atIndex=codes.indexOf('@',nowChara+8);
                             let numstring=codes.substring(nowChara+8,atIndex);
                             let num=parseInt(numstring);
@@ -292,7 +346,7 @@ function build(canvas){
                             let numstring=codes.substring(nowChara+8,atIndex);
                             let num=parseInt(numstring);
                             if (num===NaN) throw `codes number at ${nowChara}: Not an int`;
-                            await inputNum(num,initalX+codeLines[codeLines.length-1].getWidth().width,initalY);
+                            await inputNum([num],initalX+codeLines[codeLines.length-1].getWidth().width,initalY);
                             nowChara=atIndex+1;
                             break;
                         }
@@ -313,7 +367,7 @@ function build(canvas){
                             break;
                         }
                         case "turn":{
-                            console.log("option");
+                            // console.log("option");
                             nowChara+=6;
                             switch (codes[nowChara]){
                                 case 'R':
@@ -337,9 +391,24 @@ function build(canvas){
                             let numstring=codes.substring(nowChara+7,atIndex);
                             let num=parseInt(numstring);
                             if (num===NaN) throw `codes sleep at ${nowChara}: Not an int`;
-                            console.log(`sleep=${num}(${numstring})`);
+                            // console.log(`sleep=${num}(${numstring})`);
                             targetTime=performance.now()+num;
                             nowChara=atIndex+1;
+                            break;
+                        }
+                        case "special":{
+                            let atIndex=codes.indexOf('@',nowChara+9);
+                            let numstring=codes.substring(nowChara+9,atIndex);
+                            let num=parseInt(numstring);
+                            if (num===NaN) throw `codes special at ${nowChara}: Not an int`;
+                            nowChara=atIndex+1;
+                            await specialCommand[num](nowChara,initalX+codeLines[codeLines.length-1].getWidth().width,initalY);
+                            break;
+                        }
+                        case "end":{
+                            running=false;
+                            mazeFlag=true;
+                            check();
                             break;
                         }
                         default:
@@ -351,10 +420,42 @@ function build(canvas){
                     targetTime=performance.now()+standardDelay;
                 }
             }
-            requestAnimationFrame(loop);
+            if (running) requestAnimationFrame(loop);
         }
         requestAnimationFrame(loop);
     }
+
+    var specialCommand=[
+        async function(nowChara,x,y){
+            let result=await inputNum([20,70],x,y);
+            if (result===20){
+                codes=codes.substring(0,nowChara)+")@move=11@\nturtle.@special=1@"+codes.substring(nowChara);
+            }
+            else if (result===70){
+                codes=codes.substring(0,nowChara)+")@move=6@"+codes.substring(nowChara);
+            }
+            else await specialCommand[0](nowChara,x,y);
+        },
+        async function(nowChara,x,y){
+            let result=await chooseOption(['F','R'],x,y);
+            if (result==='F'){
+                codes=codes.substring(0,nowChara)+"@insert=forward@(@number=50@)@move=6@"+codes.substring(nowChara);
+            }
+            else if (result==='R'){
+                codes=codes.substring(0,nowChara)+"@insert=right@(@number=90@)@turn=R@\nturtle.@option=F@@insert=forward@(@number=30@)@move=12@@special=2@\nturtle.@option=B@@insert=backward@(@number=30@)@move=11@\nturtle.@option=L@@insert=left@(@number=90@)@turn=U@\nturtle.@option=F@@insert=forward@(@number=50@)@move=6@"+codes.substring(nowChara);
+            }
+            else await specialCommand[1](nowChara,x,y);
+        },
+        async function(nowChara,x,y){
+            await new Promise(resolve=>{
+                wyx_easter_egg_resolve=resolve;
+                canvas.changeScene("wyx_easter_egg");
+            });
+        },
+        async function(){
+            wyx_right_scene_turtle.setTransparentAlpha(1);
+        }
+    ]
 
     var optionResolves=[null,null,null,null];
 
@@ -432,10 +533,11 @@ function build(canvas){
         wyx_right_scene_code_option_forward.setIgnoreClickEven(true);
         wyx_right_scene_code_option_backward.setIgnoreClickEven(true);
 
-        if (result!=ans){
+        if (ans.every(v=>v!==result)){
             codeLines[codeLines.length-1].shakeHorizontally();
             await chooseOption(ans,x,y);
         }
+        return result;
     }
 
 
@@ -453,7 +555,7 @@ function build(canvas){
         // console.log(`${i}`);
     }));
     wyx_right_scene_number_keyboard.push(new Button(canvas.scene("wyx_right_scene"),0,0,100,100,5,res.getResource("ok"),null,null,()=>{},()=>{
-        if (wyx_right_scene_fake_text.value*1===inputNumAnswer) OKresolve();
+        if (inputNumAnswer===null || inputNumAnswer.some(v=>v===wyx_right_scene_fake_text.value*1)) OKresolve();
         else{
             codeLines[codeLines.length-1].shakeHorizontally();
             wyx_right_scene_fake_text.clear();
@@ -485,7 +587,7 @@ function build(canvas){
             OKresolve=resolve;
         })
 
-        codeLines[codeLines.length-1].value+=ans;
+        if (ans!==null) codeLines[codeLines.length-1].value+=wyx_right_scene_fake_text.value;
 
         for (let i=0;i<11;i++){
             wyx_right_scene_number_keyboard[i].setClickable(false);
@@ -493,6 +595,7 @@ function build(canvas){
             wyx_right_scene_number_keyboard[i].setTransparentAlpha(0);
         }
         wyx_right_scene_fake_text.setTransparentAlpha(0);
+        return wyx_right_scene_fake_text.value*1;
     }
 
     var destinations=[
@@ -506,7 +609,9 @@ function build(canvas){
         {x:491,y:449,line:true},
         {x:491,y:265,line:true},
         {x:855,y:265,line:true},
-        {x:855,y:107,line:true}
+        {x:855,y:107,line:true},
+        {x:737,y:761,line:true},
+        {x:934,y:761,line:true}
     ];
 
     var turtle=new Animation([
@@ -531,6 +636,7 @@ function build(canvas){
     var wyx_right_scene_turtle=new Button(canvas.scene("wyx_right_scene"),468,468,0,0,0,turtle,null,null,()=>{},()=>{});
     wyx_right_scene_turtle.setClickable(false);
     wyx_right_scene_turtle.setIgnoreClickEven(true);
+    wyx_right_scene_turtle.setTransparentAlpha(0);
     var lines=[];
 
     async function moveTurtle(des){
@@ -547,7 +653,7 @@ function build(canvas){
             lines[lines.length-1].setTransparentAlpha(1);
         }
         let loop=()=>{
-            console.log(wyx_right_scene_turtle.getPosition(),(startP.x-destinations[des].x)**2+(startP.y-destinations[des].y)**2);
+            // console.log(wyx_right_scene_turtle.getPosition(),(startP.x-destinations[des].x)**2+(startP.y-destinations[des].y)**2);
             let nowTime=performance.now();
             let s=v/1000*(nowTime-startTime);
             if (s>=distance){
@@ -567,6 +673,67 @@ function build(canvas){
             moveReslove=resolve;
             requestAnimationFrame(loop);
         });
+    }
+
+    var brush=new Animation([
+        {
+            image: res.getResource("brush"),
+            interval: Infinity
+        },
+        {
+            image: res.getResource("brush_black"),
+            interval: Infinity
+        }
+    ]);
+    var brushFlag=false;
+    var wyx_left_scene_brush=new Button(canvas.scene("wyx_left_scene"),749,300,72,111,3,brush,null,null,()=>{},()=>{
+        if (wyx_left_scene_brush.isCoincide(wyx_left_scene_ink)){
+            brushFlag=true;
+            brush.to(1);
+        }
+        if (brushFlag && wyx_left_scene_brush.isCoincide(wyx_left_scene_printmaking_uncolored)){
+            colorLevel=Math.min(colorLevel+1,5);
+            wyx_left_scene_printmaking_colored.setTransparentAlpha(colorLevel/5);
+        }
+        wyx_left_scene_brush.setPostition(749,300);
+    });
+    wyx_left_scene_brush.setDraggable(true);
+
+    var wyx_left_scene_ink=new Button(canvas.scene("wyx_left_scene"),0,0,126,156,1,res.getResource("ink"),null,null,()=>{},()=>{},721,81);
+    wyx_left_scene_ink.setClickable(false);
+
+    var colorLevel=0;
+    var wyx_left_scene_printmaking_uncolored=new Button(canvas.scene("wyx_left_scene"),0,0,335,393,0,res.getResource("printmaking_uncolored"),null,null,()=>{},()=>{},173,64);
+    wyx_left_scene_printmaking_uncolored.setClickable(false);
+
+    var wyx_left_scene_printmaking_colored=new Button(canvas.scene("wyx_left_scene"),0,0,335,393,1,res.getResource("printmaking_colored"),null,null,()=>{},()=>{},173,64);
+    wyx_left_scene_printmaking_colored.setClickable(false);
+    wyx_left_scene_printmaking_colored.setTransparentAlpha(0);
+
+    var printmaking_final_flag=false;
+    var wyx_left_scene_paper=new Button(canvas.scene("wyx_left_scene"),172,497,338,393,2,res.getResource("paper"),null,null,()=>{},()=>{
+        if (colorLevel==5 && wyx_left_scene_paper.isCoincide(wyx_left_scene_printmaking_uncolored)){
+            wyx_left_scene_paper.setTransparentAlpha(0);
+            wyx_left_scene_printmaking_final.floatUp(0,0,1000);
+            printmaking_final_flag=true;
+            check();
+        }
+        else{
+            wyx_left_scene_paper.setPostition(172,497);
+        }
+    });
+    wyx_left_scene_paper.setDraggable(true);
+
+    var wyx_left_scene_printmaking_final=new Button(canvas.scene("wyx_left_scene"),0,0,0,0,4,res.getResource("printmaking_final"),null,null,()=>{},()=>{});
+    wyx_left_scene_printmaking_final.setClickable(false);
+    wyx_left_scene_printmaking_final.setIgnoreClickEven(true);
+    wyx_left_scene_printmaking_final.setTransparentAlpha(0);
+
+    function check(){
+        if (printmaking_final_flag && mazeFlag){
+            wyx_answer_box_fake_button.setClickable(true);
+            wyx_door_scene_lock.setTransparentAlpha(0);
+        }
     }
 
     canvas.changeScene("wyx_door_scene");
