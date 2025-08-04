@@ -424,7 +424,7 @@ function build(canvas){
                 byz_top_scene_anwser_text_red.setTransparentAlpha(0);
                 clearInterval(textTransform);
                 byz_top_scene_anwser_box.disable();
-                
+
                 byz_door_scene_lock.setTransparentAlpha(0);
                 byz_answer_box_fake_button.setClickable(true);
            }
@@ -480,8 +480,7 @@ function build(canvas){
     byz_top_scene_anwser_text_red.setFontHeight(55);
     //byz_top_scene_anwser_text_blue.style.letterSpacing="2px";
 
-    canvas.changeScene("byz_top_scene");
-    //canvas.changeScene("byz_door_scene");
+    canvas.changeScene("byz_door_scene");
 }
 
 var res;
