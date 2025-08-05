@@ -714,6 +714,7 @@ function build(canvas){
     var wyx_left_scene_paper=new Button(canvas.scene("wyx_left_scene"),172,497,338,393,2,res.getResource("paper"),null,null,()=>{},()=>{
         if (colorLevel==5 && wyx_left_scene_paper.isCoincide(wyx_left_scene_printmaking_uncolored)){
             wyx_left_scene_paper.setTransparentAlpha(0);
+            wyx_left_scene_paper.setClickable(false);
             wyx_left_scene_printmaking_final.floatUp(0,0,1000);
             printmaking_final_flag=true;
             check();
