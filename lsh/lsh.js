@@ -60,6 +60,16 @@ var cfg=[
         name: "box",
         type: "image",
         value: "./lsh/data/lsh输入框.png"
+    },
+    {
+        name: "lsh_figure",
+        type: "image",
+        value: "./lsh/data/lsh形象.png"
+    },
+    {
+        name: "talking",
+        type: "image",
+        value: "./lsh/data/lsh语录.png"
     }
 ]
 
@@ -70,7 +80,7 @@ function build(canvas){
     canvas.createNewScene("lsh_left_scene",res.getResource("lsh_left_bg"));
     canvas.createNewScene("lsh_right_scene",res.getResource("lsh_right_bg"));
     var lsh_door_scene_left_arrow=new Button(canvas.scene("lsh_door_scene"),0,0,57,89,0,res.getResource("left_arrow"),null,null,()=>{},()=>canvas.changeScene("lsh_left_scene"),98,443);
-    var lsh_door_scene_right_arrow=new Button(canvas.scene("lsh_door_scene"),0,0,57,89,0,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("lsh_right_scene"),777,443);
+    var lsh_door_scene_right_arrow=new Button(canvas.scene("lsh_door_scene"),0,0,57,89,31,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("lsh_right_scene"),777,443);
     var lsh_left_scene_right_arrow=new Button(canvas.scene("lsh_left_scene"),0,0,57,89,0,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("lsh_door_scene"),777,443);
     var lsh_right_scene_left_arrow=new Button(canvas.scene("lsh_right_scene"),0,0,57,89,0,res.getResource("left_arrow"),null,null,()=>checkAnswer(),()=>canvas.changeScene("lsh_door_scene"),98,443);
     var lsh_door_scene_up_arrow=new Button(canvas.scene("lsh_door_scene"),0,0,88,46,0,res.getResource("up_arrow"),null,null,()=>{},()=>canvas.changeScene("lsh_top_scene"),416,114);
@@ -149,6 +159,15 @@ function build(canvas){
     },()=>{});
     lsh_right_scene_bg_button.setClickable(false);
     lsh_right_scene_bg_button.setIgnoreClickEven(true);
+
+    var lsh_door_scene_figure=new Button(canvas.scene("lsh_door_scene"),0,0,245,268,21,res.getResource("lsh_figure"),null,null,()=>{
+        lsh_door_scene_talking.setTransparentAlpha(1);
+        lsh_door_scene_talking.slideTo(0,0,0.3);
+    },()=>{},592,333);
+
+    var lsh_door_scene_talking=new Button(canvas.scene("lsh_door_scene"),0,100,0,0,22,res.getResource("talking"),null,null,()=>{},()=>{});
+    lsh_door_scene_talking.setTransparentAlpha(0);
+    lsh_door_scene_talking.setClickable(false);
 
     canvas.changeScene("lsh_door_scene");
 }
