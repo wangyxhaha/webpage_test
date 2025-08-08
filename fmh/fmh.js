@@ -7,6 +7,7 @@ import Button from "../button.js";
 import Animation from "../animation.js";
 import Input from "../input.js";
 import "../buttonPlugin.js";
+import "../spritePlugin.js";
 import Music from "../music.js";
 
 var cfg=[
@@ -144,31 +145,36 @@ function build(canvas){
     fmh_answer_box_fake_disable_button.setClickable(false);
     fmh_answer_box_fake_disable_button.setIgnoreClickEven(true);
 
+    function showTalking(img_show,img_ori){
+        img_ori.setTransparentAlpha(0);
+        img_ori.setPostition(0,100);
+        img_show.setTransparentAlpha(1);
+        img_show.slideTo(0,0,0.3);
+    }
+
     var cnt=1;
-    var fmh_door_scene_figure_late=new Button(canvas.scene("fmh_door_scene"),0,0,0,0,11,res.getResource("late"),null,null,()=>{},()=>{});
+    var fmh_door_scene_figure_late=new Button(canvas.scene("fmh_door_scene"),0,100,0,0,12,res.getResource("late"),null,null,()=>{},()=>{});
     fmh_door_scene_figure_late.setTransparentAlpha(0);
-    var fmh_door_scene_figure_talking1=new Button(canvas.scene("fmh_door_scene"),0,0,0,0,11,res.getResource("talking1"),null,null,()=>{},()=>{});
+    var fmh_door_scene_figure_talking1=new Button(canvas.scene("fmh_door_scene"),0,100,0,0,12,res.getResource("talking1"),null,null,()=>{},()=>{});
     fmh_door_scene_figure_talking1.setTransparentAlpha(0);
-    var fmh_door_scene_figure_talking2=new Button(canvas.scene("fmh_door_scene"),0,0,0,0,11,res.getResource("talking2"),null,null,()=>{},()=>{});
+    var fmh_door_scene_figure_talking2=new Button(canvas.scene("fmh_door_scene"),0,100,0,0,12,res.getResource("talking2"),null,null,()=>{},()=>{});
     fmh_door_scene_figure_talking2.setTransparentAlpha(0);
-    var fmh_door_scene_figure_talking3=new Button(canvas.scene("fmh_door_scene"),0,0,0,0,11,res.getResource("talking3"),null,null,()=>{},()=>{});
+    var fmh_door_scene_figure_talking3=new Button(canvas.scene("fmh_door_scene"),0,100,0,0,12,res.getResource("talking3"),null,null,()=>{},()=>{});
     fmh_door_scene_figure_talking3.setTransparentAlpha(0);
+
     var fmh_door_scene_figure=new Button(canvas.scene("fmh_door_scene"),940,577,298,344,11,res.getResource("fmh_figure"),null,null,()=>{
         cnt++;
         if(cnt==4) cnt=1;
         fmh_door_scene_figure_late.setTransparentAlpha(0);
         switch(cnt){
             case 1:
-                fmh_door_scene_figure_talking1.setTransparentAlpha(1);
-                fmh_door_scene_figure_talking3.setTransparentAlpha(0);
+                showTalking(fmh_door_scene_figure_talking1,fmh_door_scene_figure_talking3);
                 break;
             case 2:
-                fmh_door_scene_figure_talking2.setTransparentAlpha(1);
-                fmh_door_scene_figure_talking1.setTransparentAlpha(0);
+                showTalking(fmh_door_scene_figure_talking2,fmh_door_scene_figure_talking1);
                 break;
             case 3:
-                fmh_door_scene_figure_talking3.setTransparentAlpha(1);
-                fmh_door_scene_figure_talking2.setTransparentAlpha(0);
+                showTalking(fmh_door_scene_figure_talking3,fmh_door_scene_figure_talking2);
                 break;
         }
     },()=>{});
@@ -197,7 +203,7 @@ function build(canvas){
         fmh_door_scene_figure.setTransparentAlpha(1);
         fmh_door_scene_figure.setClickable(true);
         fmh_door_scene_figure.slideTo(550,577,0.2);
-        fmh_door_scene_figure_late.setTransparentAlpha(1);
+        showTalking(fmh_door_scene_figure_late,fmh_door_scene_figure_talking1);
     },()=>{});
     fmh_door_scene_clock.setClickable(true);
 
