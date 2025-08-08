@@ -301,22 +301,34 @@ function build(canvas){
         }
     ]);
 
+    //FIXME 摆手时带耳机bug
+
     var byz_door_scene_figure_original_movearm=new Button(canvas.scene("byz_door_scene"),0,0,0,0,21,figure_original_movearm,null,null,()=>{},()=>{});
     byz_door_scene_figure_original_movearm.setTransparentAlpha(0);
+    var moving=false;
 
     var byz_door_scene_figure_original=new Button(canvas.scene("byz_door_scene"),0,0,214,430,22,res.getResource("figure_original"),null,null,()=>{
         byz_door_scene_figure_original.setTransparentAlpha(0);
         byz_door_scene_figure_original_movearm.setTransparentAlpha(1);
+        byz_door_scene_figure_original.setClickable(false);
         figure_original_movearm.start();
+        moving=true;
         setTimeout(()=>{
+            if(moving){
             byz_door_scene_figure_original.setTransparentAlpha(1);
             byz_door_scene_figure_original_movearm.setTransparentAlpha(0);
+            byz_door_scene_figure_original.setClickable(true);
             figure_original_movearm.reset();
+            moving=false;
+            }
         },2000);
     },()=>{},575,420);
 
     var byz_door_scene_ear=new Button(canvas.scene("byz_door_scene"),305,838,64,59,31,res.getResource("ear"),null,null,()=>{},()=>{
         if(checkPosition(byz_door_scene_ear.getPosition())){
+            moving=false;
+            figure_original_movearm.reset();
+            byz_door_scene_figure_original_movearm.setTransparentAlpha(0);
             byz_door_scene_figure_original.setTransparentAlpha(0);
             byz_door_scene_figure_original.setClickable(false);
             //byz_door_scene_figure_ear_movehead.setTransparentAlpha(1);
@@ -380,7 +392,6 @@ function build(canvas){
 
     var ip="";
     var tmp1="",tmp2="",tmp3="";
-    var flag=false;
 
     function checkAnwser(){
         if(tmp1=="LIVE"&&tmp2=="OR"&&tmp3=="DIE") return true;
@@ -389,6 +400,7 @@ function build(canvas){
 
     var textTransform;
 
+    //TODO 输入框disable后再判定正误并切换另一场景
     var byz_top_scene_fake_button=new Button(canvas.scene("byz_top_scene"),167,400,600,81,23,null,null,null,()=>{},()=>{
         byz_top_scene_anwser_box.enable();
         //byz_top_scene_fake_button.setClickable(false);
@@ -396,31 +408,13 @@ function build(canvas){
         textTransform=setInterval(function(){
             byz_top_scene_anwser_box.inputElement.value=byz_top_scene_anwser_box.inputElement.value.split(' ').join('');
             ip=byz_top_scene_anwser_box.inputElement.value;
-            /*length=ip.length;
-            console.log(length);
-            if(length<=4){
-                tmp1=ip;
-                
-                
-            }
-            else if(length<=6){
-                tmp2=ip.slice(4);
-                
-                byz_top_scene_anwser_text_green.value=tmp2;
-            }
-            else if(length<=9){
-                tmp3=ip.slice(6);
-                
-                byz_top_scene_anwser_text_red.value=tmp3;
-            }*/
-           //ip=ip.split(' ').join('');
-           tmp1=ip.substring(0,4).toUpperCase();
-           tmp2=ip.substring(4,6).toUpperCase();
-           tmp3=ip.substring(6,9).toUpperCase();
-           byz_top_scene_anwser_text_blue.value=tmp1.split('').join(' ');
-           byz_top_scene_anwser_text_green.value=tmp2.split('').join(' ');
-           byz_top_scene_anwser_text_red.value=tmp3.split('').join(' ');
-           if(checkAnwser()){
+            tmp1=ip.substring(0,4).toUpperCase();
+            tmp2=ip.substring(4,6).toUpperCase();
+            tmp3=ip.substring(6,9).toUpperCase();
+            byz_top_scene_anwser_text_blue.value=tmp1.split('').join(' ');
+            byz_top_scene_anwser_text_green.value=tmp2.split('').join(' ');
+            byz_top_scene_anwser_text_red.value=tmp3.split('').join(' ');
+            if(checkAnwser()){
                 top_scene.nextFrame();
                 byz_top_scene_bg_button.setClickable(false);
                 byz_top_scene_fake_button.setClickable(false);
@@ -432,16 +426,15 @@ function build(canvas){
 
                 byz_door_scene_lock.setTransparentAlpha(0);
                 byz_answer_box_fake_button.setClickable(true);
-           }
+            }
         },100);
     });
     byz_top_scene_fake_button.setClickable(true);
-
+/*
     const observer=new MutationObserver(()=>{
         tmp=byz_top_scene_anwser_box.inputElement.value;
     });
 
-    /*
     const proxy=new Proxy(byz_top_scene_anwser_box.inputElement,{
         set(target,property,value){
             if(property === 'value'){
