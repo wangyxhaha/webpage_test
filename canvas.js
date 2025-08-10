@@ -98,13 +98,14 @@ export class CanvasScene{ //不同场景（可以方便切换）
         // this.canvasContext.fillRect(0,0,this.logicalWidth,this.logicalHeight);
         // this.canvasContext.fillRect(10,10,this.logicalWidth-20,this.logicalHeight-20);
         this.objectToDraw=new Array(); //包含{layer(图层，越大越靠前),object(需要绘制的对象的this)}
-        this.mouseMoveCallBackArray=new Array();
-        this.mouseDownCallBackArray=new Array();
-        this.mouseUpCallBackArray=new Array();
-        this.touchMoveCallBackArray=new Array();
-        this.touchStartCallBackArray=new Array();
-        this.touchEndCallBackArray=new Array();
-        this.clickFocusPoint=-1; //可点击元素的焦点，-1为无焦点（存在焦点时只对焦点元素进行判定）
+        this.listeners=new Array();
+        // this.mouseMoveCallBackArray=new Array();
+        // this.mouseDownCallBackArray=new Array();
+        // this.mouseUpCallBackArray=new Array();
+        // this.touchMoveCallBackArray=new Array();
+        // this.touchStartCallBackArray=new Array();
+        // this.touchEndCallBackArray=new Array();
+        this.clickFocusPoint=null; //可点击元素的焦点，null为无焦点（存在焦点时只对焦点元素进行判定）
     }
     setBackground(img){
         this.background=img;
@@ -133,36 +134,47 @@ export class CanvasScene{ //不同场景（可以方便切换）
         }
     }
     addClickCallBack(mm,md,mu,tm,ts,te,l){
-        this.mouseMoveCallBackArray.push({func:mm,layer:l});
-        this.mouseMoveCallBackArray.sort((a,b)=>b.layer-a.layer); //以图层从前到后的顺序排序
-        this.mouseDownCallBackArray.push({func:md,layer:l});
-        this.mouseDownCallBackArray.sort((a,b)=>b.layer-a.layer);
-        this.mouseUpCallBackArray.push({func:mu,layer:l});
-        this.mouseUpCallBackArray.sort((a,b)=>b.layer-a.layer);
-        this.touchMoveCallBackArray.push({func:tm,layer:l});
-        this.touchMoveCallBackArray.sort((a,b)=>b.layer-a.layer);
-        this.touchStartCallBackArray.push({func:ts,layer:l});
-        this.touchStartCallBackArray.sort((a,b)=>b.layer-a.layer);
-        this.touchEndCallBackArray.push({func:te,layer:l});
-        this.touchEndCallBackArray.sort((a,b)=>b.layer-a.layer);
+        this.listeners.push({
+            layer: l,
+            mouseMoveCallBack: mm,
+            mouseDownCallBack: md,
+            mouseUpCallBack: mu,
+            touchMoveCall: tm,
+            touchStartCallBack: ts,
+            touchEndCallBack: te
+        });
+        this.listeners.sort((a,b)=>b.layer-a.layer); //以图层从前到后的顺序排序
+        // this.mouseMoveCallBackArray.push({func:mm,layer:l});
+        // this.mouseMoveCallBackArray.sort((a,b)=>b.layer-a.layer); 
+        // this.mouseDownCallBackArray.push({func:md,layer:l});
+        // this.mouseDownCallBackArray.sort((a,b)=>b.layer-a.layer);
+        // this.mouseUpCallBackArray.push({func:mu,layer:l});
+        // this.mouseUpCallBackArray.sort((a,b)=>b.layer-a.layer);
+        // this.touchMoveCallBackArray.push({func:tm,layer:l});
+        // this.touchMoveCallBackArray.sort((a,b)=>b.layer-a.layer);
+        // this.touchStartCallBackArray.push({func:ts,layer:l});
+        // this.touchStartCallBackArray.sort((a,b)=>b.layer-a.layer);
+        // this.touchEndCallBackArray.push({func:te,layer:l});
+        // this.touchEndCallBackArray.sort((a,b)=>b.layer-a.layer);
     }
     mouseMoveCallBack(evt){
         var logicalPos=logicalEvtChange(this,evt);
         // console.log(logicalPos);
-        if (this.clickFocusPoint!=-1){
-            this.mouseMoveCallBackArray[this.clickFocusPoint].func(logicalPos);
+        if (this.clickFocusPoint!==null){
+            // this.mouseMoveCallBackArray[this.clickFocusPoint].func(logicalPos);
+            this.clickFocusPoint.mouseMoveCallBack(logicalPos);
             return;
         }
         var t=true; //从最靠前的开始判定，如果判定成功则把t设为false，并给予后续元素虚假的不可能的逻辑坐标，以免重叠元素被判定
-        for (var i in this.mouseMoveCallBackArray){
+        for (var i in this.listeners){
             if (t){
-                if (this.mouseMoveCallBackArray[i].func(logicalPos)){
+                if (this.listeners[i].mouseMoveCallBack(logicalPos)){
                     // this.clickFocusPoint=i;
                     // break;
                     t=false;
                 }
             }
-            else this.mouseMoveCallBackArray[i].func({x:Infinity,y:Infinity});
+            else this.listeners[i].mouseMoveCallBack({x:Infinity,y:Infinity});
             // this.mouseMoveCallBackArray[i].func(logicalPos);
         }
         // if (t) console.log("mm t=true");
@@ -173,18 +185,18 @@ export class CanvasScene{ //不同场景（可以方便切换）
         //     this.mouseDownCallBackArray[this.clickFocusPoint].func(logicalPos);
         //     return;
         // }
-        for (var i in this.mouseDownCallBackArray){
-            if (this.mouseDownCallBackArray[i].func(logicalPos)){
-                this.clickFocusPoint=i; //只有按下动作会产生焦点
+        for (var i in this.listeners){
+            if (this.listeners[i].mouseDownCallBack(logicalPos)){
+                this.clickFocusPoint=this.listeners[i]; //只有按下动作会产生焦点
                 break;
             }
         }
     }
     mouseUpCallBack(evt){
         var logicalPos=logicalEvtChange(this,evt);
-        if (this.clickFocusPoint!=-1){ //无焦点时松开判定无效
-            this.mouseUpCallBackArray[this.clickFocusPoint].func(logicalPos);
-            this.clickFocusPoint=-1;
+        if (this.clickFocusPoint!==null){ //无焦点时松开判定无效
+            this.clickFocusPoint.mouseUpCallBack(logicalPos);
+            this.clickFocusPoint=null;
             return;
         }
         // for (var i in this.mouseUpCallBackArray){
@@ -194,30 +206,30 @@ export class CanvasScene{ //不同场景（可以方便切换）
     touchMoveCallBack(evt){
         evt.preventDefault(); //触摸屏事件的preventDefault很重要，可防止浏览器模拟鼠标事件导致重复触发
         var logicalPos=logicalEvtChange(this,evt.touches[0]);
-        if (this.clickFocusPoint!=-1){
-            this.touchMoveCallBackArray[this.clickFocusPoint].func(logicalPos);
+        if (this.clickFocusPoint!==null){
+            this.clickFocusPoint.touchMoveCallBack(logicalPos);
             return;
         }
         var t=true;
-        for (var i in this.mouseMoveCallBackArray){
+        for (var i in this.listeners){
             if (t){
-                if (this.touchMoveCallBackArray[i].func(logicalPos)){
+                if (this.listeners[i].touchMoveCallBack(logicalPos)){
                     t=false;
                 }
             }
-            else this.touchMoveCallBackArray[i].func({x:Infinity,y:Infinity});
+            else this.listeners[i].touchMoveCallBack({x:Infinity,y:Infinity});
         }
     }
     touchStartCallBack(evt){
         evt.preventDefault();
         var logicalPos=logicalEvtChange(this,evt.touches[0]);
-        if (this.clickFocusPoint!=-1){ //因为触摸屏有多指点击，有必要限制一下有焦点时的点击
-            this.touchStartCallBackArray[this.clickFocusPoint].func(logicalPos);
+        if (this.clickFocusPoint!==null){ //因为触摸屏有多指点击，有必要限制一下有焦点时的点击
+            this.clickFocusPoint.touchStartCallBack(logicalPos);
             return;
         }
-        for (var i in this.touchStartCallBackArray){
-            if (this.touchStartCallBackArray[i].func(logicalPos)){
-                this.clickFocusPoint=i;
+        for (var i in this.listeners){
+            if (this.listeners[i].touchStartCallBack(logicalPos)){
+                this.clickFocusPoint=this.listeners[i];
                 break;
             }
         }
@@ -225,9 +237,9 @@ export class CanvasScene{ //不同场景（可以方便切换）
     touchEndCallBack(evt){
         evt.preventDefault();
         var logicalPos=logicalEvtChange(this,evt.changedTouches[0]);
-        if (this.clickFocusPoint!=-1){
-            this.touchEndCallBackArray[this.clickFocusPoint].func(logicalPos);
-            this.clickFocusPoint=-1;
+        if (this.clickFocusPoint!==null){
+            this.clickFocusPoint.touchEndCallBack(logicalPos);
+            this.clickFocusPoint==null;
             return;
         }
         // for (var i in this.touchEndCallBackArray){
