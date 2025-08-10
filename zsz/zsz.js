@@ -90,6 +90,11 @@ var cfg=[
         name: "phone",
         type: "image",
         value: "./zsz/data/zsz手机.png"
+    },
+    {
+        name: "win",
+        type: "image",
+        value: "./zsz/data/zsz胜利.png"
     }
 ]
 
@@ -144,6 +149,10 @@ function build(canvas){
         {
             image: res.getResource("lose"),
             interval: Infinity
+        },
+        {
+            image: res.getResource("win"),
+            interval: Infinity
         }
     ]
     );
@@ -155,7 +164,7 @@ function build(canvas){
         zsz_left_scene_start_button.setTransparentAlpha(0);
         zsz_left_scene_start_button.setClickable(false);
         zsz_left_scene_start_button.setIgnoreClickEven(true);
-        console.log("Game Start");
+        //console.log("Game Start");
         document.dispatchEvent(startEvent);
     },()=>{},305,555);
 
@@ -187,7 +196,11 @@ function build(canvas){
  
     document.addEventListener('startGame',()=>{
         //console.log("!start");
-        for(let i=0;i<20;i++) teachers[i].setTransparentAlpha(1),hands[i].setTransparentAlpha(1);
+        for(let i=0;i<20;i++){
+            teachers[i].setTransparentAlpha(1);
+            teachers[i].setPostition(-250,-250);
+            hands[i].setTransparentAlpha(1);
+        }
         zsz_left_scene_right_arrow.setTransparentAlpha(0);
         zsz_left_scene_right_arrow.setClickable(false);
         zsz_left_scene_phone.setTransparentAlpha(1);
@@ -246,12 +259,23 @@ function build(canvas){
         clearInterval(teacherGenerator_medium);clearInterval(handGenerator_medium);
         clearInterval(teacherGenerator_hard);clearInterval(handGenerator_hard);
         for(let i=0;i<20;i++) teachers[i].setTransparentAlpha(0),hands[i].setTransparentAlpha(0);
-        console.log("all clear");
+        //console.log("all clear");
     })
 
     document.addEventListener('winGame',()=>{
-        count_down_text.value=`剩余时间：You Win!`;
-        zsz_game_scene.to(1);
+        zsz_game_scene.to(3);
+        count_down_text.setTransparentAlpha(0);
+        clearInterval(trackInterval);
+        clearInterval(teacherGenerator_easy);clearInterval(handGenerator_easy);
+        clearInterval(teacherGenerator_medium);clearInterval(handGenerator_medium);
+        clearInterval(teacherGenerator_hard);clearInterval(handGenerator_hard);
+        for(let i=0;i<20;i++) teachers[i].setTransparentAlpha(0),hands[i].setTransparentAlpha(0);
+        zsz_left_scene_phone.setTransparentAlpha(0);
+        zsz_left_scene_right_arrow.setTransparentAlpha(1);
+        zsz_left_scene_right_arrow.setClickable(true);
+
+        zsz_door_scene_lock.setTransparentAlpha(0);
+        zsz_answer_box_fake_button.setClickable(true);
     })
 
     //TODO 显示竖向周斌和横向手掌
@@ -276,7 +300,7 @@ function build(canvas){
     var handGenerator_hard;
 
     for(let i=1;i<=20;i++){
-        teachers.push(new Button(canvas.scene("zsz_left_scene"),-200,-200,0,0,11,res.getResource("zhoubin"),null,null,()=>{},()=>{}));
+        teachers.push(new Button(canvas.scene("zsz_left_scene"),-250,-250,0,0,11,res.getResource("zhoubin"),null,null,()=>{},()=>{}));
         hands.push(new Button(canvas.scene("zsz_left_scene"),-250,-250,0,0,11,res.getResource("hand"),null,null,()=>{},()=>{}));
     }
 
@@ -285,17 +309,17 @@ function build(canvas){
         teacherGenerator_easy=setInterval(()=>{
             let y=getRandomNum(0,835);
             let speed=getRandomNum(4000,5000);
-            teachers[cnt1].setPostition(-200,y);
-            teachers[cnt1].moveTo(1000,y,speed);
+            teachers[cnt1].setPostition(-250,y);
+            teachers[cnt1].moveTo(1200,y,speed);
             cnt1++;
-        },2500);
+        },2000);
         handGenerator_easy=setInterval(()=>{
             let x=getRandomNum(0,835);
             let speed=getRandomNum(4000,5000);
             hands[cnt2].setPostition(x,-250);
-            hands[cnt2].moveTo(x,1000,speed);
+            hands[cnt2].moveTo(x,1200,speed);
             cnt2++;
-        },2500);
+        },2000);
     }
 
     function mediumMode(){
@@ -303,15 +327,15 @@ function build(canvas){
         teacherGenerator_medium=setInterval(()=>{
             let y=getRandomNum(0,835);
             let speed=getRandomNum(3000,4000);
-            teachers[cnt1].setPostition(-200,y);
-            teachers[cnt1].moveTo(1000,y,speed);
+            teachers[cnt1].setPostition(-250,y);
+            teachers[cnt1].moveTo(1200,y,speed);
             cnt1++;
         },2000);
         handGenerator_medium=setInterval(()=>{
             let x=getRandomNum(0,835);
             let speed=getRandomNum(3000,4000);
             hands[cnt2].setPostition(x,-250);
-            hands[cnt2].moveTo(x,1000,speed);
+            hands[cnt2].moveTo(x,1200,speed);
             cnt2++;
         },2000);
     }
@@ -322,19 +346,19 @@ function build(canvas){
         teacherGenerator_hard=setInterval(()=>{
             //y=getRandomNum(0,835);
             y=checkPossible(y,getRandomNum(0,835),400);
-            let speed=getRandomNum(2500,3500);
-            teachers[cnt1].setPostition(-200,y);
-            teachers[cnt1].moveTo(1000,y,speed);
+            let speed=getRandomNum(2000,3000);
+            teachers[cnt1].setPostition(-250,y);
+            teachers[cnt1].moveTo(1200,y,speed);
             cnt1++;
-        },1000);
+        },1300);
         handGenerator_hard=setInterval(()=>{
             //x=getRandomNum(0,835);
             x=checkPossible(x,getRandomNum(0,835),300);
-            let speed=getRandomNum(2500,3500);
+            let speed=getRandomNum(2000,3000);
             hands[cnt2].setPostition(x,-250);
-            hands[cnt2].moveTo(x,1000,speed);
+            hands[cnt2].moveTo(x,1200,speed);
             cnt2++;
-        },1000);
+        },1300);
     }
 
     function checkPossible(lst,num,space){
@@ -364,7 +388,7 @@ function build(canvas){
             for(let i=0;i<=19;i++){
                 if(isHit(zsz_left_scene_phone.getPosition(),hands[i].getPosition(),129-20,203-20)) document.dispatchEvent(loseEvent);
             }
-        },100);
+        },16.7);
     });
 
     function isHit(p,object,l,h){
