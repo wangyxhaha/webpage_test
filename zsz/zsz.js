@@ -160,19 +160,23 @@ function build(canvas){
     var zsz_left_scene_game_bg=new Button(canvas.scene("zsz_left_scene"),0,0,0,0,10,zsz_game_scene,null,null,()=>{},()=>{});
 
     var zsz_left_scene_start_button=new Button(canvas.scene("zsz_left_scene"),0,0,308,106,12,res.getResource("start"),null,null,()=>{
-        zsz_game_scene.to(1);
         zsz_left_scene_start_button.setTransparentAlpha(0);
         zsz_left_scene_start_button.setClickable(false);
         zsz_left_scene_start_button.setIgnoreClickEven(true);
         //console.log("Game Start");
+        document.dispatchEvent(setEvent);
+        zsz_game_scene.to(1);
         document.dispatchEvent(startEvent);
     },()=>{},305,555);
 
+    var setEvent=new CustomEvent('setGame');
+    var trackEvent=new CustomEvent('trackGame');
     var startEvent=new CustomEvent('startGame');
     var loseEvent=new CustomEvent('loseGame');
     var winEvent=new CustomEvent('winGame');
 
     var zsz_left_scene_lose_button=new Button(canvas.scene("zsz_left_scene"),0,0,255,67,11,res.getResource("try_again"),null,null,()=>{
+        document.dispatchEvent(setEvent);
         zsz_game_scene.to(0);
         zsz_left_scene_lose_button.setTransparentAlpha(0);
         zsz_left_scene_lose_button.setClickable(false);
@@ -191,27 +195,35 @@ function build(canvas){
     count_down_text.setFontHeight(40);
     count_down_text.setTransparentAlpha(0);
 
+    var ready_text=new Text(canvas.scene("zsz_left_scene"),330,400,31);
+    ready_text.setFillColor("Red");
+    ready_text.setFont("黑体");
+    ready_text.setFontHeight(100);
+    ready_text.setTransparentAlpha(0);
+
+    document.addEventListener('setGame',()=>{
+        for(let i=0;i<=20;i++){
+            teachers[i].setTransparentAlpha(0);
+            teachers[i].setPostition(-200,-200);
+            hands[i].setTransparentAlpha(0);
+            hands[i].setPostition(-200,-200);
+        }
+        zsz_left_scene_right_arrow.setTransparentAlpha(0);
+        zsz_left_scene_right_arrow.setClickable(false);
+        zsz_left_scene_phone.setPostition(383,464);
+    })
+
     var seconds;
     var timer;
  
     document.addEventListener('startGame',()=>{
-        //console.log("!start");
-        for(let i=0;i<20;i++){
-            teachers[i].setTransparentAlpha(1);
-            teachers[i].setPostition(-250,-250);
-            hands[i].setTransparentAlpha(1);
-        }
-        zsz_left_scene_right_arrow.setTransparentAlpha(0);
-        zsz_left_scene_right_arrow.setClickable(false);
         zsz_left_scene_phone.setTransparentAlpha(1);
-        zsz_left_scene_phone.setPostition(383,464);
-
-        seconds=30; //设置倒计时时间
+        seconds=33; //设置倒计时时间
         let startTime=Date.now();
         let totalMs=seconds*1000;
         count_down_text.value=`剩余时间：${seconds} s`;
-        count_down_text.setTransparentAlpha(1);
-        let flag1=false,flag2=false,flag3=false;
+        
+        let flag1=false,flag2=false,flag3=false,flag4=false,flag5=false;
         timer=setInterval(()=>{
             const elapsed=Date.now()-startTime;
             const remaining=Math.max(0,totalMs-elapsed);
@@ -225,40 +237,52 @@ function build(canvas){
                 //document.dispatchEvent(loseEvent); //仅调试用
                 document.dispatchEvent(winEvent);
             }
-            if(seconds==29&&!flag1){
+            if(seconds==32&&!flag1){
                 easyMode();
+                ready_text.value='ready';
+                ready_text.setTransparentAlpha(1);
                 flag1=true;
             }
-            if(seconds==22&&!flag2){
+            if(seconds==31&&!flag2){
+                ready_text.value='GO!!!';
+                flag2=true;
+            }
+            if(seconds==30&&!flag3){
+                document.dispatchEvent(trackEvent);
+                count_down_text.setTransparentAlpha(1);
+                ready_text.setTransparentAlpha(0);
+                flag3=true;
+            }
+            if(seconds==22&&!flag4){
                 clearInterval(teacherGenerator_easy);
                 clearInterval(handGenerator_easy);
                 mediumMode();
-                flag2=true;
+                flag4=true;
             }
-            if(seconds==13&&!flag3){
+            if(seconds==13&&!flag5){
                 clearInterval(teacherGenerator_medium);
                 clearInterval(handGenerator_medium);
                 hardMode();
-                flag3=true;
+                flag5=true;
             }
             //seconds-=1;
         },100);
     });
 
     document.addEventListener('loseGame',()=>{
+        for(let i=0;i<20;i++) teachers[i].setTransparentAlpha(0),hands[i].setTransparentAlpha(0);
         zsz_game_scene.to(2);
         clearInterval(trackInterval);
         clearInterval(timer);
+        clearInterval(teacherGenerator_easy);clearInterval(handGenerator_easy);
+        clearInterval(teacherGenerator_medium);clearInterval(handGenerator_medium);
+        clearInterval(teacherGenerator_hard);clearInterval(handGenerator_hard);
         count_down_text.setTransparentAlpha(0);
         zsz_left_scene_lose_button.setTransparentAlpha(1);
         zsz_left_scene_lose_button.setClickable(true);
         zsz_left_scene_phone.setTransparentAlpha(0);
         zsz_left_scene_right_arrow.setTransparentAlpha(1);
         zsz_left_scene_right_arrow.setClickable(true);
-        clearInterval(teacherGenerator_easy);clearInterval(handGenerator_easy);
-        clearInterval(teacherGenerator_medium);clearInterval(handGenerator_medium);
-        clearInterval(teacherGenerator_hard);clearInterval(handGenerator_hard);
-        for(let i=0;i<20;i++) teachers[i].setTransparentAlpha(0),hands[i].setTransparentAlpha(0);
         //console.log("all clear");
     })
 
@@ -299,7 +323,7 @@ function build(canvas){
     var handGenerator_medium;
     var handGenerator_hard;
 
-    for(let i=1;i<=20;i++){
+    for(let i=0;i<=20;i++){
         teachers.push(new Button(canvas.scene("zsz_left_scene"),-250,-250,0,0,11,res.getResource("zhoubin"),null,null,()=>{},()=>{}));
         hands.push(new Button(canvas.scene("zsz_left_scene"),-250,-250,0,0,11,res.getResource("hand"),null,null,()=>{},()=>{}));
     }
@@ -310,6 +334,7 @@ function build(canvas){
             let y=getRandomNum(0,835);
             let speed=getRandomNum(4000,5000);
             teachers[cnt1].setPostition(-250,y);
+            teachers[cnt1].setTransparentAlpha(1);
             teachers[cnt1].moveTo(1200,y,speed);
             cnt1++;
         },2000);
@@ -317,6 +342,7 @@ function build(canvas){
             let x=getRandomNum(0,835);
             let speed=getRandomNum(4000,5000);
             hands[cnt2].setPostition(x,-250);
+            hands[cnt2].setTransparentAlpha(1);
             hands[cnt2].moveTo(x,1200,speed);
             cnt2++;
         },2000);
@@ -328,6 +354,7 @@ function build(canvas){
             let y=getRandomNum(0,835);
             let speed=getRandomNum(3000,4000);
             teachers[cnt1].setPostition(-250,y);
+            teachers[cnt1].setTransparentAlpha(1);
             teachers[cnt1].moveTo(1200,y,speed);
             cnt1++;
         },2000);
@@ -335,6 +362,7 @@ function build(canvas){
             let x=getRandomNum(0,835);
             let speed=getRandomNum(3000,4000);
             hands[cnt2].setPostition(x,-250);
+            hands[cnt2].setTransparentAlpha(1);
             hands[cnt2].moveTo(x,1200,speed);
             cnt2++;
         },2000);
@@ -348,6 +376,7 @@ function build(canvas){
             y=checkPossible(y,getRandomNum(0,835),400);
             let speed=getRandomNum(2000,3000);
             teachers[cnt1].setPostition(-250,y);
+            teachers[cnt1].setTransparentAlpha(1);
             teachers[cnt1].moveTo(1200,y,speed);
             cnt1++;
         },1300);
@@ -356,6 +385,7 @@ function build(canvas){
             x=checkPossible(x,getRandomNum(0,835),300);
             let speed=getRandomNum(2000,3000);
             hands[cnt2].setPostition(x,-250);
+            hands[cnt2].setTransparentAlpha(1);
             hands[cnt2].moveTo(x,1200,speed);
             cnt2++;
         },1300);
@@ -380,12 +410,12 @@ function build(canvas){
 
     var trackInterval;
 
-    document.addEventListener('startGame',()=>{
+    document.addEventListener('trackGame',()=>{
         trackInterval=setInterval(()=>{
-            for(let i=0;i<=19;i++){
+            for(let i=0;i<=20;i++){
                 if(isHit(zsz_left_scene_phone.getPosition(),teachers[i].getPosition(),180-20,151-20)) document.dispatchEvent(loseEvent);
             }
-            for(let i=0;i<=19;i++){
+            for(let i=0;i<=20;i++){
                 if(isHit(zsz_left_scene_phone.getPosition(),hands[i].getPosition(),129-20,203-20)) document.dispatchEvent(loseEvent);
             }
         },16.7);
