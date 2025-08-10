@@ -130,6 +130,8 @@ function build(canvas){
     zsz_answer_box_fake_disable_button.setClickable(false);
     zsz_answer_box_fake_disable_button.setIgnoreClickEven(true);
 
+    //TODO zsz左场景游戏搭建
+
     var zsz_game_scene=new Animation([
         {
             image: res.getResource("notice"),
@@ -146,8 +148,6 @@ function build(canvas){
     ]
     );
 
-    //TODO zsz左场景游戏搭建
-
     var zsz_left_scene_game_bg=new Button(canvas.scene("zsz_left_scene"),0,0,0,0,10,zsz_game_scene,null,null,()=>{},()=>{});
 
     var zsz_left_scene_start_button=new Button(canvas.scene("zsz_left_scene"),0,0,308,106,12,res.getResource("start"),null,null,()=>{
@@ -161,6 +161,7 @@ function build(canvas){
 
     var startEvent=new CustomEvent('startGame');
     var loseEvent=new CustomEvent('loseGame');
+    var winEvent=new CustomEvent('winGame');
 
     var zsz_left_scene_lose_button=new Button(canvas.scene("zsz_left_scene"),0,0,255,67,11,res.getResource("try_again"),null,null,()=>{
         zsz_game_scene.to(0);
@@ -169,7 +170,6 @@ function build(canvas){
         zsz_left_scene_start_button.setTransparentAlpha(1);
         zsz_left_scene_start_button.setClickable(true);
         zsz_left_scene_start_button.setIgnoreClickEven(false);
-        
     },()=>{},336,610);
     zsz_left_scene_lose_button.setTransparentAlpha(0);
     zsz_left_scene_lose_button.setClickable(false);
@@ -181,53 +181,77 @@ function build(canvas){
     count_down_text.setFont("黑体");
     count_down_text.setFontHeight(40);
     count_down_text.setTransparentAlpha(0);
+
+    var seconds;
+    var timer;
  
     document.addEventListener('startGame',()=>{
         //console.log("!start");
+        for(let i=0;i<20;i++) teachers[i].setTransparentAlpha(1),hands[i].setTransparentAlpha(1);
         zsz_left_scene_right_arrow.setTransparentAlpha(0);
         zsz_left_scene_right_arrow.setClickable(false);
         zsz_left_scene_phone.setTransparentAlpha(1);
         zsz_left_scene_phone.setPostition(383,464);
-        var seconds=30; //设置倒计时时间
+
+        seconds=30; //设置倒计时时间
+        let startTime=Date.now();
+        let totalMs=seconds*1000;
         count_down_text.value=`剩余时间：${seconds} s`;
         count_down_text.setTransparentAlpha(1);
-        const timer=setInterval(()=>{
+        let flag1=false,flag2=false,flag3=false;
+        timer=setInterval(()=>{
+            const elapsed=Date.now()-startTime;
+            const remaining=Math.max(0,totalMs-elapsed);
+            seconds=Math.ceil(remaining/1000);
             count_down_text.value=`剩余时间：${seconds} s`;
+
             if(seconds==0){
                 clearInterval(timer);
                 clearInterval(teacherGenerator_hard);
                 clearInterval(handGenerator_hard);
-                document.dispatchEvent(loseEvent); //仅调试用
+                //document.dispatchEvent(loseEvent); //仅调试用
+                document.dispatchEvent(winEvent);
             }
-            if(seconds==30){
+            if(seconds==29&&!flag1){
                 easyMode();
+                flag1=true;
             }
-            if(seconds==22){
+            if(seconds==22&&!flag2){
                 clearInterval(teacherGenerator_easy);
                 clearInterval(handGenerator_easy);
                 mediumMode();
+                flag2=true;
             }
-            if(seconds==13){
+            if(seconds==13&&!flag3){
                 clearInterval(teacherGenerator_medium);
                 clearInterval(handGenerator_medium);
                 hardMode();
+                flag3=true;
             }
-            seconds-=1;
-        },1000);
+            //seconds-=1;
+        },100);
     });
 
     document.addEventListener('loseGame',()=>{
         zsz_game_scene.to(2);
+        clearInterval(trackInterval);
+        clearInterval(timer);
         count_down_text.setTransparentAlpha(0);
         zsz_left_scene_lose_button.setTransparentAlpha(1);
         zsz_left_scene_lose_button.setClickable(true);
         zsz_left_scene_phone.setTransparentAlpha(0);
-        clearInterval(teacherGenerator_easy);
-        clearInterval(teacherGenerator_medium);
-        clearInterval(teacherGenerator_hard);
-        clearInterval(handGenerator_easy);
-        clearInterval(handGenerator_medium);
-        clearInterval(handGenerator_hard);
+        zsz_left_scene_right_arrow.setTransparentAlpha(1);
+        zsz_left_scene_right_arrow.setClickable(true);
+        clearInterval(teacherGenerator_easy);clearInterval(handGenerator_easy);
+        clearInterval(teacherGenerator_medium);clearInterval(handGenerator_medium);
+        clearInterval(teacherGenerator_hard);clearInterval(handGenerator_hard);
+        for(let i=0;i<20;i++) teachers[i].setTransparentAlpha(0),hands[i].setTransparentAlpha(0);
+        console.log("all clear");
+    })
+
+    document.addEventListener('winGame',()=>{
+        count_down_text.value=`剩余时间：You Win!`;
+        zsz_game_scene.to(1);
     })
 
     //TODO 显示竖向周斌和横向手掌
@@ -251,55 +275,77 @@ function build(canvas){
     var handGenerator_medium;
     var handGenerator_hard;
 
+    for(let i=1;i<=20;i++){
+        teachers.push(new Button(canvas.scene("zsz_left_scene"),-200,-200,0,0,11,res.getResource("zhoubin"),null,null,()=>{},()=>{}));
+        hands.push(new Button(canvas.scene("zsz_left_scene"),-250,-250,0,0,11,res.getResource("hand"),null,null,()=>{},()=>{}));
+    }
+
     function easyMode(){
+        cnt1=cnt2=0;
         teacherGenerator_easy=setInterval(()=>{
-            let x=getRandomNum(0,835);
-            let speed=getRandomNum(4000,5000);
-            teachers.push(new Button(canvas.scene("zsz_left_scene"),x,-200,0,0,11,res.getResource("zhoubin"),null,null,()=>{},()=>{}));
-            teachers[cnt1].moveTo(x,1000,speed);
-            cnt1++;
-        },3000);
-        handGenerator_easy=setInterval(()=>{
             let y=getRandomNum(0,835);
             let speed=getRandomNum(4000,5000);
-            hands.push(new Button(canvas.scene("zsz_left_scene"),-200,y,0,0,11,res.getResource("hand"),null,null,()=>{},()=>{}));
-            hands[cnt2].moveTo(1000,y,speed);
+            teachers[cnt1].setPostition(-200,y);
+            teachers[cnt1].moveTo(1000,y,speed);
+            cnt1++;
+        },2500);
+        handGenerator_easy=setInterval(()=>{
+            let x=getRandomNum(0,835);
+            let speed=getRandomNum(4000,5000);
+            hands[cnt2].setPostition(x,-250);
+            hands[cnt2].moveTo(x,1000,speed);
             cnt2++;
-        },3000);
+        },2500);
     }
 
     function mediumMode(){
+        cnt1=cnt2=0;
         teacherGenerator_medium=setInterval(()=>{
-            let x=getRandomNum(0,835);
+            let y=getRandomNum(0,835);
             let speed=getRandomNum(3000,4000);
-            teachers.push(new Button(canvas.scene("zsz_left_scene"),x,-200,0,0,11,res.getResource("zhoubin"),null,null,()=>{},()=>{}));
-            teachers[cnt1].moveTo(x,1000,speed);
+            teachers[cnt1].setPostition(-200,y);
+            teachers[cnt1].moveTo(1000,y,speed);
             cnt1++;
         },2000);
         handGenerator_medium=setInterval(()=>{
-            let y=getRandomNum(0,835);
+            let x=getRandomNum(0,835);
             let speed=getRandomNum(3000,4000);
-            hands.push(new Button(canvas.scene("zsz_left_scene"),-200,y,0,0,11,res.getResource("hand"),null,null,()=>{},()=>{}));
-            hands[cnt2].moveTo(1000,y,speed);
+            hands[cnt2].setPostition(x,-250);
+            hands[cnt2].moveTo(x,1000,speed);
             cnt2++;
         },2000);
     }
 
-    function hardMode(){
+    function hardMode(){ //FIXME 前后生成的两个物体距离过近导致卡关
+        cnt1=cnt2=0;
+        let x=0,y=0;
         teacherGenerator_hard=setInterval(()=>{
-            let x=getRandomNum(0,835);
-            let speed=getRandomNum(2000,3000);
-            teachers.push(new Button(canvas.scene("zsz_left_scene"),x,-200,0,0,11,res.getResource("zhoubin"),null,null,()=>{},()=>{}));
-            teachers[cnt1].moveTo(x,1000,speed);
+            //y=getRandomNum(0,835);
+            y=checkPossible(y,getRandomNum(0,835),400);
+            let speed=getRandomNum(2500,3500);
+            teachers[cnt1].setPostition(-200,y);
+            teachers[cnt1].moveTo(1000,y,speed);
             cnt1++;
-        },1500);
+        },1000);
         handGenerator_hard=setInterval(()=>{
-            let y=getRandomNum(0,835);
-            let speed=getRandomNum(2000,3000);
-            hands.push(new Button(canvas.scene("zsz_left_scene"),-200,y,0,0,11,res.getResource("hand"),null,null,()=>{},()=>{}));
-            hands[cnt2].moveTo(1000,y,speed);
+            //x=getRandomNum(0,835);
+            x=checkPossible(x,getRandomNum(0,835),300);
+            let speed=getRandomNum(2500,3500);
+            hands[cnt2].setPostition(x,-250);
+            hands[cnt2].moveTo(x,1000,speed);
             cnt2++;
-        },1500);
+        },1000);
+    }
+
+    function checkPossible(lst,num,space){
+        if(Math.abs(lst-num)>=space) return num;
+        if(num>lst){
+            if(lst+space>=835) return lst-space;
+            else return lst+space; 
+        }else{
+            if(lst-space<=0) return lst+space;
+            else return lst-space;
+        }
     }
 
     //TODO 实现手机，判定失败
@@ -307,6 +353,23 @@ function build(canvas){
     var zsz_left_scene_phone=new Button(canvas.scene("zsz_left_scene"),383,464,142,244,10,res.getResource("phone"),null,null,()=>{},()=>{});
     zsz_left_scene_phone.setDraggable(true);
     zsz_left_scene_phone.setTransparentAlpha(0);
+
+    var trackInterval;
+
+    document.addEventListener('startGame',()=>{
+        trackInterval=setInterval(()=>{
+            for(let i=0;i<=19;i++){
+                if(isHit(zsz_left_scene_phone.getPosition(),teachers[i].getPosition(),180-20,151-20)) document.dispatchEvent(loseEvent);
+            }
+            for(let i=0;i<=19;i++){
+                if(isHit(zsz_left_scene_phone.getPosition(),hands[i].getPosition(),129-20,203-20)) document.dispatchEvent(loseEvent);
+            }
+        },100);
+    });
+
+    function isHit(p,object,l,h){
+        return Math.max(p.x,object.x+10)<Math.min(p.x+142,object.x+10+l) && Math.max(p.y,object.y+10)<Math.min(p.y+244,object.y+10+h);
+    }
 
     canvas.changeScene("zsz_door_scene");
 }
