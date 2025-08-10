@@ -295,6 +295,7 @@ function build(canvas){
         clearInterval(teacherGenerator_hard);clearInterval(handGenerator_hard);
         for(let i=0;i<20;i++) teachers[i].setTransparentAlpha(0),hands[i].setTransparentAlpha(0);
         zsz_left_scene_phone.setTransparentAlpha(0);
+        zsz_left_scene_phone.setIgnoreClickEven(true);
         zsz_left_scene_right_arrow.setTransparentAlpha(1);
         zsz_left_scene_right_arrow.setClickable(true);
 
