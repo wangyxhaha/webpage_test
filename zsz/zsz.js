@@ -418,7 +418,7 @@ function build(canvas){
             for(let i=0;i<=20;i++){
                 if(isHit(zsz_left_scene_phone.getPosition(),hands[i].getPosition(),129-20,203-20)) document.dispatchEvent(loseEvent);
             }
-        },16.7);
+        },50);
     });
 
     function isHit(p,object,l,h){
