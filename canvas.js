@@ -30,12 +30,15 @@ class Canvas{
         this.sceneArray=new Array();
         this.sceneArray["main"]=new CanvasScene(canvasid,height,width,null);
         this.nowScene="main";
-        this.canvas.addEventListener("mousemove",this.mouseMoveCallBack.bind(this)) //设置对鼠标移动的监听
-        this.canvas.addEventListener("mousedown",this.mouseDownCallBack.bind(this)) //设置对鼠标按下的监听
-        this.canvas.addEventListener("mouseup",this.mouseUpCallBack.bind(this)) //设置对鼠标松开的监听
-        this.canvas.addEventListener("touchmove",this.touchMoveCallBack.bind(this),{passive:false}) //设置对触摸移动的监听
-        this.canvas.addEventListener("touchstart",this.touchStartCallBack.bind(this),{passive:false}) //设置对触摸屏按下的监听
-        this.canvas.addEventListener("touchend",this.touchEndCallBack.bind(this)) //设置对触摸屏松开的监听
+        this.canvas.addEventListener("pointermove",this.mouseMoveCallBack.bind(this)) //设置对鼠标移动的监听
+        this.canvas.addEventListener("pointerdown",this.mouseDownCallBack.bind(this)) //设置对鼠标按下的监听
+        this.canvas.addEventListener("pointerup",this.mouseUpCallBack.bind(this)) //设置对鼠标松开的监听
+        // this.canvas.addEventListener("mousemove",this.mouseMoveCallBack.bind(this)) //设置对鼠标移动的监听
+        // this.canvas.addEventListener("mousedown",this.mouseDownCallBack.bind(this)) //设置对鼠标按下的监听
+        // this.canvas.addEventListener("mouseup",this.mouseUpCallBack.bind(this)) //设置对鼠标松开的监听
+        // this.canvas.addEventListener("touchmove",this.touchMoveCallBack.bind(this),{passive:false}) //设置对触摸移动的监听
+        // this.canvas.addEventListener("touchstart",this.touchStartCallBack.bind(this),{passive:false}) //设置对触摸屏按下的监听
+        // this.canvas.addEventListener("touchend",this.touchEndCallBack.bind(this)) //设置对触摸屏松开的监听
         this.mainLoop=()=>{
             this.draw();
             requestAnimationFrame(this.mainLoop);
@@ -144,18 +147,6 @@ export class CanvasScene{ //不同场景（可以方便切换）
             touchEndCallBack: te
         });
         this.listeners.sort((a,b)=>b.layer-a.layer); //以图层从前到后的顺序排序
-        // this.mouseMoveCallBackArray.push({func:mm,layer:l});
-        // this.mouseMoveCallBackArray.sort((a,b)=>b.layer-a.layer); 
-        // this.mouseDownCallBackArray.push({func:md,layer:l});
-        // this.mouseDownCallBackArray.sort((a,b)=>b.layer-a.layer);
-        // this.mouseUpCallBackArray.push({func:mu,layer:l});
-        // this.mouseUpCallBackArray.sort((a,b)=>b.layer-a.layer);
-        // this.touchMoveCallBackArray.push({func:tm,layer:l});
-        // this.touchMoveCallBackArray.sort((a,b)=>b.layer-a.layer);
-        // this.touchStartCallBackArray.push({func:ts,layer:l});
-        // this.touchStartCallBackArray.sort((a,b)=>b.layer-a.layer);
-        // this.touchEndCallBackArray.push({func:te,layer:l});
-        // this.touchEndCallBackArray.sort((a,b)=>b.layer-a.layer);
     }
     mouseMoveCallBack(evt){
         var logicalPos=logicalEvtChange(this,evt);
@@ -206,6 +197,7 @@ export class CanvasScene{ //不同场景（可以方便切换）
     touchMoveCallBack(evt){
         evt.preventDefault(); //触摸屏事件的preventDefault很重要，可防止浏览器模拟鼠标事件导致重复触发
         var logicalPos=logicalEvtChange(this,evt.touches[0]);
+        console.log(this.clickFocusPoint);
         if (this.clickFocusPoint!==null){
             this.clickFocusPoint.touchMoveCallBack(logicalPos);
             return;
@@ -223,8 +215,9 @@ export class CanvasScene{ //不同场景（可以方便切换）
     touchStartCallBack(evt){
         evt.preventDefault();
         var logicalPos=logicalEvtChange(this,evt.touches[0]);
+        console.log(this.clickFocusPoint);
         if (this.clickFocusPoint!==null){ //因为触摸屏有多指点击，有必要限制一下有焦点时的点击
-            this.clickFocusPoint.touchStartCallBack(logicalPos);
+            // this.clickFocusPoint.touchStartCallBack(logicalPos);
             return;
         }
         for (var i in this.listeners){
@@ -237,6 +230,7 @@ export class CanvasScene{ //不同场景（可以方便切换）
     touchEndCallBack(evt){
         evt.preventDefault();
         var logicalPos=logicalEvtChange(this,evt.changedTouches[0]);
+        console.log(this.clickFocusPoint);
         if (this.clickFocusPoint!==null){
             this.clickFocusPoint.touchEndCallBack(logicalPos);
             this.clickFocusPoint=null;
