@@ -156,7 +156,7 @@ function build(canvas){
         if (p.x<=30 && p.x>=-30 && p.y<=30 && p.y>=-30){
             gy_door_scene_lock.setTransparentAlpha(0);
             gy_answer_box_fake_button.setClickable(true);
-            gy_door_scene_liekai.setPostition(0,0);
+            gy_door_scene_liekai.setPosition(0,0);
         }
         else{
             gy_door_scene_lock.setTransparentAlpha(1);

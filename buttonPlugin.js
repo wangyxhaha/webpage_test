@@ -22,3 +22,7 @@ Button.prototype.isCoincide=function(anotherButton){
 Button.prototype.isPositionIn=function(pos){
     return pos.x>=this.x+this.boxX && pos.x<=this.x+this.boxX+this.boxWidth && pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxY+this.boxHeight;
 }
+
+Button.prototype.setPosition_center=function(x,y){
+    this.setPosition
+}

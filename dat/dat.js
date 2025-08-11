@@ -329,18 +329,18 @@ function build(canvas){
                 dat_door_scene_lock.setTransparentAlpha(0);
                 dat_answer_box_fake_button.setClickable(true);
             }
-            else dat_left_scene_candle.setPostition(405,365);
+            else dat_left_scene_candle.setPosition(405,365);
         }
     });
     dat_left_scene_candle.setDraggable(true);
 
     var dat_left_scene_undo=new Button(canvas.scene("dat_left_scene"),30,30,113,113,40,res.getResource("undo"),null,null,()=>{},()=>{
-        dat_left_scene_wonu1.setPostition(123,153);
-        dat_left_scene_suanla1.setPostition(228,213);
-        dat_left_scene_jiangshi1.setPostition(685,39);
-        dat_left_scene_xian1.setPostition(487,117);
-        dat_left_scene_gong1.setPostition(524,233);
-        dat_left_scene_candle.setPostition(405,365);
+        dat_left_scene_wonu1.setPosition(123,153);
+        dat_left_scene_suanla1.setPosition(228,213);
+        dat_left_scene_jiangshi1.setPosition(685,39);
+        dat_left_scene_xian1.setPosition(487,117);
+        dat_left_scene_gong1.setPosition(524,233);
+        dat_left_scene_candle.setPosition(405,365);
     });
 
     canvas.changeScene("dat_door_scene");

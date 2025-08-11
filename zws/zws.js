@@ -258,7 +258,7 @@ function build(canvas){
         if (targetX<333) tar=0; //先判断在哪一块
         else if (targetX>=333 && targetX<603) tar=1;
         else tar=2;
-        zws_right_scene_hair[hairP[now]].setPostition(line[tar]-hairdx[hairP[now]],hairy[hairP[now]]); //先将被拖动的移过去
+        zws_right_scene_hair[hairP[now]].setPosition(line[tar]-hairdx[hairP[now]],hairy[hairP[now]]); //先将被拖动的移过去
         if (now==tar) return; //如果被拖动的和目标是一个位置，无需后续
         zws_right_scene_hair[hairP[tar]].setDraggable(false);
         let temp=hairP[tar];
@@ -278,7 +278,7 @@ function build(canvas){
         if (targetX<333) tar=0; //先判断在哪一块
         else if (targetX>=333 && targetX<603) tar=1;
         else tar=2;
-        zws_right_scene_costume[cosP[now]].setPostition(line[tar]-cosdx[cosP[now]],cosy[cosP[now]]); //先将被拖动的移过去
+        zws_right_scene_costume[cosP[now]].setPosition(line[tar]-cosdx[cosP[now]],cosy[cosP[now]]); //先将被拖动的移过去
         if (now==tar) return; //如果被拖动的和目标是一个位置，无需后续
         zws_right_scene_costume[cosP[tar]].setDraggable(false);
         let temp=cosP[tar];

@@ -26,7 +26,7 @@ class Sprite{
     set y(m){
         this.trueY=m;
     }
-    setPostition(x,y){
+    setPosition(x,y){
         this.x=x;
         this.y=y;
     }
