@@ -151,6 +151,10 @@ export class CanvasScene{ //不同场景（可以方便切换）
     mouseMoveCallBack(evt){
         var logicalPos=logicalEvtChange(this,evt);
         // console.log(logicalPos);
+        if (evt.pointerType==="touch" && evt.pressure.length>1){
+            evt.preventDefault();
+            return;
+        }
         if (this.clickFocusPoint!==null){
             // this.mouseMoveCallBackArray[this.clickFocusPoint].func(logicalPos);
             this.clickFocusPoint.mouseMoveCallBack(logicalPos);
@@ -176,6 +180,10 @@ export class CanvasScene{ //不同场景（可以方便切换）
         //     this.mouseDownCallBackArray[this.clickFocusPoint].func(logicalPos);
         //     return;
         // }
+        if (evt.pointerType==="touch" && evt.pressure.length>1){
+            evt.preventDefault();
+            return;
+        }
         for (var i in this.listeners){
             if (this.listeners[i].mouseDownCallBack(logicalPos)){
                 this.clickFocusPoint=this.listeners[i]; //只有按下动作会产生焦点
@@ -185,6 +193,10 @@ export class CanvasScene{ //不同场景（可以方便切换）
     }
     mouseUpCallBack(evt){
         var logicalPos=logicalEvtChange(this,evt);
+        if (evt.pointerType==="touch" && evt.pressure.length>1){
+            evt.preventDefault();
+            return;
+        }
         if (this.clickFocusPoint!==null){ //无焦点时松开判定无效
             this.clickFocusPoint.mouseUpCallBack(logicalPos);
             this.clickFocusPoint=null;
