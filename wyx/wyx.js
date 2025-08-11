@@ -273,17 +273,17 @@ function build(canvas){
     var wyx_answer_box_fake_button=new Button(canvas.scene("wyx_door_scene"),362,395,180,98,2,null,null,null,()=>{},()=>{
         wyx_answer_box.enable();
         wyx_answer_box_fake_disable_button.setClickable(true);
-        wyx_answer_box_fake_disable_button.setIgnoreClickEven(false);
+        wyx_answer_box_fake_disable_button.setIgnoreClickEvent(false);
     });
     wyx_answer_box_fake_button.setClickable(false);
 
     var wyx_answer_box_fake_disable_button=new Button(canvas.scene("wyx_door_scene"),0,0,935,935,10,null,null,null,()=>{},()=>{
         wyx_answer_box.disable();
         wyx_answer_box_fake_disable_button.setClickable(false);
-        wyx_answer_box_fake_disable_button.setIgnoreClickEven(true);
+        wyx_answer_box_fake_disable_button.setIgnoreClickEvent(true);
     });
     wyx_answer_box_fake_disable_button.setClickable(false);
-    wyx_answer_box_fake_disable_button.setIgnoreClickEven(true);
+    wyx_answer_box_fake_disable_button.setIgnoreClickEvent(true);
 
     var wyx_easter_egg_resolve;
     var wyx_easter_egg_fake_button=new Button(canvas.scene("wyx_easter_egg"),0,0,935,935,10,null,null,null,()=>{},()=>{
@@ -311,7 +311,7 @@ function build(canvas){
                 if (codes[nowChara]==='\n'){ //处理换行
                     for (let i=0;i<codeLines.length;i++){
                         let p=codeLines[i].getPosition();
-                        codeLines[i].setPostition(p.x,p.y-dy);
+                        codeLines[i].setPosition(p.x,p.y-dy);
                     }
                     codeLines.push(new Text(canvas.scene("wyx_right_scene"),initalX,initalY));
                     codeLines[codeLines.length-1].setFillColor("#5ee9aaff");
@@ -474,17 +474,17 @@ function build(canvas){
     wyx_right_scene_code_option_forward.setClickable(false);
     wyx_right_scene_code_option_backward.setClickable(false);
 
-    wyx_right_scene_code_option_left.setIgnoreClickEven(true);
-    wyx_right_scene_code_option_right.setIgnoreClickEven(true);
-    wyx_right_scene_code_option_forward.setIgnoreClickEven(true);
-    wyx_right_scene_code_option_backward.setIgnoreClickEven(true);
+    wyx_right_scene_code_option_left.setIgnoreClickEvent(true);
+    wyx_right_scene_code_option_right.setIgnoreClickEvent(true);
+    wyx_right_scene_code_option_forward.setIgnoreClickEvent(true);
+    wyx_right_scene_code_option_backward.setIgnoreClickEvent(true);
 
     async function chooseOption(ans,x,y){
         // console.log(ans,x,y);
-        wyx_right_scene_code_option_left.setPostition(x,y);
-        wyx_right_scene_code_option_right.setPostition(x,y+62);
-        wyx_right_scene_code_option_forward.setPostition(x,y+62*2);
-        wyx_right_scene_code_option_backward.setPostition(x,y+62*3);
+        wyx_right_scene_code_option_left.setPosition(x,y);
+        wyx_right_scene_code_option_right.setPosition(x,y+62);
+        wyx_right_scene_code_option_forward.setPosition(x,y+62*2);
+        wyx_right_scene_code_option_backward.setPosition(x,y+62*3);
         
         wyx_right_scene_code_option_left.setTransparentAlpha(0.5);
         wyx_right_scene_code_option_right.setTransparentAlpha(0.5);
@@ -496,10 +496,10 @@ function build(canvas){
         wyx_right_scene_code_option_forward.setClickable(true);
         wyx_right_scene_code_option_backward.setClickable(true);
         
-        wyx_right_scene_code_option_left.setIgnoreClickEven(false);
-        wyx_right_scene_code_option_right.setIgnoreClickEven(false);
-        wyx_right_scene_code_option_forward.setIgnoreClickEven(false);
-        wyx_right_scene_code_option_backward.setIgnoreClickEven(false);
+        wyx_right_scene_code_option_left.setIgnoreClickEvent(false);
+        wyx_right_scene_code_option_right.setIgnoreClickEvent(false);
+        wyx_right_scene_code_option_forward.setIgnoreClickEvent(false);
+        wyx_right_scene_code_option_backward.setIgnoreClickEvent(false);
 
         let result=await Promise.any(
             [
@@ -528,10 +528,10 @@ function build(canvas){
         wyx_right_scene_code_option_forward.setClickable(false);
         wyx_right_scene_code_option_backward.setClickable(false);
 
-        wyx_right_scene_code_option_left.setIgnoreClickEven(true);
-        wyx_right_scene_code_option_right.setIgnoreClickEven(true);
-        wyx_right_scene_code_option_forward.setIgnoreClickEven(true);
-        wyx_right_scene_code_option_backward.setIgnoreClickEven(true);
+        wyx_right_scene_code_option_left.setIgnoreClickEvent(true);
+        wyx_right_scene_code_option_right.setIgnoreClickEvent(true);
+        wyx_right_scene_code_option_forward.setIgnoreClickEvent(true);
+        wyx_right_scene_code_option_backward.setIgnoreClickEvent(true);
 
         if (ans.every(v=>v!==result)){
             codeLines[codeLines.length-1].shakeHorizontally();
@@ -563,21 +563,21 @@ function build(canvas){
     }));
     for (let i=0;i<11;i++){
         wyx_right_scene_number_keyboard[i].setClickable(false);
-        wyx_right_scene_number_keyboard[i].setIgnoreClickEven(true);
+        wyx_right_scene_number_keyboard[i].setIgnoreClickEvent(true);
         wyx_right_scene_number_keyboard[i].setTransparentAlpha(0);
     }
 
     async function inputNum(ans,x,y){ //输入数字
         for (let i=0;i<9;i++){
-            wyx_right_scene_number_keyboard[i+1].setPostition(x+(i%3)*100,y+Math.floor(i/3)*100);
+            wyx_right_scene_number_keyboard[i+1].setPosition(x+(i%3)*100,y+Math.floor(i/3)*100);
         }
-        wyx_right_scene_number_keyboard[0].setPostition(x,y+300);
-        wyx_right_scene_number_keyboard[10].setPostition(x+100,y+300);
-        wyx_right_scene_fake_text.setPostition(x,y);
+        wyx_right_scene_number_keyboard[0].setPosition(x,y+300);
+        wyx_right_scene_number_keyboard[10].setPosition(x+100,y+300);
+        wyx_right_scene_fake_text.setPosition(x,y);
         wyx_right_scene_fake_text.clear();
         for (let i=0;i<11;i++){
             wyx_right_scene_number_keyboard[i].setClickable(true);
-            wyx_right_scene_number_keyboard[i].setIgnoreClickEven(false);
+            wyx_right_scene_number_keyboard[i].setIgnoreClickEvent(false);
             wyx_right_scene_number_keyboard[i].setTransparentAlpha(0.5);
         }
         wyx_right_scene_fake_text.setTransparentAlpha(1);
@@ -591,7 +591,7 @@ function build(canvas){
 
         for (let i=0;i<11;i++){
             wyx_right_scene_number_keyboard[i].setClickable(false);
-            wyx_right_scene_number_keyboard[i].setIgnoreClickEven(true);
+            wyx_right_scene_number_keyboard[i].setIgnoreClickEvent(true);
             wyx_right_scene_number_keyboard[i].setTransparentAlpha(0);
         }
         wyx_right_scene_fake_text.setTransparentAlpha(0);
@@ -635,7 +635,7 @@ function build(canvas){
 
     var wyx_right_scene_turtle=new Button(canvas.scene("wyx_right_scene"),468,468,0,0,0,turtle,null,null,()=>{},()=>{});
     wyx_right_scene_turtle.setClickable(false);
-    wyx_right_scene_turtle.setIgnoreClickEven(true);
+    wyx_right_scene_turtle.setIgnoreClickEvent(true);
     wyx_right_scene_turtle.setTransparentAlpha(0);
     var lines=[];
 
@@ -657,13 +657,13 @@ function build(canvas){
             let nowTime=performance.now();
             let s=v/1000*(nowTime-startTime);
             if (s>=distance){
-                wyx_right_scene_turtle.setPostition(destinations[des].x-12,destinations[des].y-12);
+                wyx_right_scene_turtle.setPosition(destinations[des].x-12,destinations[des].y-12);
                 moveReslove();
                 return;
             }
             let sinx=(destinations[des].y-startP.y)/distance;
             let cosx=(destinations[des].x-startP.x)/distance;
-            wyx_right_scene_turtle.setPostition(startP.x+s*cosx-12,startP.y+s*sinx-12);
+            wyx_right_scene_turtle.setPosition(startP.x+s*cosx-12,startP.y+s*sinx-12);
             if (destinations[des].line){
                 lines[lines.length-1].setEnd(startP.x+s*cosx,startP.y+s*sinx);
             }
@@ -695,7 +695,7 @@ function build(canvas){
             colorLevel=Math.min(colorLevel+1,5);
             wyx_left_scene_printmaking_colored.setTransparentAlpha(colorLevel/5);
         }
-        wyx_left_scene_brush.setPostition(749,300);
+        wyx_left_scene_brush.setPosition(749,300);
     });
     wyx_left_scene_brush.setDraggable(true);
 
@@ -720,14 +720,14 @@ function build(canvas){
             check();
         }
         else{
-            wyx_left_scene_paper.setPostition(172,497);
+            wyx_left_scene_paper.setPosition(172,497);
         }
     });
     wyx_left_scene_paper.setDraggable(true);
 
     var wyx_left_scene_printmaking_final=new Button(canvas.scene("wyx_left_scene"),0,0,0,0,4,res.getResource("printmaking_final"),null,null,()=>{},()=>{});
     wyx_left_scene_printmaking_final.setClickable(false);
-    wyx_left_scene_printmaking_final.setIgnoreClickEven(true);
+    wyx_left_scene_printmaking_final.setIgnoreClickEvent(true);
     wyx_left_scene_printmaking_final.setTransparentAlpha(0);
 
     function check(){

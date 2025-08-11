@@ -9,7 +9,7 @@ import Dialog from "./dialog.js";
 var canvas=new Canvas("gameCanvas",935,935)
 
 
-import("./lzan/lzan.js")
+import("./qsy/qsy.js")
     .then(module=>{
         module.default.init(canvas);
     });
