@@ -139,7 +139,7 @@ export class CanvasScene{ //不同场景（可以方便切换）
             mouseMoveCallBack: mm,
             mouseDownCallBack: md,
             mouseUpCallBack: mu,
-            touchMoveCall: tm,
+            touchMoveCallBack: tm,
             touchStartCallBack: ts,
             touchEndCallBack: te
         });
@@ -239,7 +239,7 @@ export class CanvasScene{ //不同场景（可以方便切换）
         var logicalPos=logicalEvtChange(this,evt.changedTouches[0]);
         if (this.clickFocusPoint!==null){
             this.clickFocusPoint.touchEndCallBack(logicalPos);
-            this.clickFocusPoint==null;
+            this.clickFocusPoint=null;
             return;
         }
         // for (var i in this.touchEndCallBackArray){
