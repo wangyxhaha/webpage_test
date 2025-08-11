@@ -132,17 +132,17 @@ function build(canvas){
     var fmh_answer_box_fake_button=new Button(canvas.scene("fmh_door_scene"),362,395,180,98,2,null,null,null,()=>{},()=>{
         fmh_answer_box.enable();
         fmh_answer_box_fake_disable_button.setClickable(true);
-        fmh_answer_box_fake_disable_button.setIgnoreClickEven(false);
+        fmh_answer_box_fake_disable_button.setIgnoreClickEvent(false);
     });
     fmh_answer_box_fake_button.setClickable(false);
 
     var fmh_answer_box_fake_disable_button=new Button(canvas.scene("fmh_door_scene"),0,0,935,935,2,null,null,null,()=>{},()=>{
         fmh_answer_box.disable();
         fmh_answer_box_fake_disable_button.setClickable(false);
-        fmh_answer_box_fake_disable_button.setIgnoreClickEven(true);
+        fmh_answer_box_fake_disable_button.setIgnoreClickEvent(true);
     });
     fmh_answer_box_fake_disable_button.setClickable(false);
-    fmh_answer_box_fake_disable_button.setIgnoreClickEven(true);
+    fmh_answer_box_fake_disable_button.setIgnoreClickEvent(true);
 
     var cnt=1;
     var fmh_door_scene_figure_late=new Button(canvas.scene("fmh_door_scene"),0,0,0,0,11,res.getResource("late"),null,null,()=>{},()=>{});

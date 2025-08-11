@@ -23,6 +23,10 @@ Button.prototype.isPositionIn=function(pos){
     return pos.x>=this.x+this.boxX && pos.x<=this.x+this.boxX+this.boxWidth && pos.y>=this.y+this.boxY && pos.y<=this.y+this.boxY+this.boxHeight;
 }
 
-Button.prototype.setPosition_center=function(x,y){
-    this.setPosition
+Button.prototype.setPosition_boxCenter=function(x,y){
+    this.setPosition(x-this.boxX-this.boxWidth/2,y-this.boxY-this.boxHeight/2);
+}
+
+Button.prototype.getPosition_boxCenter=function(){
+    return {x:this.x+this.boxX+this.boxWidth/2,y:this.y+this.boxY+this.boxHeight/2};
 }

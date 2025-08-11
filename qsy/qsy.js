@@ -157,21 +157,20 @@ function build(canvas){
     qsy_answer_box.setFontHeight(40);
     qsy_answer_box.setFont("黑体");
     qsy_answer_box.clear();
-    qsy_answer_box.setTransparentAlpha(0);
     var qsy_answer_box_fake_button=new Button(canvas.scene("qsy_door_scene"),362,395,180,98,2,null,null,null,()=>{},()=>{
         qsy_answer_box.enable();
         qsy_answer_box_fake_disable_button.setClickable(true);
-        qsy_answer_box_fake_disable_button.setIgnoreClickEven(false);
+        qsy_answer_box_fake_disable_button.setIgnoreClickEvent(false);
     });
     qsy_answer_box_fake_button.setClickable(false);
 
     var qsy_answer_box_fake_disable_button=new Button(canvas.scene("qsy_door_scene"),0,0,935,935,10,null,null,null,()=>{},()=>{
         qsy_answer_box.disable();
         qsy_answer_box_fake_disable_button.setClickable(false);
-        qsy_answer_box_fake_disable_button.setIgnoreClickEven(true);
+        qsy_answer_box_fake_disable_button.setIgnoreClickEvent(true);
     });
     qsy_answer_box_fake_disable_button.setClickable(false);
-    qsy_answer_box_fake_disable_button.setIgnoreClickEven(true);
+    qsy_answer_box_fake_disable_button.setIgnoreClickEvent(true);
 
     var qsy_left_scene_stick=new Button(canvas.scene("qsy_left_scene"),779,46,76,231,11,res.getResource("stick"),null,null,()=>{},()=>check());
     var qsy_left_scene_tomas=new Button(canvas.scene("qsy_left_scene"),268,130,197,202,12,res.getResource("tomas"),null,null,()=>{},()=>check());
@@ -202,44 +201,63 @@ function build(canvas){
     var qsy_left_scene_ai_cow_and_foot_and_planet=new Button(canvas.scene("qsy_left_scene"),0,0,485,381,27,res.getResource("cow&foot&planet"),null,null,()=>{},()=>{});
 
     qsy_left_scene_aitung.setDraggable(true);
-    qsy_left_scene_aitung.setIgnoreClickEven(true);
+    qsy_left_scene_aitung.setIgnoreClickEvent(true);
     qsy_left_scene_aitung.setTransparentAlpha(0);
     qsy_left_scene_aicap.setDraggable(true);
-    qsy_left_scene_aicap.setIgnoreClickEven(true);
+    qsy_left_scene_aicap.setIgnoreClickEvent(true);
     qsy_left_scene_aicap.setTransparentAlpha(0);
     qsy_left_scene_aishark.setDraggable(true);
-    qsy_left_scene_aishark.setIgnoreClickEven(true)
+    qsy_left_scene_aishark.setIgnoreClickEvent(true)
     qsy_left_scene_aishark.setTransparentAlpha(0);
     qsy_left_scene_ai_cow_and_foot.setDraggable(true);
-    qsy_left_scene_ai_cow_and_foot.setIgnoreClickEven(true)
+    qsy_left_scene_ai_cow_and_foot.setIgnoreClickEvent(true)
     qsy_left_scene_ai_cow_and_foot.setTransparentAlpha(0);
     qsy_left_scene_ai_foot_and_planet.setDraggable(true);
-    qsy_left_scene_ai_foot_and_planet.setIgnoreClickEven(true)
+    qsy_left_scene_ai_foot_and_planet.setIgnoreClickEvent(true)
     qsy_left_scene_ai_foot_and_planet.setTransparentAlpha(0);
     qsy_left_scene_ai_cow_and_planet.setDraggable(true);
-    qsy_left_scene_ai_cow_and_planet.setIgnoreClickEven(true)
+    qsy_left_scene_ai_cow_and_planet.setIgnoreClickEvent(true)
     qsy_left_scene_ai_cow_and_planet.setTransparentAlpha(0);
     qsy_left_scene_ai_cow_and_foot_and_planet.setDraggable(true);
-    qsy_left_scene_ai_cow_and_foot_and_planet.setIgnoreClickEven(true)
+    qsy_left_scene_ai_cow_and_foot_and_planet.setIgnoreClickEvent(true)
     qsy_left_scene_ai_cow_and_foot_and_planet.setTransparentAlpha(0);
 
-    var tungFlag=false;
-    var capFlag=false;
-    var sharkFlag=false;
-    var cfFlag=false;
-    var fpFlag=false;
-    var cpFlag=false;
-    var cfpFlag=false;
+    async function foo(a,b,c){
+        if (!a.ignoreClickEvent && !b.ignoreClickEvent && a.isCoincide(b)){
+            a.setIgnoreClickEvent(true);
+            b.setIgnoreClickEvent(true);
+            let p1=a.getPosition_boxCenter();
+            let p2=b.getPosition_boxCenter();
+            c.setPosition_boxCenter((p1.x+p2.x)/2,(p1.y+p2.y)/2);
+            a.shakeHorizontally(2000);
+            b.shakeHorizontally(2000);
+            c.shakeHorizontally(2000);
+            setTimeout(()=>{
+                a.setTransparentAlpha(0);
+                b.setTransparentAlpha(0);
+                c.setTransparentAlpha(1);
+            },1000);
+            setTimeout(()=>{
+                c.setIgnoreClickEvent(false);
+                if (!qsy_left_scene_aitung.ignoreClickEvent && !qsy_left_scene_aishark.ignoreClickEvent && !qsy_left_scene_aicap.ignoreClickEvent && !qsy_left_scene_ai_cow_and_foot_and_planet.ignoreClickEvent){
+                    qsy_door_scene_lock.setTransparentAlpha(0);
+                    qsy_answer_box_fake_button.setClickable(true);
+                }
+            },2000);
+        }
+    }
 
     function check(){
-        if (!tungFlag && qsy_left_scene_stick.isCoincide(qsy_left_scene_tomas)){
-            tungFlag=true;
-            qsy_left_scene_stick.setIgnoreClickEven(true);
-            qsy_left_scene_tomas.setIgnoreClickEven(true);
-            
-            qsy_left_scene_stick.shakeHorizontally(2000);
-            qsy_left_scene_tomas.shakeHorizontally(2000);
-        }
+        foo(qsy_left_scene_stick,qsy_left_scene_tomas,qsy_left_scene_aitung);
+        foo(qsy_left_scene_ninja,qsy_left_scene_cap,qsy_left_scene_aicap);
+        foo(qsy_left_scene_shark,qsy_left_scene_shoes,qsy_left_scene_aishark);
+        foo(qsy_left_scene_cow,qsy_left_scene_foot,qsy_left_scene_ai_cow_and_foot);
+        foo(qsy_left_scene_cow,qsy_left_scene_planet,qsy_left_scene_ai_cow_and_planet);
+        foo(qsy_left_scene_foot,qsy_left_scene_planet,qsy_left_scene_ai_foot_and_planet);
+        foo(qsy_left_scene_ai_cow_and_foot,qsy_left_scene_planet,qsy_left_scene_ai_cow_and_foot_and_planet);
+        foo(qsy_left_scene_ai_cow_and_planet,qsy_left_scene_foot,qsy_left_scene_ai_cow_and_foot_and_planet);
+        foo(qsy_left_scene_ai_foot_and_planet,qsy_left_scene_cow,qsy_left_scene_ai_cow_and_foot_and_planet);
+        console.log(qsy_left_scene_aitung.ignoreClickEvent,qsy_left_scene_aishark.ignoreClickEvent,qsy_left_scene_aicap.ignoreClickEvent,qsy_left_scene_ai_cow_and_foot_and_planet.ignoreClickEvent)
     }
 
     canvas.changeScene("qsy_door_scene");

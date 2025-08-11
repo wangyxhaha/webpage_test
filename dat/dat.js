@@ -159,11 +159,11 @@ function build(canvas){
     var dat_top_scene_down_arrow=new Button(canvas.scene("dat_top_scene"),0,0,88,46,0,res.getResource("down_arrow"),null,null,()=>{},()=>canvas.changeScene("dat_door_scene"),416,833);
     
     var dat_door_scene_saying1=new Button(canvas.scene("dat_door_scene"),0,0,0,0,4,res.getResource("dat_saying1"),null,null,()=>{},()=>{});
-    dat_door_scene_saying1.setIgnoreClickEven(true);
+    dat_door_scene_saying1.setIgnoreClickEvent(true);
     dat_door_scene_saying1.setTransparentAlpha(0);
 
     var dat_door_scene_saying2=new Button(canvas.scene("dat_door_scene"),0,0,0,0,4,res.getResource("dat_saying2"),null,null,()=>{},()=>{});
-    dat_door_scene_saying2.setIgnoreClickEven(true);
+    dat_door_scene_saying2.setIgnoreClickEvent(true);
     dat_door_scene_saying2.setTransparentAlpha(0);
 
     var sayingCnt=0;
@@ -196,17 +196,17 @@ function build(canvas){
     var dat_answer_box_fake_button=new Button(canvas.scene("dat_door_scene"),362,395,180,98,2,null,null,null,()=>{},()=>{
         dat_answer_box.enable();
         dat_answer_box_fake_disable_button.setClickable(true);
-        dat_answer_box_fake_disable_button.setIgnoreClickEven(false);
+        dat_answer_box_fake_disable_button.setIgnoreClickEvent(false);
     });
     dat_answer_box_fake_button.setClickable(false);
 
     var dat_answer_box_fake_disable_button=new Button(canvas.scene("dat_door_scene"),0,0,935,935,10,null,null,null,()=>{},()=>{
         dat_answer_box.disable();
         dat_answer_box_fake_disable_button.setClickable(false);
-        dat_answer_box_fake_disable_button.setIgnoreClickEven(true);
+        dat_answer_box_fake_disable_button.setIgnoreClickEvent(true);
     });
     dat_answer_box_fake_disable_button.setClickable(false);
-    dat_answer_box_fake_disable_button.setIgnoreClickEven(true);
+    dat_answer_box_fake_disable_button.setIgnoreClickEvent(true);
 
     var fire_animation=new Animation(
         [

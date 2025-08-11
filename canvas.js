@@ -149,10 +149,11 @@ export class CanvasScene{ //不同场景（可以方便切换）
         this.listeners.sort((a,b)=>b.layer-a.layer); //以图层从前到后的顺序排序
     }
     mouseMoveCallBack(evt){
+        evt.preventDefault();
         var logicalPos=logicalEvtChange(this,evt);
         // console.log(logicalPos);
         if (evt.pointerType==="touch" && evt.pressure.length>1){
-            evt.preventDefault();
+            
             return;
         }
         if (this.clickFocusPoint!==null){
@@ -175,13 +176,14 @@ export class CanvasScene{ //不同场景（可以方便切换）
         // if (t) console.log("mm t=true");
     }
     mouseDownCallBack(evt){
+        evt.preventDefault();
         var logicalPos=logicalEvtChange(this,evt);
         // if (this.clickFocusPoint!=-1){
         //     this.mouseDownCallBackArray[this.clickFocusPoint].func(logicalPos);
         //     return;
         // }
         if (evt.pointerType==="touch" && evt.pressure.length>1){
-            evt.preventDefault();
+            
             return;
         }
         for (var i in this.listeners){
@@ -192,9 +194,9 @@ export class CanvasScene{ //不同场景（可以方便切换）
         }
     }
     mouseUpCallBack(evt){
+        evt.preventDefault();
         var logicalPos=logicalEvtChange(this,evt);
         if (evt.pointerType==="touch" && evt.pressure.length>1){
-            evt.preventDefault();
             return;
         }
         if (this.clickFocusPoint!==null){ //无焦点时松开判定无效

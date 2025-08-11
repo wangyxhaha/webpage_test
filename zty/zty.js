@@ -162,17 +162,17 @@ function build(canvas){
     var zty_answer_box_fake_button=new Button(canvas.scene("zty_door_scene"),362,395,180,98,32,null,null,null,()=>{},()=>{
         zty_answer_box.enable();
         zty_answer_box_fake_disable_button.setClickable(true);
-        zty_answer_box_fake_disable_button.setIgnoreClickEven(false);
+        zty_answer_box_fake_disable_button.setIgnoreClickEvent(false);
     });
     zty_answer_box_fake_button.setClickable(false);
 
     var zty_answer_box_fake_disable_button=new Button(canvas.scene("zty_door_scene"),0,0,935,935,2,null,null,null,()=>{},()=>{
         zty_answer_box.disable();
         zty_answer_box_fake_disable_button.setClickable(false);
-        zty_answer_box_fake_disable_button.setIgnoreClickEven(true);
+        zty_answer_box_fake_disable_button.setIgnoreClickEvent(true);
     });
     zty_answer_box_fake_disable_button.setClickable(false);
-    zty_answer_box_fake_disable_button.setIgnoreClickEven(true);
+    zty_answer_box_fake_disable_button.setIgnoreClickEvent(true);
 
     var flag=false;
 
