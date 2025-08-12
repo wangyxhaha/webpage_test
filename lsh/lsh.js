@@ -101,7 +101,7 @@ function build(canvas){
 <<<<<<< HEAD
         lsh_answer_box_fake_disable_button.setIgnoreClickEvent(false);
 =======
-        lsh_answer_box_fake_disable_button.setIgnoreClickEventt(false);
+        lsh_answer_box_fake_disable_button.setIgnoreClickEvent(false);
 >>>>>>> 50c840475923fcff17e2b042348cd30df711a310
     });
     lsh_answer_box_fake_button.setClickable(false);
@@ -115,10 +115,10 @@ function build(canvas){
     lsh_answer_box_fake_disable_button.setClickable(false);
     lsh_answer_box_fake_disable_button.setIgnoreClickEvent(true);
 =======
-        lsh_answer_box_fake_disable_button.setIgnoreClickEventt(true);
+        lsh_answer_box_fake_disable_button.setIgnoreClickEvent(true);
     });
     lsh_answer_box_fake_disable_button.setClickable(false);
-    lsh_answer_box_fake_disable_button.setIgnoreClickEventt(true);
+    lsh_answer_box_fake_disable_button.setIgnoreClickEvent(true);
 >>>>>>> 50c840475923fcff17e2b042348cd30df711a310
 
     //输入框
@@ -162,7 +162,7 @@ function build(canvas){
 <<<<<<< HEAD
         lsh_right_scene_bg_button.setIgnoreClickEvent(false);
 =======
-        lsh_right_scene_bg_button.setIgnoreClickEventt(false);
+        lsh_right_scene_bg_button.setIgnoreClickEvent(false);
 >>>>>>> 50c840475923fcff17e2b042348cd30df711a310
     },358,483);
 
@@ -176,10 +176,10 @@ function build(canvas){
     lsh_right_scene_bg_button.setClickable(false);
     lsh_right_scene_bg_button.setIgnoreClickEvent(true);
 =======
-        lsh_right_scene_bg_button.setIgnoreClickEventt(true);
+        lsh_right_scene_bg_button.setIgnoreClickEvent(true);
     },()=>{});
     lsh_right_scene_bg_button.setClickable(false);
-    lsh_right_scene_bg_button.setIgnoreClickEventt(true);
+    lsh_right_scene_bg_button.setIgnoreClickEvent(true);
 
     var lsh_door_scene_figure=new Button(canvas.scene("lsh_door_scene"),0,0,245,268,21,res.getResource("lsh_figure"),null,null,()=>{
         lsh_door_scene_talking.setTransparentAlpha(1);
