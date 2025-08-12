@@ -1,16 +1,144 @@
 "use strict"
 
+import Resource from "./resource.js"
 import Canvas from "./canvas.js";
-// import Sprite from "./sprite";
 import Button from "./button.js";
+import Animation from "./animation.js";
 import Input from "./input.js";
-import Dialog from "./dialog.js";
+import "./buttonPlugin.js";
+import "./spritePlugin.js";
 
 var canvas=new Canvas("gameCanvas",935,935)
 
 
-import("./qsy/qsy.js")
-    .then(module=>{
-        module.default.init(canvas);
-    });
+// import("./qsy/qsy.js")
+// .then(module=>{
+//     module.default.init(canvas);
+// });
+
+var menuResInfor=[
+    {
+        name: "menu_bg",
+        type: "image",
+        value: "./menu/封面底图.jpg"
+    },
+    {
+        name: "door1",
+        type: "image",
+        value: "./menu/封面门1.png"
+    },
+    {
+        name: "door2",
+        type: "image",
+        value: "./menu/封面门2.png"
+    },
+    {
+        name: "new_game1",
+        type: "image",
+        value: "./menu/新游戏1.png"
+    },
+    {
+        name: "new_game2",
+        type: "image",
+        value: "./menu/新游戏2.png"
+    },
+    {
+        name: "continue1",
+        type: "image",
+        value: "./menu/继续1.png"
+    },
+    {
+        name: "continue2",
+        type: "image",
+        value: "./menu/继续2.png"
+    },
+    {
+        name: "exit1",
+        type: "image",
+        value: "./menu/退出1.png"
+    },
+    {
+        name: "exit2",
+        type: "image",
+        value: "./menu/退出2.png"
+    }
+];
+
+var menuRes=new Resource(menuResInfor);
+menuRes.onload=()=>{
+    let doorAnimation=new Animation([
+        {
+            image: menuRes.getResource("door1"),
+            interval: 200
+        },
+        {
+            image: menuRes.getResource("door2"),
+            interval: 200
+        }
+    ]);
+    let newGameAnimation=new Animation([
+        {
+            image: menuRes.getResource("new_game1"),
+            interval: 200
+        },
+        {
+            image: menuRes.getResource("new_game2"),
+            interval: 200
+        }
+    ]);
+    let continueAnimation=new Animation([
+        {
+            image: menuRes.getResource("continue1"),
+            interval: 200
+        },
+        {
+            image: menuRes.getResource("continue2"),
+            interval: 200
+        }
+    ]);
+    let exitAnimation=new Animation([
+        {
+            image: menuRes.getResource("exit1"),
+            interval: 200
+        },
+        {
+            image: menuRes.getResource("exit2"),
+            interval: 200
+        }
+    ]);
+    doorAnimation.start();
+    newGameAnimation.start();
+    continueAnimation.start();
+    exitAnimation.start();
+    canvas.createNewScene("menu",menuRes.getResource("menu_bg"));
+    let menu_door=new Button(canvas.scene("menu"),10,0,0,0,0,doorAnimation,null,null,()=>{},()=>{});
+    let menu_new_game=new Button(canvas.scene("menu"),0,150,237,56,1,newGameAnimation,null,null,()=>{},()=>{console.log("newgame")},349,246);
+    let menu_continue=new Button(canvas.scene("menu"),0,150,237,56,1,continueAnimation,null,null,()=>{},()=>{},349,394);
+    let exitFlag=0;
+    let menu_exit=new Button(canvas.scene("menu"),0,150,237,56,1,exitAnimation,null,null,()=>{},()=>{
+        switch (exitFlag){
+            case 0:
+                alert("其实你直接关闭浏览器标签页就好了");
+                exitFlag++;
+                break;
+            case 1:
+                alert("真的，你直接关闭标签页就行了");
+                exitFlag++;
+                break;
+            case 2:
+                alert("行吧，我给你关了行吧");
+                exitFlag++;
+                window.close();
+                break;
+            case 3:
+                alert("猜你想问：怎么还没关？\n事实是：有的浏览器的策略会限制代码关闭标签页的行为\n所以要不你换个浏览器，要不你自己关吧\nHave a nice day");
+                break;
+        }
+        
+    },349,546);
+    canvas.changeScene("menu");
+}
+
+//后台加载关卡资源
+
 
