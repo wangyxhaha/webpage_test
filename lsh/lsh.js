@@ -180,7 +180,6 @@ function build(canvas){
     },()=>{});
     lsh_right_scene_bg_button.setClickable(false);
     lsh_right_scene_bg_button.setIgnoreClickEventt(true);
->>>>>>> 50c840475923fcff17e2b042348cd30df711a310
 
     var lsh_door_scene_figure=new Button(canvas.scene("lsh_door_scene"),0,0,245,268,21,res.getResource("lsh_figure"),null,null,()=>{
         lsh_door_scene_talking.setTransparentAlpha(1);

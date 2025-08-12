@@ -356,7 +356,7 @@ function build(canvas){
             byz_door_scene_figure_ear_movehead.setTransparentAlpha(1);
             byz_door_scene_figure_ear_movehead.setClickable(true);            
         }
-        byz_door_scene_ear.setPosition(305,838);
+        byz_door_scene_ear.setPostition(305,838);
     });
     byz_door_scene_ear.setDraggable(true);
 
