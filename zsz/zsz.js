@@ -123,17 +123,17 @@ function build(canvas){
     var zsz_answer_box_fake_button=new Button(canvas.scene("zsz_door_scene"),362,395,180,98,2,null,null,null,()=>{},()=>{
         zsz_answer_box.enable();
         zsz_answer_box_fake_disable_button.setClickable(true);
-        zsz_answer_box_fake_disable_button.setIgnoreClickEventt(false);
+        zsz_answer_box_fake_disable_button.setIgnoreClickEvent(false);
     });
     zsz_answer_box_fake_button.setClickable(false);
 
     var zsz_answer_box_fake_disable_button=new Button(canvas.scene("zsz_door_scene"),0,0,935,935,2,null,null,null,()=>{},()=>{
         zsz_answer_box.disable();
         zsz_answer_box_fake_disable_button.setClickable(false);
-        zsz_answer_box_fake_disable_button.setIgnoreClickEventt(true);
+        zsz_answer_box_fake_disable_button.setIgnoreClickEvent(true);
     });
     zsz_answer_box_fake_disable_button.setClickable(false);
-    zsz_answer_box_fake_disable_button.setIgnoreClickEventt(true);
+    zsz_answer_box_fake_disable_button.setIgnoreClickEvent(true);
 
     //TODO zsz左场景游戏搭建
 
@@ -162,7 +162,7 @@ function build(canvas){
     var zsz_left_scene_start_button=new Button(canvas.scene("zsz_left_scene"),0,0,308,106,12,res.getResource("start"),null,null,()=>{
         zsz_left_scene_start_button.setTransparentAlpha(0);
         zsz_left_scene_start_button.setClickable(false);
-        zsz_left_scene_start_button.setIgnoreClickEventt(true);
+        zsz_left_scene_start_button.setIgnoreClickEvent(true);
         //console.log("Game Start");
         document.dispatchEvent(setEvent);
         zsz_game_scene.to(1);
@@ -182,7 +182,7 @@ function build(canvas){
         zsz_left_scene_lose_button.setClickable(false);
         zsz_left_scene_start_button.setTransparentAlpha(1);
         zsz_left_scene_start_button.setClickable(true);
-        zsz_left_scene_start_button.setIgnoreClickEventt(false);
+        zsz_left_scene_start_button.setIgnoreClickEvent(false);
     },()=>{},336,610);
     zsz_left_scene_lose_button.setTransparentAlpha(0);
     zsz_left_scene_lose_button.setClickable(false);
@@ -295,7 +295,7 @@ function build(canvas){
         clearInterval(teacherGenerator_hard);clearInterval(handGenerator_hard);
         for(let i=0;i<20;i++) teachers[i].setTransparentAlpha(0),hands[i].setTransparentAlpha(0);
         zsz_left_scene_phone.setTransparentAlpha(0);
-        zsz_left_scene_phone.setIgnoreClickEventt(true);
+        zsz_left_scene_phone.setIgnoreClickEvent(true);
         zsz_left_scene_right_arrow.setTransparentAlpha(1);
         zsz_left_scene_right_arrow.setClickable(true);
 

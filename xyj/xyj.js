@@ -83,17 +83,17 @@ function build(canvas){
     var xyj_answer_box_fake_button=new Button(canvas.scene("xyj_door_scene"),362,395,180,98,2,null,null,null,()=>{},()=>{
         xyj_answer_box.enable();
         xyj_answer_box_fake_disable_button.setClickable(true);
-        xyj_answer_box_fake_disable_button.setIgnoreClickEventt(false);
+        xyj_answer_box_fake_disable_button.setIgnoreClickEvent(false);
     });
     xyj_answer_box_fake_button.setClickable(false);
 
     var xyj_answer_box_fake_disable_button=new Button(canvas.scene("xyj_door_scene"),0,0,935,935,2,null,null,null,()=>{},()=>{
         xyj_answer_box.disable();
         xyj_answer_box_fake_disable_button.setClickable(false);
-        xyj_answer_box_fake_disable_button.setIgnoreClickEventt(true);
+        xyj_answer_box_fake_disable_button.setIgnoreClickEvent(true);
     });
     xyj_answer_box_fake_disable_button.setClickable(false);
-    xyj_answer_box_fake_disable_button.setIgnoreClickEventt(true);
+    xyj_answer_box_fake_disable_button.setIgnoreClickEvent(true);
     
     canvas.changeScene("xyj_door_scene");
 }
