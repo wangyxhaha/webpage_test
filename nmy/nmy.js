@@ -228,17 +228,17 @@ function build(canvas){
     var nmy_answer_box_fake_button=new Button(canvas.scene("nmy_door_scene"),362,395,180,98,2,null,null,null,()=>{},()=>{
         nmy_answer_box.enable();
         nmy_answer_box_fake_disable_button.setClickable(true);
-        nmy_answer_box_fake_disable_button.setignoreClickEventt(false);
+        nmy_answer_box_fake_disable_button.setIgnoreClickEventtt(false);
     });
     nmy_answer_box_fake_button.setClickable(false);
 
     var nmy_answer_box_fake_disable_button=new Button(canvas.scene("nmy_door_scene"),0,0,935,935,10,null,null,null,()=>{},()=>{
         nmy_answer_box.disable();
         nmy_answer_box_fake_disable_button.setClickable(false);
-        nmy_answer_box_fake_disable_button.setignoreClickEventt(true);
+        nmy_answer_box_fake_disable_button.setIgnoreClickEventtt(true);
     });
     nmy_answer_box_fake_disable_button.setClickable(false);
-    nmy_answer_box_fake_disable_button.setignoreClickEventt(true);
+    nmy_answer_box_fake_disable_button.setIgnoreClickEventtt(true);
 
     var nmy_door_scene_broken_blocker=new Button(canvas.scene("nmy_door_scene"),0,0,0,0,1,res.getResource("broken_blocker"),null,null,()=>{},()=>{});
     nmy_door_scene_broken_blocker.setClickable(false);

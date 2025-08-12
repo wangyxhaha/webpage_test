@@ -98,17 +98,17 @@ function build(canvas){
     var lsh_answer_box_fake_button=new Button(canvas.scene("lsh_door_scene"),362,395,180,98,2,null,null,null,()=>{},()=>{
         lsh_answer_box.enable();
         lsh_answer_box_fake_disable_button.setClickable(true);
-        lsh_answer_box_fake_disable_button.setignoreClickEvent(false);
+        lsh_answer_box_fake_disable_button.setIgnoreClickEventt(false);
     });
     lsh_answer_box_fake_button.setClickable(false);
 
     var lsh_answer_box_fake_disable_button=new Button(canvas.scene("lsh_door_scene"),0,0,935,935,2,null,null,null,()=>{},()=>{
         lsh_answer_box.disable();
         lsh_answer_box_fake_disable_button.setClickable(false);
-        lsh_answer_box_fake_disable_button.setignoreClickEvent(true);
+        lsh_answer_box_fake_disable_button.setIgnoreClickEventt(true);
     });
     lsh_answer_box_fake_disable_button.setClickable(false);
-    lsh_answer_box_fake_disable_button.setignoreClickEvent(true);
+    lsh_answer_box_fake_disable_button.setIgnoreClickEventt(true);
 
     //输入框
 
@@ -148,17 +148,17 @@ function build(canvas){
     var lsh_right_scene_answer_box_fake_button=new Button(canvas.scene("lsh_right_scene"),0,0,189,73,22,res.getResource("box"),null,null,()=>{},()=>{
         lsh_right_scene_answer_box.enable();
         lsh_right_scene_bg_button.setClickable(true);
-        lsh_right_scene_bg_button.setignoreClickEvent(false);
+        lsh_right_scene_bg_button.setIgnoreClickEventt(false);
     },358,483);
 
     var lsh_right_scene_bg_button=new Button(canvas.scene("lsh_right_scene"),0,0,935,935,21,null,null,null,()=>{
         checkAnswer();
         lsh_right_scene_answer_box.disable();
         lsh_right_scene_bg_button.setClickable(false);
-        lsh_right_scene_bg_button.setignoreClickEvent(true);
+        lsh_right_scene_bg_button.setIgnoreClickEventt(true);
     },()=>{});
     lsh_right_scene_bg_button.setClickable(false);
-    lsh_right_scene_bg_button.setignoreClickEvent(true);
+    lsh_right_scene_bg_button.setIgnoreClickEventt(true);
 
     var lsh_door_scene_figure=new Button(canvas.scene("lsh_door_scene"),0,0,245,268,21,res.getResource("lsh_figure"),null,null,()=>{
         lsh_door_scene_talking.setTransparentAlpha(1);
