@@ -165,17 +165,17 @@ function build(canvas){
     var lzan_answer_box_fake_button=new Button(canvas.scene("lzan_door_scene"),362,395,180,98,2,null,null,null,()=>{},()=>{
         lzan_answer_box.enable();
         lzan_answer_box_fake_disable_button.setClickable(true);
-        lzan_answer_box_fake_disable_button.setIgnoreClickEvent(false);
+        lzan_answer_box_fake_disable_button.setignoreClickEventt(false);
     });
     lzan_answer_box_fake_button.setClickable(false);
 
     var lzan_answer_box_fake_disable_button=new Button(canvas.scene("lzan_door_scene"),0,0,935,935,10,null,null,null,()=>{},()=>{
         lzan_answer_box.disable();
         lzan_answer_box_fake_disable_button.setClickable(false);
-        lzan_answer_box_fake_disable_button.setIgnoreClickEvent(true);
+        lzan_answer_box_fake_disable_button.setignoreClickEventt(true);
     });
     lzan_answer_box_fake_disable_button.setClickable(false);
-    lzan_answer_box_fake_disable_button.setIgnoreClickEvent(true);
+    lzan_answer_box_fake_disable_button.setignoreClickEventt(true);
 
     var boxes=[];
     for (let i=1;i<=5;i++) boxes.push(new Animation([

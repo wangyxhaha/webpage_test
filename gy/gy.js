@@ -118,17 +118,17 @@ function build(canvas){
     var gy_answer_box_fake_button=new Button(canvas.scene("gy_door_scene"),362,395,180,98,2,null,null,null,()=>{},()=>{
         gy_answer_box.enable();
         gy_answer_box_fake_disable_button.setClickable(true);
-        gy_answer_box_fake_disable_button.setIgnoreClickEvent(false);
+        gy_answer_box_fake_disable_button.setignoreClickEventt(false);
     });
     gy_answer_box_fake_button.setClickable(false);
 
     var gy_answer_box_fake_disable_button=new Button(canvas.scene("gy_door_scene"),0,0,935,935,10,null,null,null,()=>{},()=>{
         gy_answer_box.disable();
         gy_answer_box_fake_disable_button.setClickable(false);
-        gy_answer_box_fake_disable_button.setIgnoreClickEvent(true);
+        gy_answer_box_fake_disable_button.setignoreClickEventt(true);
     });
     gy_answer_box_fake_disable_button.setClickable(false);
-    gy_answer_box_fake_disable_button.setIgnoreClickEvent(true);
+    gy_answer_box_fake_disable_button.setignoreClickEventt(true);
 
     var gy_hit_rocket_animation=new Animation([
         {

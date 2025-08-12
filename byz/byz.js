@@ -256,17 +256,17 @@ function build(canvas){
     var byz_answer_box_fake_button=new Button(canvas.scene("byz_door_scene"),362,395,180,98,32,null,null,null,()=>{},()=>{
         byz_answer_box.enable();
         byz_answer_box_fake_disable_button.setClickable(true);
-        byz_answer_box_fake_disable_button.setIgnoreClickEvent(false);
+        byz_answer_box_fake_disable_button.setignoreClickEventt(false);
     });
     byz_answer_box_fake_button.setClickable(false);
 
     var byz_answer_box_fake_disable_button=new Button(canvas.scene("byz_door_scene"),0,0,935,935,2,null,null,null,()=>{},()=>{
         byz_answer_box.disable();
         byz_answer_box_fake_disable_button.setClickable(false);
-        byz_answer_box_fake_disable_button.setIgnoreClickEvent(true);
+        byz_answer_box_fake_disable_button.setignoreClickEventt(true);
     });
     byz_answer_box_fake_disable_button.setClickable(false);
-    byz_answer_box_fake_disable_button.setIgnoreClickEvent(true);
+    byz_answer_box_fake_disable_button.setignoreClickEventt(true);
 
     //门场景耳机
 
@@ -356,7 +356,7 @@ function build(canvas){
             byz_door_scene_figure_ear_movehead.setTransparentAlpha(1);
             byz_door_scene_figure_ear_movehead.setClickable(true);            
         }
-        byz_door_scene_ear.setPostition(305,838);
+        byz_door_scene_ear.setPosition(305,838);
     });
     byz_door_scene_ear.setDraggable(true);
 
