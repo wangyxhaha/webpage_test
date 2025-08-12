@@ -204,13 +204,13 @@ function build(canvas){
     document.addEventListener('setGame',()=>{
         for(let i=0;i<=20;i++){
             teachers[i].setTransparentAlpha(0);
-            teachers[i].setPostition(-200,-200);
+            teachers[i].setPosition(-200,-200);
             hands[i].setTransparentAlpha(0);
-            hands[i].setPostition(-200,-200);
+            hands[i].setPosition(-200,-200);
         }
         zsz_left_scene_right_arrow.setTransparentAlpha(0);
         zsz_left_scene_right_arrow.setClickable(false);
-        zsz_left_scene_phone.setPostition(383,464);
+        zsz_left_scene_phone.setPosition(383,464);
     })
 
     var seconds;
@@ -331,7 +331,7 @@ function build(canvas){
         teacherGenerator_easy=setInterval(()=>{
             let y=getRandomNum(0,835);
             let speed=getRandomNum(4000,5000);
-            teachers[cnt1].setPostition(-250,y);
+            teachers[cnt1].setPosition(-250,y);
             teachers[cnt1].setTransparentAlpha(1);
             teachers[cnt1].moveTo(1200,y,speed);
             cnt1++;
@@ -339,7 +339,7 @@ function build(canvas){
         handGenerator_easy=setInterval(()=>{
             let x=getRandomNum(0,835);
             let speed=getRandomNum(4000,5000);
-            hands[cnt2].setPostition(x,-250);
+            hands[cnt2].setPosition(x,-250);
             hands[cnt2].setTransparentAlpha(1);
             hands[cnt2].moveTo(x,1200,speed);
             cnt2++;
@@ -351,7 +351,7 @@ function build(canvas){
         teacherGenerator_medium=setInterval(()=>{
             let y=getRandomNum(0,835);
             let speed=getRandomNum(3000,4000);
-            teachers[cnt1].setPostition(-250,y);
+            teachers[cnt1].setPosition(-250,y);
             teachers[cnt1].setTransparentAlpha(1);
             teachers[cnt1].moveTo(1200,y,speed);
             cnt1++;
@@ -359,7 +359,7 @@ function build(canvas){
         handGenerator_medium=setInterval(()=>{
             let x=getRandomNum(0,835);
             let speed=getRandomNum(3000,4000);
-            hands[cnt2].setPostition(x,-250);
+            hands[cnt2].setPosition(x,-250);
             hands[cnt2].setTransparentAlpha(1);
             hands[cnt2].moveTo(x,1200,speed);
             cnt2++;
@@ -373,7 +373,7 @@ function build(canvas){
             //y=getRandomNum(0,835);
             y=checkPossible(y,getRandomNum(0,835),400);
             let speed=getRandomNum(2000,3000);
-            teachers[cnt1].setPostition(-250,y);
+            teachers[cnt1].setPosition(-250,y);
             teachers[cnt1].setTransparentAlpha(1);
             teachers[cnt1].moveTo(1200,y,speed);
             cnt1++;
@@ -382,7 +382,7 @@ function build(canvas){
             //x=getRandomNum(0,835);
             x=checkPossible(x,getRandomNum(0,835),300);
             let speed=getRandomNum(2000,3000);
-            hands[cnt2].setPostition(x,-250);
+            hands[cnt2].setPosition(x,-250);
             hands[cnt2].setTransparentAlpha(1);
             hands[cnt2].moveTo(x,1200,speed);
             cnt2++;
