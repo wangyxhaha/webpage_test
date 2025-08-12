@@ -223,7 +223,7 @@ function build(canvas){
     qsy_left_scene_ai_cow_and_foot_and_planet.setTransparentAlpha(0);
 
     async function foo(a,b,c){
-        if (!a.ignoreClickEvent && !b.ignoreClickEvent && a.isCoincide(b)){
+        if (!a.ignoreClickEventt && !b.ignoreClickEventt && a.isCoincide(b)){
             a.setIgnoreClickEvent(true);
             b.setIgnoreClickEvent(true);
             let p1=a.getPosition_boxCenter();
@@ -239,7 +239,7 @@ function build(canvas){
             },1000);
             setTimeout(()=>{
                 c.setIgnoreClickEvent(false);
-                if (!qsy_left_scene_aitung.ignoreClickEvent && !qsy_left_scene_aishark.ignoreClickEvent && !qsy_left_scene_aicap.ignoreClickEvent && !qsy_left_scene_ai_cow_and_foot_and_planet.ignoreClickEvent){
+                if (!qsy_left_scene_aitung.ignoreClickEventt && !qsy_left_scene_aishark.ignoreClickEventt && !qsy_left_scene_aicap.ignoreClickEventt && !qsy_left_scene_ai_cow_and_foot_and_planet.ignoreClickEventt){
                     qsy_door_scene_lock.setTransparentAlpha(0);
                     qsy_answer_box_fake_button.setClickable(true);
                 }
@@ -257,7 +257,7 @@ function build(canvas){
         foo(qsy_left_scene_ai_cow_and_foot,qsy_left_scene_planet,qsy_left_scene_ai_cow_and_foot_and_planet);
         foo(qsy_left_scene_ai_cow_and_planet,qsy_left_scene_foot,qsy_left_scene_ai_cow_and_foot_and_planet);
         foo(qsy_left_scene_ai_foot_and_planet,qsy_left_scene_cow,qsy_left_scene_ai_cow_and_foot_and_planet);
-        console.log(qsy_left_scene_aitung.ignoreClickEvent,qsy_left_scene_aishark.ignoreClickEvent,qsy_left_scene_aicap.ignoreClickEvent,qsy_left_scene_ai_cow_and_foot_and_planet.ignoreClickEvent)
+        console.log(qsy_left_scene_aitung.ignoreClickEventt,qsy_left_scene_aishark.ignoreClickEventt,qsy_left_scene_aicap.ignoreClickEventt,qsy_left_scene_ai_cow_and_foot_and_planet.ignoreClickEventt)
     }
 
     canvas.changeScene("qsy_door_scene");

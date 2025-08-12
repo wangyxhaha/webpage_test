@@ -147,7 +147,7 @@ function build(canvas){
 
     function showTalking(img_show,img_ori){
         img_ori.setTransparentAlpha(0);
-        img_ori.setPostition(0,100);
+        img_ori.setPosition(0,100);
         img_show.setTransparentAlpha(1);
         img_show.slideTo(0,0,0.3);
     }
