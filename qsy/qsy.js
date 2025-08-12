@@ -223,18 +223,9 @@ function build(canvas){
     qsy_left_scene_ai_cow_and_foot_and_planet.setTransparentAlpha(0);
 
     async function foo(a,b,c){
-<<<<<<< HEAD
-        if (!a.ignoreClickEventt && !b.ignoreClickEventt && a.isCoincide(b)){
-<<<<<<< HEAD
-=======
         if (!a.ignoreClickEvent && !b.ignoreClickEvent && a.isCoincide(b)){
->>>>>>> parent of 71a0623 (Fix spelling mistakes)
             a.setIgnoreClickEvent(true);
             b.setIgnoreClickEvent(true);
-=======
-            a.setIgnoreClickEvent(true);
-            b.setIgnoreClickEvent(true);
->>>>>>> 50c840475923fcff17e2b042348cd30df711a310
             let p1=a.getPosition_boxCenter();
             let p2=b.getPosition_boxCenter();
             c.setPosition_boxCenter((p1.x+p2.x)/2,(p1.y+p2.y)/2);
@@ -247,16 +238,8 @@ function build(canvas){
                 c.setTransparentAlpha(1);
             },1000);
             setTimeout(()=>{
-<<<<<<< HEAD
                 c.setIgnoreClickEvent(false);
-<<<<<<< HEAD
-=======
-                c.setIgnoreClickEvent(false);
->>>>>>> 50c840475923fcff17e2b042348cd30df711a310
-                if (!qsy_left_scene_aitung.ignoreClickEventt && !qsy_left_scene_aishark.ignoreClickEventt && !qsy_left_scene_aicap.ignoreClickEventt && !qsy_left_scene_ai_cow_and_foot_and_planet.ignoreClickEventt){
-=======
                 if (!qsy_left_scene_aitung.ignoreClickEvent && !qsy_left_scene_aishark.ignoreClickEvent && !qsy_left_scene_aicap.ignoreClickEvent && !qsy_left_scene_ai_cow_and_foot_and_planet.ignoreClickEvent){
->>>>>>> parent of 71a0623 (Fix spelling mistakes)
                     qsy_door_scene_lock.setTransparentAlpha(0);
                     qsy_answer_box_fake_button.setClickable(true);
                 }

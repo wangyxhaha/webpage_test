@@ -98,28 +98,17 @@ function build(canvas){
     var lsh_answer_box_fake_button=new Button(canvas.scene("lsh_door_scene"),362,395,180,98,2,null,null,null,()=>{},()=>{
         lsh_answer_box.enable();
         lsh_answer_box_fake_disable_button.setClickable(true);
-<<<<<<< HEAD
         lsh_answer_box_fake_disable_button.setIgnoreClickEvent(false);
-=======
-        lsh_answer_box_fake_disable_button.setIgnoreClickEvent(false);
->>>>>>> 50c840475923fcff17e2b042348cd30df711a310
     });
     lsh_answer_box_fake_button.setClickable(false);
 
     var lsh_answer_box_fake_disable_button=new Button(canvas.scene("lsh_door_scene"),0,0,935,935,2,null,null,null,()=>{},()=>{
         lsh_answer_box.disable();
         lsh_answer_box_fake_disable_button.setClickable(false);
-<<<<<<< HEAD
         lsh_answer_box_fake_disable_button.setIgnoreClickEvent(true);
     });
     lsh_answer_box_fake_disable_button.setClickable(false);
     lsh_answer_box_fake_disable_button.setIgnoreClickEvent(true);
-=======
-        lsh_answer_box_fake_disable_button.setIgnoreClickEvent(true);
-    });
-    lsh_answer_box_fake_disable_button.setClickable(false);
-    lsh_answer_box_fake_disable_button.setIgnoreClickEvent(true);
->>>>>>> 50c840475923fcff17e2b042348cd30df711a310
 
     //输入框
 
@@ -159,23 +148,13 @@ function build(canvas){
     var lsh_right_scene_answer_box_fake_button=new Button(canvas.scene("lsh_right_scene"),0,0,189,73,22,res.getResource("box"),null,null,()=>{},()=>{
         lsh_right_scene_answer_box.enable();
         lsh_right_scene_bg_button.setClickable(true);
-<<<<<<< HEAD
         lsh_right_scene_bg_button.setIgnoreClickEvent(false);
-=======
-        lsh_right_scene_bg_button.setIgnoreClickEvent(false);
->>>>>>> 50c840475923fcff17e2b042348cd30df711a310
     },358,483);
 
     var lsh_right_scene_bg_button=new Button(canvas.scene("lsh_right_scene"),0,0,935,935,21,null,null,null,()=>{
         checkAnswer();
         lsh_right_scene_answer_box.disable();
         lsh_right_scene_bg_button.setClickable(false);
-<<<<<<< HEAD
-        lsh_right_scene_bg_button.setIgnoreClickEvent(true);
-    },()=>{});
-    lsh_right_scene_bg_button.setClickable(false);
-    lsh_right_scene_bg_button.setIgnoreClickEvent(true);
-=======
         lsh_right_scene_bg_button.setIgnoreClickEvent(true);
     },()=>{});
     lsh_right_scene_bg_button.setClickable(false);
