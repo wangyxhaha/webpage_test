@@ -148,17 +148,17 @@ function build(canvas){
     var zyy_answer_box_fake_button=new Button(canvas.scene("zyy_door_scene"),362,395,180,98,2,null,null,null,()=>{},()=>{
         zyy_answer_box.enable();
         zyy_answer_box_fake_disable_button.setClickable(true);
-        zyy_answer_box_fake_disable_button.setIgnoreClickEvent(false);
+        zyy_answer_box_fake_disable_button.setignoreClickEventt(false);
     });
     zyy_answer_box_fake_button.setClickable(false);
 
     var zyy_answer_box_fake_disable_button=new Button(canvas.scene("zyy_door_scene"),0,0,935,935,10,null,null,null,()=>{},()=>{
         zyy_answer_box.disable();
         zyy_answer_box_fake_disable_button.setClickable(false);
-        zyy_answer_box_fake_disable_button.setIgnoreClickEvent(true);
+        zyy_answer_box_fake_disable_button.setignoreClickEventt(true);
     });
     zyy_answer_box_fake_disable_button.setClickable(false);
-    zyy_answer_box_fake_disable_button.setIgnoreClickEvent(true);
+    zyy_answer_box_fake_disable_button.setignoreClickEventt(true);
 
     var zyy_left_scene_screen=[
         new Button(canvas.scene("zyy_left_scene"),0,0,0,0,1,res.getResource("white_screen"),null,null,()=>{},()=>{}),

@@ -160,17 +160,17 @@ function build(canvas){
     var qsy_answer_box_fake_button=new Button(canvas.scene("qsy_door_scene"),362,395,180,98,2,null,null,null,()=>{},()=>{
         qsy_answer_box.enable();
         qsy_answer_box_fake_disable_button.setClickable(true);
-        qsy_answer_box_fake_disable_button.setIgnoreClickEvent(false);
+        qsy_answer_box_fake_disable_button.setIgnoreClickEventtt(false);
     });
     qsy_answer_box_fake_button.setClickable(false);
 
     var qsy_answer_box_fake_disable_button=new Button(canvas.scene("qsy_door_scene"),0,0,935,935,10,null,null,null,()=>{},()=>{
         qsy_answer_box.disable();
         qsy_answer_box_fake_disable_button.setClickable(false);
-        qsy_answer_box_fake_disable_button.setIgnoreClickEvent(true);
+        qsy_answer_box_fake_disable_button.setIgnoreClickEventtt(true);
     });
     qsy_answer_box_fake_disable_button.setClickable(false);
-    qsy_answer_box_fake_disable_button.setIgnoreClickEvent(true);
+    qsy_answer_box_fake_disable_button.setIgnoreClickEventtt(true);
 
     var qsy_left_scene_stick=new Button(canvas.scene("qsy_left_scene"),779,46,76,231,11,res.getResource("stick"),null,null,()=>{},()=>check());
     var qsy_left_scene_tomas=new Button(canvas.scene("qsy_left_scene"),268,130,197,202,12,res.getResource("tomas"),null,null,()=>{},()=>check());
@@ -201,31 +201,36 @@ function build(canvas){
     var qsy_left_scene_ai_cow_and_foot_and_planet=new Button(canvas.scene("qsy_left_scene"),0,0,485,381,27,res.getResource("cow&foot&planet"),null,null,()=>{},()=>{});
 
     qsy_left_scene_aitung.setDraggable(true);
-    qsy_left_scene_aitung.setIgnoreClickEvent(true);
+    qsy_left_scene_aitung.setIgnoreClickEventtt(true);
     qsy_left_scene_aitung.setTransparentAlpha(0);
     qsy_left_scene_aicap.setDraggable(true);
-    qsy_left_scene_aicap.setIgnoreClickEvent(true);
+    qsy_left_scene_aicap.setIgnoreClickEventtt(true);
     qsy_left_scene_aicap.setTransparentAlpha(0);
     qsy_left_scene_aishark.setDraggable(true);
-    qsy_left_scene_aishark.setIgnoreClickEvent(true)
+    qsy_left_scene_aishark.setIgnoreClickEventtt(true)
     qsy_left_scene_aishark.setTransparentAlpha(0);
     qsy_left_scene_ai_cow_and_foot.setDraggable(true);
-    qsy_left_scene_ai_cow_and_foot.setIgnoreClickEvent(true)
+    qsy_left_scene_ai_cow_and_foot.setIgnoreClickEventtt(true)
     qsy_left_scene_ai_cow_and_foot.setTransparentAlpha(0);
     qsy_left_scene_ai_foot_and_planet.setDraggable(true);
-    qsy_left_scene_ai_foot_and_planet.setIgnoreClickEvent(true)
+    qsy_left_scene_ai_foot_and_planet.setIgnoreClickEventtt(true)
     qsy_left_scene_ai_foot_and_planet.setTransparentAlpha(0);
     qsy_left_scene_ai_cow_and_planet.setDraggable(true);
-    qsy_left_scene_ai_cow_and_planet.setIgnoreClickEvent(true)
+    qsy_left_scene_ai_cow_and_planet.setIgnoreClickEventtt(true)
     qsy_left_scene_ai_cow_and_planet.setTransparentAlpha(0);
     qsy_left_scene_ai_cow_and_foot_and_planet.setDraggable(true);
-    qsy_left_scene_ai_cow_and_foot_and_planet.setIgnoreClickEvent(true)
+    qsy_left_scene_ai_cow_and_foot_and_planet.setIgnoreClickEventtt(true)
     qsy_left_scene_ai_cow_and_foot_and_planet.setTransparentAlpha(0);
 
     async function foo(a,b,c){
         if (!a.ignoreClickEventt && !b.ignoreClickEventt && a.isCoincide(b)){
+<<<<<<< HEAD
             a.setIgnoreClickEvent(true);
             b.setIgnoreClickEvent(true);
+=======
+            a.setIgnoreClickEventtt(true);
+            b.setIgnoreClickEventtt(true);
+>>>>>>> 50c840475923fcff17e2b042348cd30df711a310
             let p1=a.getPosition_boxCenter();
             let p2=b.getPosition_boxCenter();
             c.setPosition_boxCenter((p1.x+p2.x)/2,(p1.y+p2.y)/2);
@@ -238,7 +243,11 @@ function build(canvas){
                 c.setTransparentAlpha(1);
             },1000);
             setTimeout(()=>{
+<<<<<<< HEAD
                 c.setIgnoreClickEvent(false);
+=======
+                c.setIgnoreClickEventtt(false);
+>>>>>>> 50c840475923fcff17e2b042348cd30df711a310
                 if (!qsy_left_scene_aitung.ignoreClickEventt && !qsy_left_scene_aishark.ignoreClickEventt && !qsy_left_scene_aicap.ignoreClickEventt && !qsy_left_scene_ai_cow_and_foot_and_planet.ignoreClickEventt){
                     qsy_door_scene_lock.setTransparentAlpha(0);
                     qsy_answer_box_fake_button.setClickable(true);

@@ -133,17 +133,17 @@ function build(canvas){
     var fmh_answer_box_fake_button=new Button(canvas.scene("fmh_door_scene"),362,395,180,98,2,null,null,null,()=>{},()=>{
         fmh_answer_box.enable();
         fmh_answer_box_fake_disable_button.setClickable(true);
-        fmh_answer_box_fake_disable_button.setIgnoreClickEvent(false);
+        fmh_answer_box_fake_disable_button.setIgnoreClickEventtt(false);
     });
     fmh_answer_box_fake_button.setClickable(false);
 
     var fmh_answer_box_fake_disable_button=new Button(canvas.scene("fmh_door_scene"),0,0,935,935,2,null,null,null,()=>{},()=>{
         fmh_answer_box.disable();
         fmh_answer_box_fake_disable_button.setClickable(false);
-        fmh_answer_box_fake_disable_button.setIgnoreClickEvent(true);
+        fmh_answer_box_fake_disable_button.setIgnoreClickEventtt(true);
     });
     fmh_answer_box_fake_disable_button.setClickable(false);
-    fmh_answer_box_fake_disable_button.setIgnoreClickEvent(true);
+    fmh_answer_box_fake_disable_button.setIgnoreClickEventtt(true);
 
     function showTalking(img_show,img_ori){
         img_ori.setTransparentAlpha(0);
