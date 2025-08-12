@@ -12,7 +12,7 @@ class Sprite{
         this.offsetY=0;
         this.visible=visible;
         this.transparentAlpha=1.0;
-        this.nowMover=null;
+        this.nowMoveStop=null;
     }
     get x(){
         return this.trueX+this.offsetX;
@@ -26,7 +26,7 @@ class Sprite{
     set y(m){
         this.trueY=m;
     }
-    setPostition(x,y){
+    setPosition(x,y){
         this.x=x;
         this.y=y;
     }
@@ -44,43 +44,53 @@ class Sprite{
     }
     //匀速运动至(x,y)，time为运动时间，单位为ms
     moveTo(x,y,time){
-        clearInterval(this.nowMover);
-        var startTime=new Date().valueOf();
-        var endTime=startTime+time;
-        this.nowMover=setInterval(()=>{
-            if (endTime<=new Date().valueOf()){
+        if (this.nowMoveStop!==null) this.nowMoveStop();
+        let startTime=performance.now();
+        let startPos=this.getPosition();
+        let running=true;
+        this.nowMoveStop=()=>running=false;
+        let moveFuntion=()=>{
+            if (!running) return;
+            if (performance.now()>=startTime+time){
                 this.x=x;
                 this.y=y;
-                // console.log(`pos:(${this.x},${this.y}),v:(${vx},${vy})`);
-                clearInterval(this.nowMover);
+                this.nowMoveStop=null;
+                return;
             }
-            var vx=(x-this.x)/(endTime-new Date().valueOf())*16.7;
-            var vy=(y-this.y)/(endTime-new Date().valueOf())*16.7;
-            this.x+=vx;
-            this.y+=vy;
-            // console.log(`endTime:${endTime}, nowTime${new Date().valueOf()}`);
-        },16.7)
+            let dt=performance.now()-startTime;
+            this.x=startPos.x+(x-startPos.x)*dt/time;
+            this.y=startPos.y+(y-startPos.y)*dt/time;
+            requestAnimationFrame(moveFuntion);
+        }
+        requestAnimationFrame(moveFuntion);
     }
     //平滑移动至(x,y)，k为强度(0<=k<=1)
     slideTo(x,y,k){
-        console.log("slide to");
-        clearInterval(this.nowMover);
-        this.nowMover=setInterval(()=>{
-            if (Math.abs(x-this.x)<=0.1 && Math.abs(y-this.y)<=0.1){
+        let k2=1-k;
+        if (this.nowMoveStop!==null) this.nowMoveStop();
+        let startTime=performance.now();
+        let startPos=this.getPosition();
+        let running=true;
+        this.nowMoveStop=()=>running=false;
+        let moveFuntion=()=>{
+            if (!running) return;
+            let dt=performance.now()-startTime;
+            if ((1-(k2**(dt/1000)-0.001)/0.999)>=1){
                 this.x=x;
                 this.y=y;
-                // console.log(`pos:(${this.x},${this.y})`);
-                clearInterval(this.nowMover);
-                console.log("slide to end");
+                this.nowMoveStop=null;
+                return;
             }
-            this.x+=(x-this.x)*k;
-            this.y+=(y-this.y)*k;
-            // console.log(`endTime:${endTime}, nowTime${new Date().valueOf()}`);
-        },16.7)
+            this.x=startPos.x+(x-startPos.x)*(1-(k2**(dt/1000)-0.001)/0.999);
+            this.y=startPos.y+(y-startPos.y)*(1-(k2**(dt/1000)-0.001)/0.999);
+            console.log(this.x,this.y);
+            requestAnimationFrame(moveFuntion);
+        }
+        requestAnimationFrame(moveFuntion);
     }
     cancelMovement(){
-        clearInterval(this.nowMover);
-        this.nowMover=null;
+        this.nowMoveStop();
+        this.nowMoveStop=null;
     }
 }
 

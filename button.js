@@ -57,7 +57,7 @@ class Button extends Sprite{
     setClickable(c){
         this.clickable=c;
     }
-    setIgnoreClickEven(i){
+    setIgnoreClickEvent(i){
         this.ignoreClickEvent=i;
     }
     // setTransparentAlpha(a){

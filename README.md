@@ -44,7 +44,7 @@
         - `Sprite(cvs,x,y)`（构造函数）
             > `cvs`为对应的`CanvasScene`\
             > `x`、`y`分别为左上角的x坐标和y坐标（x轴由画布左上角水平指向右，y轴由画布左上角竖直指向下）
-        - `Sprite.setPostition(x,y)`（设置位置）
+        - `Sprite.setPosition(x,y)`（设置位置）
         - `Sprite.setTransparentAlpha(a)`（设置透明度）
             > 范围为0.0~1.0，0.0为完全透明，1.0为完全不透明\
             > 如参数超出了范围，则静默处理\
