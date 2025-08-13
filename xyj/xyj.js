@@ -55,7 +55,72 @@ var cfg=[
         name: "lock",
         type: "image",
         value: "./xyj/data/锁.png"
-    }
+    },
+    {
+        name: "rook_black",
+        type: "image",
+        value: "./xyj/data/黑車.png"
+    },
+    {
+        name: "knight_red",
+        type: "image",
+        value: "./xyj/data/红馬.png"
+    },
+    {
+        name: "elephant_black",
+        type: "image",
+        value: "./xyj/data/黑象.png"
+    },
+    {
+        name: "mandarin_red",
+        type: "image",
+        value: "./xyj/data/红仕.png"
+    },
+    {
+        name: "king_black",
+        type: "image",
+        value: "./xyj/data/黑将.png"
+    },
+    {
+        name: "king_red",
+        type: "image",
+        value: "./xyj/data/红帥.png"
+    },
+    {
+        name: "cannon_red",
+        type: "image",
+        value: "./xyj/data/红炮.png"
+    },
+    {
+        name: "pawn_black",
+        type: "image",
+        value: "./xyj/data/黑卒.png"
+    },
+    {
+        name: "pawn_red1",
+        type: "image",
+        value: "./xyj/data/红兵1.png"
+    },
+    {
+        name: "pawn_red2",
+        type: "image",
+        value: "./xyj/data/红兵2.png"
+    },
+    {
+        name: "win",
+        type: "image",
+        value: "./xyj/data/红兵2.png"
+    },
+    {
+        name: "lose",
+        type: "image",
+        value: "./xyj/data/红兵2.png"
+    },
+    {
+        name: "try_again",
+        type: "image",
+        value: "./xyj/data/红兵2.png"
+    },
 ]
 
 function build(canvas){
@@ -94,8 +159,85 @@ function build(canvas){
     });
     xyj_answer_box_fake_disable_button.setClickable(false);
     xyj_answer_box_fake_disable_button.setIgnoreClickEvent(true);
-    
-    canvas.changeScene("xyj_door_scene");
+
+    var xyj_game_scene=new Animation([
+        {
+            image: null,
+            interval: Infinity
+        },
+        {
+            image: res.getResource("win"),
+            interval: Infinity
+        },
+        {
+            image: res.getResource("lose"),
+            interval: Infinity
+        }
+    ])
+
+    var setEvent=new CustomEvent('setGame');
+    var startEvent=new CustomEvent('startGame');
+    var loseEvent=new CustomEvent('loseGame');
+    var winEvent=new CustomEvent('winGame');
+
+    var x=[221,272,327,382,432,481,536,591,643];
+    var y=[135,184,237,293,349,433,489,545,601,655];
+
+    function checkRook(p,){
+
+    }
+ 
+    var flag=[
+        [false,false,true,false,false,false,false,false,true],
+        [false,false,false,false,true,false,false,false,false],
+        [false,false,true,false,false,false,true,true,false],
+        [false,false,true,false,true,false,false,false,false],
+        [false,false,false,false,true,false,false,true,false],
+        [false,false,true,false,false,false,false,false,false],
+        [false,true,false,false,false,false,false,true,false],
+        [false,false,false,false,true,false,false,false,false],
+        [false,true,false,false,false,true,false,false,false],
+    ]
+
+    var xyj_left_scene_rook_black=new Button(canvas.scene("xyj_left_scene"),x[8],y[0],70,70,11,res.getResource("rook_black"),null,null,()=>{},()=>{
+        //xyj_left_scene_rook_black.setPosition(x[8],y[0]);
+        //checkRook(xyj_left_scene_rook_black.getPosition());
+    });
+    var xyj_left_scene_knight_red=new Button(canvas.scene("xyj_left_scene"),x[1],y[9],70,70,11,res.getResource("knight_red"),null,null,()=>{},()=>{});
+    var xyj_left_scene_elephant_black=new Button(canvas.scene("xyj_left_scene"),x[2],y[0],70,70,11,res.getResource("elephant_black"),null,null,()=>{},()=>{});
+    var xyj_left_scene_mandarin_red=new Button(canvas.scene("xyj_left_scene"),x[5],y[9],70,70,11,res.getResource("mandarin_red"),null,null,()=>{},()=>{});
+    var xyj_left_scene_king_black=new Button(canvas.scene("xyj_left_scene"),x[4],y[1],70,70,11,res.getResource("king_black"),null,null,()=>{},()=>{});
+    var xyj_left_scene_king_red=new Button(canvas.scene("xyj_left_scene"),x[4],y[8],70,70,11,res.getResource("king_red"),null,null,()=>{},()=>{});
+    var xyj_left_scene_cannon_red=new Button(canvas.scene("xyj_left_scene"),x[1],y[7],70,70,11,res.getResource("cannon_red"),null,null,()=>{},()=>{});
+    var xyj_left_scene_pawn_black=new Button(canvas.scene("xyj_left_scene"),x[2],y[6],70,70,11,res.getResource("pawn_black"),null,null,()=>{},()=>{});
+    var xyj_left_scene_pawn_red1=new Button(canvas.scene("xyj_left_scene"),x[2],y[3],70,70,11,res.getResource("pawn_red1"),null,null,()=>{},()=>{});
+    var xyj_left_scene_pawn_red2=new Button(canvas.scene("xyj_left_scene"),x[4],y[3],70,70,11,res.getResource("pawn_red2"),null,null,()=>{},()=>{});
+
+    var pieces=[];
+    pieces.push(
+        xyj_left_scene_rook_black,
+        xyj_left_scene_knight_red,
+        xyj_left_scene_elephant_black,
+        xyj_left_scene_mandarin_red,
+        xyj_left_scene_king_black,
+        xyj_left_scene_king_red,
+        xyj_left_scene_cannon_red,
+        xyj_left_scene_pawn_black,
+        xyj_left_scene_pawn_red1,
+        xyj_left_scene_pawn_red2
+    )
+
+    document.addEventListener('setGame',()=>{
+        pieces.forEach(function(element){
+            element.setDraggable(true);
+        })
+    });
+
+
+    document.dispatchEvent(setEvent);
+    console.log("setGame");
+
+    canvas.changeScene("xyj_left_scene");
 }
 
 var res;
