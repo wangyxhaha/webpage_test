@@ -65,7 +65,12 @@ var menuResInfor=[
 ];
 
 var menuRes=new Resource(menuResInfor);
-menuRes.onload=()=>{
+menuRes.onload=async()=>{
+    levelList=(await fetch("./levelList.json").then(responce=>responce.json()).catch(()=>{throw "关卡信息炸了"})).value;
+    for (let i=0;i<levelList.length;i++){
+        levelList[i].ready=false;
+    }
+    console.log(levelList);
     let doorAnimation=new Animation([
         {
             image: menuRes.getResource("door1"),
@@ -112,7 +117,11 @@ menuRes.onload=()=>{
     exitAnimation.start();
     canvas.createNewScene("menu",menuRes.getResource("menu_bg"));
     let menu_door=new Button(canvas.scene("menu"),10,0,0,0,0,doorAnimation,null,null,()=>{},()=>{});
-    let menu_new_game=new Button(canvas.scene("menu"),0,150,237,56,1,newGameAnimation,null,null,()=>{},()=>{console.log("newgame")},349,246);
+    let menu_new_game=new Button(canvas.scene("menu"),0,150,237,56,1,newGameAnimation,null,null,()=>{},()=>{
+        nowLevel=0;
+        loadLevel();
+        controlLevel();
+    },349,246);
     let menu_continue=new Button(canvas.scene("menu"),0,150,237,56,1,continueAnimation,null,null,()=>{},()=>{},349,394);
     let exitFlag=0;
     let menu_exit=new Button(canvas.scene("menu"),0,150,237,56,1,exitAnimation,null,null,()=>{},()=>{
@@ -139,6 +148,84 @@ menuRes.onload=()=>{
     canvas.changeScene("menu");
 }
 
-//后台加载关卡资源
+//异步加载关卡资源
+var levelList;
+var nowLevel;
+
+async function loadLevel(){
+    // levelList=(await fetch("./levelList.json").then(responce=>responce.json()).catch(()=>{throw "关卡信息炸了"})).value;
+    // levelList[from].ready=true;
+    // let nextLevel;
+    // for (let i=from+1;i<levelList.length;i++){
+    //     console.log(`loading: ${levelList[i].dir}`);
+    //     nextLevel=await import(`./${levelList[i].dir}/${levelList[i].dir}.js`);
+    //     nextLevel.init();
+    //     levelList[i].ready=true;
+    //     let stopWaiting;
+    //     let loop=()=>{
+    //         if (levelList[i-1].finish) stopWaiting();
+    //         else requestAnimationFrame(loop);
+    //     };
+    //     await new Promise(resolve=>{
+    //         stopWaiting=resolve;
+    //         requestAnimationFrame(loop);
+    //     });
+    //     nowLevel=nextLevel;
+    // }
+    if (nowLevel===null) return;
+    if (!levelList[nowLevel].ready){
+        levelList[nowLevel].resource=await import(`./${levelList[nowLevel].dir}/${levelList[nowLevel].dir}.js`);
+        levelList[nowLevel].resource.default.init();
+        let stop=false;
+        levelList[nowLevel].resource.default.setOnload(()=>stop=true);
+        await until(()=>stop);
+        levelList[nowLevel].ready=true;
+    }
+    if (!levelList[nowLevel+1].ready){
+        levelList[nowLevel+1].resource=await import(`./${levelList[nowLevel+1].dir}/${levelList[nowLevel+1].dir}.js`);
+        levelList[nowLevel+1].resource.default.init();
+        let stop=false;
+        levelList[nowLevel+1].resource.default.setOnload(()=>stop=true);
+        await until(()=>stop);
+        levelList[nowLevel+1].ready=true;
+    }
+    setTimeout(loadLevel,10);
+}
+
+//
+
+async function until(requirement){
+    let stopWaiting;
+    let loop1=()=>{
+        if (requirement()){
+            stopWaiting();
+            return;
+        }
+        setTimeout(loop1,10);
+    };
+    await new Promise(resolve=>{
+        stopWaiting=resolve;
+        loop1();
+    });
+}
+
+var inputElement=document.getElementById("gameInput");
+
+async function controlLevel(){
+    console.log("cl");
+    await until(()=>levelList[nowLevel].ready);
+    levelList[nowLevel].resource.default.build(canvas);
+    await until(()=>inputElement.value===levelList[nowLevel].ans);
+    if (nowLevel<levelList.length-1){
+        nowLevel++;
+        setTimeout(controlLevel,10);
+    }
+    else{
+        nowLevel=null;
+        canvas.changeScene("menu");
+    }
+}
+
+
 
 

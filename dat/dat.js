@@ -351,9 +351,10 @@ var res;
 
 function init(canvas){
     res=new Resource(cfg); //加载素材
-    res.onload=()=>build(canvas); //仅测试用
+    // res.onload=()=>build(canvas); //仅测试用
 }
 
 export default{
-    init,build
+    init,build,
+    setOnload: (ol)=>res.onload=ol
 };
