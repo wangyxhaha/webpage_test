@@ -8,13 +8,7 @@ import Input from "./input.js";
 import "./buttonPlugin.js";
 import "./spritePlugin.js";
 
-var canvas=new Canvas("gameCanvas",935,935)
-
-
-// import("./qsy/qsy.js")
-// .then(module=>{
-//     module.default.init(canvas);
-// });
+var canvas=new Canvas("gameCanvas",935,935);
 
 var menuResInfor=[
     {
