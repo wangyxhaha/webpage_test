@@ -141,7 +141,7 @@ function isIn(p){ //218 701 704 934
 }
 
 function build(canvas){
-    console.log("build");
+    console.log("build lzan");
     canvas.createNewScene("lzan_door_scene",res.getResource("lzan_door"));
     canvas.createNewScene("lzan_top_scene",res.getResource("lzan_top"));
     canvas.createNewScene("lzan_right_scene",res.getResource("lzan_right_bg"));
@@ -255,7 +255,7 @@ function build(canvas){
         }
     }
 
-    canvas.changeScene("lzan_door_scene");
+    // canvas.changeScene("lzan_door_scene");
     // lzan_answer_box.enable();
 }
 
@@ -263,9 +263,18 @@ var res;
 
 function init(canvas){
     res=new Resource(cfg); //加载素材
-    res.onload=()=>build(canvas); //仅测试用
+    // res.onload=()=>build(canvas); //仅测试用
+}
+
+function destroy(canvas){
+    canvas.deleteScene("lzan_door_scene");
+    canvas.deleteScene("lzan_top_scene");
+    canvas.deleteScene("lzan_right_scene");
+    canvas.deleteScene("lzan_left_scene");
+    console.log("des lzan");
 }
 
 export default{
-    init,build
+    init,build,destroy,
+    setOnload: (ol)=>res.onload=ol
 };

@@ -146,7 +146,7 @@ function isIn(p){ //218 701 704 934
 }
 
 function build(canvas){
-    console.log("build");
+    console.log("build dat");
     canvas.createNewScene("dat_door_scene",res.getResource("dat_door"));
     canvas.createNewScene("dat_top_scene",res.getResource("dat_top"));
     canvas.createNewScene("dat_right_scene",res.getResource("dat_right_bg"));
@@ -343,7 +343,7 @@ function build(canvas){
         dat_left_scene_candle.setPosition(405,365);
     });
 
-    canvas.changeScene("dat_door_scene");
+    // canvas.changeScene("dat_door_scene");
     // dat_answer_box.enable();
 }
 
@@ -351,9 +351,19 @@ var res;
 
 function init(canvas){
     res=new Resource(cfg); //加载素材
-    res.onload=()=>build(canvas); //仅测试用
+    // res.onload=()=>build(canvas); //仅测试用
+}
+
+
+function destroy(canvas){
+    canvas.deleteScene("dat_door_scene");
+    canvas.deleteScene("dat_top_scene");
+    canvas.deleteScene("dat_right_scene");
+    canvas.deleteScene("dat_left_scene");
+    console.log("des dat");
 }
 
 export default{
-    init,build
+    init,build,destroy,
+    setOnload: (ol)=>res.onload=ol
 };
