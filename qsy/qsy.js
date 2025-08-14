@@ -136,7 +136,7 @@ var cfg=[ //所需素材的信息
 ]
 
 function build(canvas){
-    console.log("build");
+    console.log("build qsy");
     canvas.createNewScene("qsy_door_scene",res.getResource("qsy_door"));
     canvas.createNewScene("qsy_top_scene",res.getResource("qsy_top"));
     canvas.createNewScene("qsy_right_scene",res.getResource("qsy_right_bg"));
@@ -260,7 +260,7 @@ function build(canvas){
         console.log(qsy_left_scene_aitung.ignoreClickEvent,qsy_left_scene_aishark.ignoreClickEvent,qsy_left_scene_aicap.ignoreClickEvent,qsy_left_scene_ai_cow_and_foot_and_planet.ignoreClickEvent)
     }
 
-    canvas.changeScene("qsy_door_scene");
+    // canvas.changeScene("qsy_door_scene");
     // qsy_answer_box.enable();
 }
 
@@ -271,8 +271,16 @@ function init(canvas){
     // res.onload=()=>build(canvas); //仅测试用
 }
 
+function destroy(canvas){
+    canvas.deleteScene("qsy_door_scene");
+    canvas.deleteScene("qsy_top_scene");
+    canvas.deleteScene("qsy_right_scene");
+    canvas.deleteScene("qsy_left_scene");
+    console.log("des qsy");
+}
+
 export default{
-    init,build,
+    init,build,destroy,
     setOnload: (ol)=>res.onload=ol
 };
 

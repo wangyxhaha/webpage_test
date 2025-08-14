@@ -68,7 +68,7 @@ var menuRes=new Resource(menuResInfor);
 menuRes.onload=async()=>{
     levelList=(await fetch("./levelList.json").then(responce=>responce.json()).catch(()=>{throw "关卡信息炸了"})).value;
     for (let i=0;i<levelList.length;i++){
-        levelList[i].ready=false;
+        levelList[i].resReady=false;
     }
     console.log(levelList);
     let doorAnimation=new Animation([
@@ -153,41 +153,24 @@ var levelList;
 var nowLevel;
 
 async function loadLevel(){
-    // levelList=(await fetch("./levelList.json").then(responce=>responce.json()).catch(()=>{throw "关卡信息炸了"})).value;
-    // levelList[from].ready=true;
-    // let nextLevel;
-    // for (let i=from+1;i<levelList.length;i++){
-    //     console.log(`loading: ${levelList[i].dir}`);
-    //     nextLevel=await import(`./${levelList[i].dir}/${levelList[i].dir}.js`);
-    //     nextLevel.init();
-    //     levelList[i].ready=true;
-    //     let stopWaiting;
-    //     let loop=()=>{
-    //         if (levelList[i-1].finish) stopWaiting();
-    //         else requestAnimationFrame(loop);
-    //     };
-    //     await new Promise(resolve=>{
-    //         stopWaiting=resolve;
-    //         requestAnimationFrame(loop);
-    //     });
-    //     nowLevel=nextLevel;
-    // }
     if (nowLevel===null) return;
-    if (!levelList[nowLevel].ready){
+    if (!levelList[nowLevel].resReady){
         levelList[nowLevel].resource=await import(`./${levelList[nowLevel].dir}/${levelList[nowLevel].dir}.js`);
         levelList[nowLevel].resource.default.init();
         let stop=false;
         levelList[nowLevel].resource.default.setOnload(()=>stop=true);
         await until(()=>stop);
-        levelList[nowLevel].ready=true;
+        // levelList[nowLevel].resource.default.build(canvas);
+        levelList[nowLevel].resReady=true;
     }
-    if (!levelList[nowLevel+1].ready){
+    if (nowLevel+1<levelList.length && !levelList[nowLevel+1].resReady){
         levelList[nowLevel+1].resource=await import(`./${levelList[nowLevel+1].dir}/${levelList[nowLevel+1].dir}.js`);
         levelList[nowLevel+1].resource.default.init();
         let stop=false;
         levelList[nowLevel+1].resource.default.setOnload(()=>stop=true);
         await until(()=>stop);
-        levelList[nowLevel+1].ready=true;
+        // levelList[nowLevel+1].resource.default.build(canvas);
+        levelList[nowLevel+1].resReady=true;
     }
     setTimeout(loadLevel,10);
 }
@@ -213,9 +196,13 @@ var inputElement=document.getElementById("gameInput");
 
 async function controlLevel(){
     console.log("cl");
-    await until(()=>levelList[nowLevel].ready);
+    await until(()=>levelList[nowLevel].resReady);
     levelList[nowLevel].resource.default.build(canvas);
+    canvas.changeScene(`${levelList[nowLevel].dir}_door_scene`);
     await until(()=>inputElement.value===levelList[nowLevel].ans);
+    canvas.changeScene("main");
+    inputElement.value="";
+    levelList[nowLevel].resource.default.destroy(canvas);
     if (nowLevel<levelList.length-1){
         nowLevel++;
         setTimeout(controlLevel,10);
