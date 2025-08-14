@@ -202,6 +202,7 @@ async function controlLevel(){
     await until(()=>inputElement.value===levelList[nowLevel].ans);
     canvas.changeScene("main");
     inputElement.value="";
+    inputElement.blur();
     levelList[nowLevel].resource.default.destroy(canvas);
     if (nowLevel<levelList.length-1){
         nowLevel++;
