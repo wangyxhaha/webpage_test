@@ -112,11 +112,30 @@ menuRes.onload=async()=>{
     canvas.createNewScene("menu",menuRes.getResource("menu_bg"));
     let menu_door=new Button(canvas.scene("menu"),10,0,0,0,0,doorAnimation,null,null,()=>{},()=>{});
     let menu_new_game=new Button(canvas.scene("menu"),0,150,237,56,1,newGameAnimation,null,null,()=>{},()=>{
+        // console.log("new game");
+        if (localStorage.getItem("save")!=null){
+            if (confirm("这会覆盖已有的存档，你确定吗？")){
+                localStorage.removeItem("save");
+            }
+            else return;
+        }
         nowLevel=0;
         loadLevel();
         controlLevel();
     },349,246);
-    let menu_continue=new Button(canvas.scene("menu"),0,150,237,56,1,continueAnimation,null,null,()=>{},()=>{},349,394);
+    let menu_continue=new Button(canvas.scene("menu"),0,150,237,56,1,continueAnimation,null,null,()=>{},()=>{
+        // console.log("new game");
+        if (localStorage.getItem("save")===null){
+            if (confirm("你现在没有存档，开始新游戏吗？")){
+                nowLevel=0;
+                loadLevel();
+                controlLevel();
+            }
+            else return;
+        }
+        nowLevel=localStorage.getItem("save")*1;
+        loadLevel();
+        controlLevel();},349,394);
     let exitFlag=0;
     let menu_exit=new Button(canvas.scene("menu"),0,150,237,56,1,exitAnimation,null,null,()=>{},()=>{
         switch (exitFlag){
@@ -191,6 +210,10 @@ var inputElement=document.getElementById("gameInput");
 async function controlLevel(){
     console.log("cl");
     await until(()=>levelList[nowLevel].resReady);
+    if (localStorage.getItem("save")!=null){
+        localStorage.removeItem("save");
+    }
+    localStorage.setItem("save",String(nowLevel));
     levelList[nowLevel].resource.default.build(canvas);
     canvas.changeScene(`${levelList[nowLevel].dir}_door_scene`);
     await until(()=>inputElement.value===levelList[nowLevel].ans);
@@ -208,6 +231,20 @@ async function controlLevel(){
     }
 }
 
+function setCookie(cookieName,cookieValue,exday){
+    let time=new Date();
+    time.setDate(time.getDate()+exday*24*60*60*1000);
+    document.cookie=cookieName+'='+cookieValue+"; expires="+time.getUTCDate()+"; path=/";
+}
 
+function getCookie(cookieName){
+    let cs=document.cookie.split(';');
+    for (let i=0;i<cs.length;i++){
+        if (cs[i].indexOf(cookieName)!==-1){
+            return cs[i].substring(cookieName.length+1,cs[i].length);
+        }
+    }
+    return "";
+}
 
 
