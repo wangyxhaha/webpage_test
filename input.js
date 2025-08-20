@@ -6,6 +6,7 @@ class Input extends Sprite{
         super(cvs,x,y);
         // this.canvas=cvs.canvas; //获取canvas环境
         // this.canvasContext=cvs.canvasContext;
+        this.canvasScene=cvs;
         this.inputElement=document.getElementById(input_id); //获取实际文本框元素
         this.inputElement.style="position: fixed top: -100px opacity: 0 height: 0"; //隐藏实际文本框，很重要！！
         // this.x=x; //获取坐标（x的定位由textAlign决定，y的定位由textBaseLine决定）
@@ -15,18 +16,21 @@ class Input extends Sprite{
         this.fontHeight=30;
         this.inputElement.addEventListener("keydown",this.submitCallBack.bind(this)); //用于检测Enter
         this.inputElement.addEventListener("blur",this.disable.bind(this)); //用于检测失去焦点
-        this.timeHandler.flag=true;
+        this.timeHandler_flag=true;
         this.oninput=false;
         this.fillColor="red";
         // this.strokeColor="blue";
         this.lineWidth=2;
         this.textAlign="start";
         this.font="Arial";
-        setInterval(this.timeHandler.bind(this),500); //用来处理光标周期性闪烁
-    }
-    timeHandler(){
-        this.timeHandler.flag=!this.timeHandler.flag;
-        // console.log("switch cursor");
+        
+        const weakThis=new WeakRef(this);
+        let timeHandler=()=>{
+            if (!weakThis.deref()) return;
+            this.timeHandler_flag=!this.timeHandler_flag;
+            setTimeout(()=>timeHandler(),300);
+        }
+        setTimeout(()=>timeHandler(),300); //用来处理光标周期性闪烁
     }
     draw(){
         // console.log(this.inputElement.value);
@@ -41,7 +45,7 @@ class Input extends Sprite{
         this.canvasContext.fillText(this.inputElement.value,this.x,this.y);
         // this.canvasContext.strock
         // console.log("draw input");
-        if (this.oninput && this.timeHandler.flag){
+        if (this.oninput && this.timeHandler_flag){
             if (this.textAlign=="start"){
                 var w=this.canvasContext.measureText(this.inputElement.value.substring(0,this.inputElement.selectionStart)); //获取到光标位置的内容的宽度
                 this.canvasContext.fillRect(this.x+w.width,this.y-this.fontHeight,2,this.fontHeight);

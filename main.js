@@ -55,6 +55,21 @@ var menuResInfor=[
         name: "exit2",
         type: "image",
         value: "./menu/退出2.png"
+    },
+    {
+        name: "loading1",
+        type: "image",
+        value: "./menu/loading1.png"
+    },
+    {
+        name: "loading2",
+        type: "image",
+        value: "./menu/loading2.png"
+    },
+    {
+        name: "victory",
+        type: "image",
+        value: "./menu/victory.png"
     }
 ];
 
@@ -158,6 +173,12 @@ menuRes.onload=async()=>{
         }
         
     },349,546);
+
+    canvas.createNewScene("victory_scene");
+    let victory_scene_img=new Button(canvas.scene("victory_scene"),0,0,935,935,1,menuRes.getResource("victory"),null,null,()=>{},()=>{
+        victory_scene_resolve();
+    });
+
     canvas.changeScene("menu");
 }
 
@@ -207,6 +228,16 @@ async function until(requirement){
 
 var inputElement=document.getElementById("gameInput");
 
+var victory_scene_resolve;
+
+function dataURLToImage(data){
+    return new Promise(resolve=>{
+        let img=new Image();
+        img.src=data;
+        img.onload=resolve(img);
+    });
+}
+
 async function controlLevel(){
     console.log("cl");
     await until(()=>levelList[nowLevel].resReady);
@@ -217,9 +248,15 @@ async function controlLevel(){
     levelList[nowLevel].resource.default.build(canvas);
     canvas.changeScene(`${levelList[nowLevel].dir}_door_scene`);
     await until(()=>inputElement.value===levelList[nowLevel].ans);
-    canvas.changeScene("main");
     inputElement.value="";
     inputElement.blur();
+
+    let vimg_dataurl=document.getElementById("gameCanvas").toDataURL("image/png");
+    let vimg=await dataURLToImage(vimg_dataurl);
+    canvas.scene("victory_scene").setBackground(vimg);
+    canvas.changeScene("victory_scene");
+    await new Promise(resolve=>victory_scene_resolve=resolve);
+
     levelList[nowLevel].resource.default.destroy(canvas);
     if (nowLevel<levelList.length-1){
         nowLevel++;

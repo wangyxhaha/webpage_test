@@ -71,7 +71,6 @@ function build(canvas){
             let inputElement=document.getElementById("gameInput");
             inputElement.value="mygo";
         }
-        console.log("!");
         if (cnt!=0) guide_door_scene_tips[cnt-1].setTransparentAlpha(0);
         if (cnt!=4){
             guide_door_scene_tips[cnt++].floatUp(0,0,1000);
