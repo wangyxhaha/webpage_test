@@ -71,11 +71,11 @@ var cfg=[
         type: "image",
         value: "./xyj/data/黑象.png"
     },
-    {
-        name: "mandarin_red",
-        type: "image",
-        value: "./xyj/data/红仕.png"
-    },
+    // {
+    //     name: "mandarin_red",
+    //     type: "image",
+    //     value: "./xyj/data/红仕.png"
+    // },
     {
         name: "king_black",
         type: "image",
@@ -109,22 +109,22 @@ var cfg=[
     {
         name: "win",
         type: "image",
-        value: "./xyj/data/红兵2.png"
+        value: "./xyj/data/许砚均胜利.png"
     },
     {
         name: "lose",
         type: "image",
-        value: "./xyj/data/红兵2.png"
+        value: "./xyj/data/许砚均失败.png"
     },
     {
         name: "try_again",
         type: "image",
-        value: "./xyj/data/红兵2.png"
-    },
+        value: "./xyj/data/许砚均重试.png"
+    }
 ]
 
 function build(canvas){
-    console.log("build");
+    console.log("build xyj");
     canvas.createNewScene("xyj_door_scene",res.getResource("xyj_door_bg"));
     canvas.createNewScene("xyj_top_scene",res.getResource("xyj_top_bg"));
     canvas.createNewScene("xyj_left_scene",res.getResource("xyj_left_bg"));
@@ -175,50 +175,75 @@ function build(canvas){
         }
     ])
 
+    var xyj_game_scene_bg=new Button(canvas.scene("xyj_left_scene"),0,0,0,0,1,xyj_game_scene,null,()=>{},()=>{});
+
     var setEvent=new CustomEvent('setGame');
-    var startEvent=new CustomEvent('startGame');
+    //var startEvent=new CustomEvent('startGame');
     var loseEvent=new CustomEvent('loseGame');
     var winEvent=new CustomEvent('winGame');
 
-    var x=[221,272,327,382,432,481,536,591,643];
-    var y=[135,184,237,293,349,433,489,545,601,655];
+    //FIXME Bigger chess board.
 
-    function checkRook(p,){
-
-    }
+    var x=[132,208,284,361,437,512,589,665,741];
+    var y=[58,134,210,286,362,492,568,644,720,796];
  
     var flag=[
-        [false,false,true,false,false,false,false,false,true],
-        [false,false,false,false,true,false,false,false,false],
-        [false,false,true,false,false,false,true,true,false],
-        [false,false,true,false,true,false,false,false,false],
-        [false,false,false,false,true,false,false,true,false],
-        [false,false,true,false,false,false,false,false,false],
-        [false,true,false,false,false,false,false,true,false],
-        [false,false,false,false,true,false,false,false,false],
-        [false,true,false,false,false,true,false,false,false],
+        [0,0,1,0,0,0,0,0,1],
+        [0,0,0,0,1,0,0,0,0],
+        [0,0,1,0,0,0,1,1,0],
+        [0,0,1,0,1,0,0,0,0],
+        [0,0,0,0,0,1,0,1,0],
+        [0,0,0,0,1,0,0,1,0],
+        [0,0,1,0,0,0,0,0,0],
+        [0,1,0,0,0,0,0,1,0],
+        [0,0,0,0,1,0,0,0,0],
+        [0,1,0,0,0,0,0,0,0]
     ]
 
-    var xyj_left_scene_rook_black=new Button(canvas.scene("xyj_left_scene"),x[8],y[0],70,70,11,res.getResource("rook_black"),null,null,()=>{},()=>{
-        //xyj_left_scene_rook_black.setPosition(x[8],y[0]);
-        //checkRook(xyj_left_scene_rook_black.getPosition());
+    //FIXME Bigger chess peices.
+
+    var xyj_left_scene_rook_black=new Button(canvas.scene("xyj_left_scene"),x[8],y[0],60,64,11,res.getResource("rook_black"),null,null,()=>{},()=>{
+        checkMove(xyj_left_scene_rook_black.getPosition(),0);
+        xyj_left_scene_rook_black.setPosition(x[point[0].x],y[point[0].y]);
     });
-    var xyj_left_scene_knight_red=new Button(canvas.scene("xyj_left_scene"),x[1],y[9],70,70,11,res.getResource("knight_red"),null,null,()=>{},()=>{});
-    var xyj_left_scene_elephant_black=new Button(canvas.scene("xyj_left_scene"),x[2],y[0],70,70,11,res.getResource("elephant_black"),null,null,()=>{},()=>{});
-    var xyj_left_scene_mandarin_red=new Button(canvas.scene("xyj_left_scene"),x[5],y[9],70,70,11,res.getResource("mandarin_red"),null,null,()=>{},()=>{});
-    var xyj_left_scene_king_black=new Button(canvas.scene("xyj_left_scene"),x[4],y[1],70,70,11,res.getResource("king_black"),null,null,()=>{},()=>{});
-    var xyj_left_scene_king_red=new Button(canvas.scene("xyj_left_scene"),x[4],y[8],70,70,11,res.getResource("king_red"),null,null,()=>{},()=>{});
-    var xyj_left_scene_cannon_red=new Button(canvas.scene("xyj_left_scene"),x[1],y[7],70,70,11,res.getResource("cannon_red"),null,null,()=>{},()=>{});
-    var xyj_left_scene_pawn_black=new Button(canvas.scene("xyj_left_scene"),x[2],y[6],70,70,11,res.getResource("pawn_black"),null,null,()=>{},()=>{});
-    var xyj_left_scene_pawn_red1=new Button(canvas.scene("xyj_left_scene"),x[2],y[3],70,70,11,res.getResource("pawn_red1"),null,null,()=>{},()=>{});
-    var xyj_left_scene_pawn_red2=new Button(canvas.scene("xyj_left_scene"),x[4],y[3],70,70,11,res.getResource("pawn_red2"),null,null,()=>{},()=>{});
+    var xyj_left_scene_knight_red=new Button(canvas.scene("xyj_left_scene"),x[1],y[9],60,64,11,res.getResource("knight_red"),null,null,()=>{},()=>{
+        checkMove(xyj_left_scene_knight_red.getPosition(),1);
+        xyj_left_scene_knight_red.setPosition(x[point[1].x],y[point[1].y]);
+    });
+    var xyj_left_scene_elephant_black=new Button(canvas.scene("xyj_left_scene"),x[2],y[0],60,64,11,res.getResource("elephant_black"),null,null,()=>{},()=>{
+        checkMove(xyj_left_scene_elephant_black.getPosition(),2);
+        xyj_left_scene_elephant_black.setPosition(x[point[2].x],y[point[2].y]);
+    });
+    var xyj_left_scene_king_black=new Button(canvas.scene("xyj_left_scene"),x[4],y[1],60,64,11,res.getResource("king_black"),null,null,()=>{},()=>{
+        checkMove(xyj_left_scene_king_black.getPosition(),3);
+        xyj_left_scene_king_black.setPosition(x[point[3].x],y[point[3].y]);
+    });
+    var xyj_left_scene_king_red=new Button(canvas.scene("xyj_left_scene"),x[4],y[8],60,64,11,res.getResource("king_red"),null,null,()=>{},()=>{
+        checkMove(xyj_left_scene_king_red.getPosition(),4);
+        xyj_left_scene_king_red.setPosition(x[point[4].x],y[point[4].y]);
+    });
+    var xyj_left_scene_cannon_red=new Button(canvas.scene("xyj_left_scene"),x[1],y[7],60,64,11,res.getResource("cannon_red"),null,null,()=>{},()=>{
+        checkMove(xyj_left_scene_cannon_red.getPosition(),5);
+        xyj_left_scene_cannon_red.setPosition(x[point[5].x],y[point[5].y]);
+    });
+    var xyj_left_scene_pawn_black=new Button(canvas.scene("xyj_left_scene"),x[2],y[6],60,64,11,res.getResource("pawn_black"),null,null,()=>{},()=>{
+        checkMove(xyj_left_scene_pawn_black.getPosition(),6);
+        xyj_left_scene_pawn_black.setPosition(x[point[6].x],y[point[6].y]);
+    });
+    var xyj_left_scene_pawn_red1=new Button(canvas.scene("xyj_left_scene"),x[2],y[3],60,64,11,res.getResource("pawn_red1"),null,null,()=>{},()=>{
+        checkMove(xyj_left_scene_pawn_red1.getPosition(),7);
+        xyj_left_scene_pawn_red1.setPosition(x[point[7].x],y[point[7].y]);
+    });
+    var xyj_left_scene_pawn_red2=new Button(canvas.scene("xyj_left_scene"),x[4],y[3],60,64,11,res.getResource("pawn_red2"),null,null,()=>{},()=>{
+        checkMove(xyj_left_scene_pawn_red2.getPosition(),8);
+        xyj_left_scene_pawn_red2.setPosition(x[point[8].x],y[point[8].y]);
+    });
 
     var pieces=[];
     pieces.push(
         xyj_left_scene_rook_black,
         xyj_left_scene_knight_red,
         xyj_left_scene_elephant_black,
-        xyj_left_scene_mandarin_red,
         xyj_left_scene_king_black,
         xyj_left_scene_king_red,
         xyj_left_scene_cannon_red,
@@ -227,15 +252,174 @@ function build(canvas){
         xyj_left_scene_pawn_red2
     )
 
+    var point,final;
+
     document.addEventListener('setGame',()=>{
+        xyj_game_scene.to(0);
+        xyj_left_scene_try_button.setTransparentAlpha(0);
+        xyj_left_scene_try_button.setClickable(false);
+
         pieces.forEach(function(element){
             element.setDraggable(true);
-        })
+        });
+
+        fcnt=0;
+        point=[ //初始坐标
+            {x:8,y:0},
+            {x:1,y:9},
+            {x:2,y:0},
+            {x:4,y:1},
+            {x:4,y:8},
+            {x:1,y:7},
+            {x:2,y:6},
+            {x:2,y:3},
+            {x:4,y:3}
+        ];
+        final=[ //终点坐标
+            {x:6,y:8},
+            {x:2,y:7},
+            {x:4,y:2},
+            {x:4,y:0},
+            {x:5,y:7},
+            {x:3,y:1},
+            {x:3,y:6},
+            {x:1,y:3},
+            {x:3,y:3}
+        ];
     });
 
+    var fcnt=0;
+
+    function checkMove(p,id){
+        let cx=-1,cy=-1;
+        let px=point[id].x,py=point[id].y;
+        for(let i=0;i<=8;i++){
+            if(Math.abs(p.x-x[i])<=40) cx=i;
+        }
+        for(let i=0;i<=9;i++){
+            if(Math.abs(p.y-y[i])<=40) cy=i;
+        }
+        if(cx==-1||cy==-1) return;
+        if(flag[cy][cx]==1) return;
+        let valid=false;
+        switch(id){
+            case 1:{ //马
+                if(Math.abs(px-cx)==2&&Math.abs(py-cy)==1) valid=true;
+                if(Math.abs(px-cx)==1&&Math.abs(py-cy)==2) valid=true;
+                break;
+            }
+            case 2:{ //象
+                if(Math.abs(px-cx)==2&&Math.abs(py-cy)==2&&cy<=4) valid=true;
+                if(flag[(py+cy)/2][(px+cx)/2]==1) valid=false;
+                break;
+            }
+            //TODO Mandarin and cannon move check.
+            //Finish.
+            // case 3:{ //仕
+            //     if(cx<3&&cx>5&&cy<7&&cy>9) break;
+            //     if(px%2==0&&py%2==0){ //角或中央
+            //         if(Math.abs(px-cx)==1||Math.abs(py-cy)==1) valid=true;
+            //     }else{ //边
+            //         if(Math.abs(px-cx)==1&&Math.abs(py-cy)==0||Math.abs(px-cx)==0&&Math.abs(py-cy)==1) valid=true;
+            //     }
+            //     break;
+            // }
+            case 3:{ //将
+                if(cx<3&&cx>5&&cy<0&&cy>2) break;
+                if(px%2==1&&py%2==0||px==4&&py==1){ //角或中央
+                    if(Math.abs(px-cx)==1||Math.abs(py-cy)==1) valid=true;
+                }else{ //边
+                    if(Math.abs(px-cx)==1&&Math.abs(py-cy)==0||Math.abs(px-cx)==0&&Math.abs(py-cy)==1) valid=true;
+                }
+                break;
+            }
+            case 4:{ 
+                if(cx<3&&cx>5&&cy<7&&cy>9) break;
+                if(px%2==1&&py%2==1||px==4&&py==8){ //角或中央
+                    if(Math.abs(px-cx)==1||Math.abs(py-cy)==1) valid=true;
+                }else{ //边
+                    if(Math.abs(px-cx)==1&&Math.abs(py-cy)==0||Math.abs(px-cx)==0&&Math.abs(py-cy)==1) valid=true;
+                }
+                break;
+            }
+            case 0:
+            case 5:{ //車,炮
+                let cnt=0
+                if(cx==px&&cy<py){ //up
+                    for(let i=cy+1;i<py;i++){
+                        if(flag[i][cx]) cnt++;
+                    }
+                    if(cnt==0) valid=true;
+                }
+                if(cx==px&&cy>py){ //down
+                    for(let i=py+1;i<cy;i++){
+                        if(flag[i][cx]) cnt++;
+                    }
+                    if(cnt==0) valid=true;
+                }
+                if(cy==py&&cx<px){ //left
+                    for(let i=cx+1;i<px;i++){
+                        if(flag[cy][i]) cnt++;
+                    }
+                    if(cnt==0) valid=true;
+                }
+                if(cy==py&&cx>px){ //right
+                    for(let i=px+1;i<cx;i++){
+                        if(flag[cy][i]) cnt++;
+                    }
+                    if(cnt==0) valid=true;
+                }
+                break;
+            }
+            case 6:{ //卒(黑)
+                if(px-cx==0&&py-cy==-1) valid=true;
+                if(py>=5&&Math.abs(px-cx)==1&&py-cy==0) valid=true;
+                break;
+            }
+            case 7:
+            case 8:{ //兵(红)
+                if(px-cx==0&&py-cy==1) valid=true;
+                if(py<=4&&Math.abs(px-cx)==1&&py-cy==0) valid=true;
+                break;
+            }
+        }
+        if(valid){
+            console.log(`${pieces[id]} Move to (${cx},${cy})`);
+            flag[py][px]=0;
+            flag[cy][cx]=1;
+            point[id].x=cx;
+            point[id].y=cy;
+            if(cx==final[id].x&&cy==final[id].y){
+                fcnt++;
+                console.log(`${pieces[id]} Complete, Total ${fcnt}`);
+                if(fcnt==9) document.dispatchEvent(winEvent);
+                pieces[id].setDraggable(false);
+            }
+        }
+        if(!valid) console.log(`${pieces[id]} Invalid Move`);
+        return;
+    }
+
+    //TODO Special judgement of King move.
+    var xyj_left_scene_try_button=new Button(canvas.scene("xyj_left_scene"),0,0,0,0,12,null,null,()=>{
+        document.dispatchEvent(setEvent);
+    },()=>{});
+    
+    document.addEventListener('loseGame',()=>{
+        xyj_game_scene.to(2);
+        xyj_left_scene_try_button.setTransparentAlpha(1);
+        xyj_left_scene_try_button.setClickable(true);
+    });
 
     document.dispatchEvent(setEvent);
-    console.log("setGame");
+    console.log("Game Start");
+
+    document.addEventListener('winGame',()=>{
+        console.log(`You Win!`);
+        xyj_game_scene.to(1);
+        xyj_answer_box_fake_button.setClickable(true);
+        xyj_door_scene_lock.setTransparentAlpha(0);
+    });
 
     canvas.changeScene("xyj_left_scene");
 }
@@ -247,6 +431,15 @@ function init(canvas){
     res.onload=()=>build(canvas); //仅测试用
 }
 
+function destroy(canvas){
+    canvas.deleteScene("xyj_door_scene");
+    canvas.deleteScene("xyj_top_scene");
+    canvas.deleteScene("xyj_right_scene");
+    canvas.deleteScene("xyj_left_scene");
+    console.log("des xyj");
+}
+
 export default{
-    init,build
+    init,build,destroy,
+    setOnload: (ol)=>res.onload=ol
 };
