@@ -120,10 +120,21 @@ menuRes.onload=async()=>{
             interval: 200
         }
     ]);
+    let loadingAnimation=new Animation([
+        {
+            image: menuRes.getResource("loading1"),
+            interval: 200
+        },
+        {
+            image: menuRes.getResource("loading2"),
+            interval: 200
+        }
+    ])
     doorAnimation.start();
     newGameAnimation.start();
     continueAnimation.start();
     exitAnimation.start();
+    loadingAnimation.start();
     canvas.createNewScene("menu",menuRes.getResource("menu_bg"));
     let menu_door=new Button(canvas.scene("menu"),10,0,0,0,0,doorAnimation,null,null,()=>{},()=>{});
     let menu_new_game=new Button(canvas.scene("menu"),0,150,237,56,1,newGameAnimation,null,null,()=>{},()=>{
@@ -179,6 +190,8 @@ menuRes.onload=async()=>{
         victory_scene_resolve();
     });
 
+    canvas.createNewScene("loading_scene",loadingAnimation);
+
     canvas.changeScene("menu");
 }
 
@@ -188,23 +201,24 @@ var nowLevel;
 
 async function loadLevel(){
     if (nowLevel===null) return;
-    if (!levelList[nowLevel].resReady){
-        levelList[nowLevel].resource=await import(`./${levelList[nowLevel].dir}/${levelList[nowLevel].dir}.js`);
-        levelList[nowLevel].resource.default.init();
+    const _nowLevel=nowLevel;
+    if (!levelList[_nowLevel].resReady){
+        levelList[_nowLevel].resource=await import(`./${levelList[_nowLevel].dir}/${levelList[_nowLevel].dir}.js`);
+        levelList[_nowLevel].resource.default.init();
         let stop=false;
-        levelList[nowLevel].resource.default.setOnload(()=>stop=true);
+        levelList[_nowLevel].resource.default.setOnload(()=>stop=true);
         await until(()=>stop);
-        // levelList[nowLevel].resource.default.build(canvas);
-        levelList[nowLevel].resReady=true;
+        // levelList[_nowLevel].resource.default.build(canvas);
+        levelList[_nowLevel].resReady=true;
     }
-    if (nowLevel+1<levelList.length && !levelList[nowLevel+1].resReady){
-        levelList[nowLevel+1].resource=await import(`./${levelList[nowLevel+1].dir}/${levelList[nowLevel+1].dir}.js`);
-        levelList[nowLevel+1].resource.default.init();
+    if (_nowLevel+1<levelList.length && !levelList[_nowLevel+1].resReady){
+        levelList[_nowLevel+1].resource=await import(`./${levelList[_nowLevel+1].dir}/${levelList[_nowLevel+1].dir}.js`);
+        levelList[_nowLevel+1].resource.default.init();
         let stop=false;
-        levelList[nowLevel+1].resource.default.setOnload(()=>stop=true);
+        levelList[_nowLevel+1].resource.default.setOnload(()=>stop=true);
         await until(()=>stop);
-        // levelList[nowLevel+1].resource.default.build(canvas);
-        levelList[nowLevel+1].resReady=true;
+        // levelList[_nowLevel+1].resource.default.build(canvas);
+        levelList[_nowLevel+1].resReady=true;
     }
     setTimeout(loadLevel,10);
 }
@@ -240,14 +254,20 @@ function dataURLToImage(data){
 
 async function controlLevel(){
     console.log("cl");
+    canvas.changeScene("loading_scene");
     await until(()=>levelList[nowLevel].resReady);
+
     if (localStorage.getItem("save")!=null){
         localStorage.removeItem("save");
     }
     localStorage.setItem("save",String(nowLevel));
+
+    console.log(levelList[nowLevel].resReady,nowLevel,levelList[nowLevel].resource.default);
+
     levelList[nowLevel].resource.default.build(canvas);
     canvas.changeScene(`${levelList[nowLevel].dir}_door_scene`);
     await until(()=>inputElement.value===levelList[nowLevel].ans);
+
     inputElement.value="";
     inputElement.blur();
 
