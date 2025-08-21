@@ -135,8 +135,10 @@ function build(canvas){
     canvas.createNewScene("xyj_left_scene",res.getResource("xyj_left_bg"));
     canvas.createNewScene("xyj_right_scene",res.getResource("xyj_right_bg"));
     var xyj_door_scene_left_arrow=new Button(canvas.scene("xyj_door_scene"),0,0,57,89,0,res.getResource("left_arrow"),null,null,()=>{
-        document.dispatchEvent(setEvent);
-        console.log("Game Start");
+        if(!wingame){
+            document.dispatchEvent(setEvent);
+            console.log("Game Start");
+        }
     },()=>canvas.changeScene("xyj_left_scene"),98,443);
     var xyj_door_scene_right_arrow=new Button(canvas.scene("xyj_door_scene"),0,0,57,89,0,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("xyj_right_scene"),777,443);
     var xyj_left_scene_right_arrow=new Button(canvas.scene("xyj_left_scene"),0,0,57,89,0,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("xyj_door_scene"),777,443);
@@ -187,7 +189,6 @@ function build(canvas){
     xyj_game_scene_bg.setIgnoreClickEvent(true);
     var xyj_left_scene_undo=new Button(canvas.scene("xyj_left_scene"),0,0,113,113,12,res.getResource("undo"),null,null,()=>{
         document.dispatchEvent(setEvent);
-        clearInterval(showNotice);
     },()=>{});
 
     var setEvent=new CustomEvent('setGame');
@@ -253,6 +254,7 @@ function build(canvas){
     )
 
     var point,final;
+    var wingame=false;
     var xyj_left_scene_notice=new Text(canvas.scene("xyj_left_scene"),35,480,23);
     xyj_left_scene_notice.setFillColor("Red");
     xyj_left_scene_notice.setFont("黑体");
@@ -264,6 +266,7 @@ function build(canvas){
 
     document.addEventListener('setGame',()=>{
         xyj_game_scene.to(0);
+        clearInterval(showNotice);
         xyj_left_scene_try_button.setTransparentAlpha(0);
         xyj_left_scene_try_button.setClickable(false);
         xyj_left_scene_notice.setTransparentAlpha(1);
@@ -271,7 +274,7 @@ function build(canvas){
             xyj_left_scene_notice.setTransparentAlpha(0);
         },5000);
 
-        fcnt=0;
+        fcnt=0,sur=true;
         point=[ //初始坐标
             {x:8,y:0},
             {x:1,y:9},
@@ -316,7 +319,7 @@ function build(canvas){
         xyj_left_scene_king_black.setIgnoreClickEvent(true);
     });
 
-    var fcnt=0;
+    var fcnt=0,sur=true;
 
     function checkMove(p,id){
         let cx=-1,cy=-1;
@@ -330,7 +333,6 @@ function build(canvas){
         if(cx==-1||cy==-1) return;
         if(flag[cy][cx]==1&&cx!=4&&cy!=1) return;
         let valid=false;
-        let sur=true;
         switch(id){
             case 1:{ //马
                 if(Math.abs(px-cx)==2&&Math.abs(py-cy)==1) valid=true;
@@ -445,7 +447,7 @@ function build(canvas){
         }
         if(valid){
             if(cx==4&&cy==1){ //吃将
-                fcnt++;
+                //fcnt++;
                 xyj_left_scene_king_black.setTransparentAlpha(0);
                 console.log(`King OUT`);
                 sur=false;
@@ -459,8 +461,10 @@ function build(canvas){
                 fcnt++;
                 console.log(`${pieces[id]} Complete, Total ${fcnt}`);
                 //TODO Check winning.
-                if(fcnt==9) document.dispatchEvent(winEvent);
-                if(fcnt==8&&sur==true) document.dispatchEvent(loseEvent);
+                if(fcnt==8){
+                    if(sur==true) document.dispatchEvent(loseEvent);
+                    else document.dispatchEvent(winEvent);
+                }
                 pieces[id].setDraggable(false);
             }
         }
@@ -484,6 +488,7 @@ function build(canvas){
 
     document.addEventListener('winGame',()=>{
         console.log(`You Win!`);
+        wingame=true;
         xyj_game_scene.to(1);
         xyj_answer_box_fake_button.setClickable(true);
         xyj_door_scene_lock.setTransparentAlpha(0);
