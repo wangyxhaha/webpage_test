@@ -446,12 +446,13 @@ function build(canvas){
             }
         }
         if(valid){
-            if(cx==point[3].x&&cy==point[3].y){ //吃将
+            if(cx==point[3].x&&cy==point[3].y&&id!=3){ //吃将
                 //fcnt++;
                 xyj_left_scene_king_black.setTransparentAlpha(0);
                 console.log(`King OUT`);
                 sur=false;
-                if(fcnt!=9) document.dispatchEvent(loseEvent);
+                if(cx==final[id].x&&cy==final[id].y&&fcnt==7) document.dispatchEvent(winEvent);
+                else document.dispatchEvent(loseEvent);
             }
             console.log(`${pieces[id]} Move to (${cx},${cy})`);
             flag[py][px]=0;
