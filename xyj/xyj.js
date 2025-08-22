@@ -290,7 +290,7 @@ function build(canvas){
             {x:6,y:8},
             {x:2,y:7},
             {x:4,y:2},
-            {x:4,y:1},
+            {x:-1,y:-1},
             {x:5,y:7},
             {x:3,y:1},
             {x:3,y:6},
@@ -315,8 +315,8 @@ function build(canvas){
             pieces[i].setDraggable(true);
         }
         xyj_left_scene_king_black.setTransparentAlpha(1);
-        xyj_left_scene_king_black.setDraggable(false);
-        xyj_left_scene_king_black.setIgnoreClickEvent(true);
+        xyj_left_scene_king_black.setDraggable(true);
+        xyj_left_scene_king_black.setIgnoreClickEvent(false);
     });
 
     var fcnt=0,sur=true;
@@ -356,7 +356,7 @@ function build(canvas){
             //     break;
             // }
             case 3:{ //将
-                if(cx<3&&cx>5&&cy<0&&cy>2) break;
+                if(cx<3||cx>5||cy<0||cy>2) break;
                 if(px%2==1&&py%2==0||px==4&&py==1){ //角或中央
                     if(Math.abs(px-cx)==1||Math.abs(py-cy)==1) valid=true;
                 }else{ //边
@@ -365,7 +365,7 @@ function build(canvas){
                 break;
             }
             case 4:{ 
-                if(cx<3&&cx>5&&cy<7&&cy>9) break;
+                if(cx<3||cx>5||cy<7||cy>9) break;
                 if(px%2==1&&py%2==1||px==4&&py==8){ //角或中央
                     if(Math.abs(px-cx)==1||Math.abs(py-cy)==1) valid=true;
                 }else{ //边
@@ -446,11 +446,12 @@ function build(canvas){
             }
         }
         if(valid){
-            if(cx==4&&cy==1){ //吃将
+            if(cx==point[3].x&&cy==point[3].y){ //吃将
                 //fcnt++;
                 xyj_left_scene_king_black.setTransparentAlpha(0);
                 console.log(`King OUT`);
                 sur=false;
+                if(fcnt!=9) document.dispatchEvent(loseEvent);
             }
             console.log(`${pieces[id]} Move to (${cx},${cy})`);
             flag[py][px]=0;
