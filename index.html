@@ -40,11 +40,19 @@
             opacity: 0;
             height: 0;
         }
+        .input_element{
+            position: fixed;
+            top: -100px;
+            opacity: 0;
+            height: 0;
+        }
     </style>
     <title>test</title>
 </head>
 <body>
-    <input id="gameInput" maxlength="4">
+    <div id="input_container">
+        <input id="gameInput" maxlength="4" class="input_element">
+    </div>
     <div id="gameContainer">
         <canvas id="gameCanvas">
             <span style="color: red;">你的浏览器不支持，换个浏览器试试？</span>
