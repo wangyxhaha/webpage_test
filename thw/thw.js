@@ -149,14 +149,14 @@ function build(canvas){
     thw_left_scene_bg_button.setClickable(false);
     thw_left_scene_bg_button.setIgnoreClickEvent(true);
 
-    canvas.changeScene("thw_door_scene");
+    //canvas.changeScene("thw_door_scene");
 }
 
 var res;
 
 function init(canvas){
     res=new Resource(cfg); //加载素材
-    res.onload=()=>build(canvas); //仅测试用
+    //res.onload=()=>build(canvas); //仅测试用
 }
 
 function destroy(canvas){
