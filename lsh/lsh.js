@@ -161,8 +161,8 @@ function build(canvas){
     lsh_right_scene_bg_button.setIgnoreClickEvent(true);
 
     var lsh_door_scene_figure=new Button(canvas.scene("lsh_door_scene"),0,0,245,268,21,res.getResource("lsh_figure"),null,null,()=>{
-        lsh_door_scene_talking.setTransparentAlpha(1);
-        lsh_door_scene_talking.slideTo(0,0,0.3);
+        //lsh_door_scene_talking.setTransparentAlpha(1);
+        lsh_door_scene_talking.floatUp(0,0,300);
     },()=>{},592,333);
 
     var lsh_door_scene_talking=new Button(canvas.scene("lsh_door_scene"),0,100,0,0,22,res.getResource("talking"),null,null,()=>{},()=>{});

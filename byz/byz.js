@@ -478,16 +478,25 @@ function build(canvas){
     byz_top_scene_anwser_text_red.setFontHeight(55);
     //byz_top_scene_anwser_text_blue.style.letterSpacing="2px";
 
-    canvas.changeScene("byz_door_scene");
+    //canvas.changeScene("byz_door_scene");
 }
 
 var res;
 
 function init(canvas){
     res=new Resource(cfg); //加载素材
-    res.onload=()=>build(canvas); //仅测试用
+    //res.onload=()=>build(canvas); //仅测试用
+}
+
+function destroy(canvas){
+    canvas.deleteScene("byz_door_scene");
+    canvas.deleteScene("byz_top_scene");
+    canvas.deleteScene("byz_right_scene");
+    canvas.deleteScene("byz_left_scene");
+    console.log("des byz");
 }
 
 export default{
-    init,build
+    init,build,destroy,
+    setOnload: (ol)=>res.onload=ol
 };
