@@ -60,6 +60,11 @@ var cfg=[
         name: "box",
         type: "image",
         value: "./thw/data/输入框.png"
+    },
+    {
+        name: "thw_figure",
+        type: "image",
+        value: "./thw/data/thw形象.png"
     }
 ]
 
@@ -70,7 +75,7 @@ function build(canvas){
     canvas.createNewScene("thw_left_scene",res.getResource("thw_left_bg"));
     canvas.createNewScene("thw_right_scene",res.getResource("thw_right_bg"));
     var thw_door_scene_left_arrow=new Button(canvas.scene("thw_door_scene"),0,0,57,89,0,res.getResource("left_arrow"),null,null,()=>{},()=>canvas.changeScene("thw_left_scene"),98,443);
-    var thw_door_scene_right_arrow=new Button(canvas.scene("thw_door_scene"),0,0,57,89,0,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("thw_right_scene"),777,443);
+    var thw_door_scene_right_arrow=new Button(canvas.scene("thw_door_scene"),0,0,57,89,11,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("thw_right_scene"),777,443);
     var thw_left_scene_right_arrow=new Button(canvas.scene("thw_left_scene"),0,0,57,89,0,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("thw_door_scene"),777,443);
     var thw_right_scene_left_arrow=new Button(canvas.scene("thw_right_scene"),0,0,57,89,0,res.getResource("left_arrow"),null,null,()=>{},()=>canvas.changeScene("thw_door_scene"),98,443);
     var thw_door_scene_up_arrow=new Button(canvas.scene("thw_door_scene"),0,0,88,46,0,res.getResource("up_arrow"),null,null,()=>{},()=>canvas.changeScene("thw_top_scene"),416,114);
@@ -99,6 +104,8 @@ function build(canvas){
     });
     thw_answer_box_fake_disable_button.setClickable(false);
     thw_answer_box_fake_disable_button.setIgnoreClickEvent(true);
+
+    var thw_door_scene_figure=new Button(canvas.scene("thw_door_scene"),0,0,0,0,5,res.getResource("thw_figure"),null,null,()=>{},()=>{});
 
     //输入框
 

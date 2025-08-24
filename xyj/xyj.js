@@ -125,6 +125,11 @@ var cfg=[
         name: "undo",
         type: "image",
         value: "./xyj/data/撤销.png"
+    },
+    {
+        name: "xyj_figure",
+        type: "image",
+        value: "./xyj/data/xyj形象.png"
     }
 ]
 
@@ -140,7 +145,7 @@ function build(canvas){
             console.log("Game Start");
         }
     },()=>canvas.changeScene("xyj_left_scene"),98,443);
-    var xyj_door_scene_right_arrow=new Button(canvas.scene("xyj_door_scene"),0,0,57,89,0,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("xyj_right_scene"),777,443);
+    var xyj_door_scene_right_arrow=new Button(canvas.scene("xyj_door_scene"),0,0,57,89,11,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("xyj_right_scene"),777,443);
     var xyj_left_scene_right_arrow=new Button(canvas.scene("xyj_left_scene"),0,0,57,89,0,res.getResource("right_arrow"),null,null,()=>{},()=>canvas.changeScene("xyj_door_scene"),777,443);
     var xyj_right_scene_left_arrow=new Button(canvas.scene("xyj_right_scene"),0,0,57,89,0,res.getResource("left_arrow"),null,null,()=>{},()=>canvas.changeScene("xyj_door_scene"),98,443);
     var xyj_door_scene_up_arrow=new Button(canvas.scene("xyj_door_scene"),0,0,88,46,0,res.getResource("up_arrow"),null,null,()=>{},()=>canvas.changeScene("xyj_top_scene"),416,114);
@@ -169,6 +174,8 @@ function build(canvas){
     });
     xyj_answer_box_fake_disable_button.setClickable(false);
     xyj_answer_box_fake_disable_button.setIgnoreClickEvent(true);
+
+    var xyj_door_scene_figure=new Button(canvas.scene("xyj_door_scene"),0,0,0,0,5,res.getResource("xyj_figure"),null,null,()=>{},()=>{});
 
     var xyj_game_scene=new Animation([
         {
