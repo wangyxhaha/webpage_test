@@ -499,14 +499,14 @@ function build(canvas){
         xyj_left_scene_undo.setClickable(false);
     });
 
-    canvas.changeScene("xyj_door_scene");
+    //canvas.changeScene("xyj_door_scene");
 }
 
 var res;
 
 function init(canvas){
     res=new Resource(cfg); //加载素材
-    res.onload=()=>build(canvas); //仅测试用
+    //res.onload=()=>build(canvas); //仅测试用
 }
 
 function destroy(canvas){

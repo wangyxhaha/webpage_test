@@ -99,7 +99,7 @@ var cfg=[
 ]
 
 function build(canvas){
-    console.log("build");
+    console.log("build zsz");
     canvas.createNewScene("zsz_door_scene",res.getResource("zsz_door_bg"));
     canvas.createNewScene("zsz_top_scene",res.getResource("zsz_top_bg"));
     canvas.createNewScene("zsz_left_scene",res.getResource("zsz_left_bg"));
@@ -423,16 +423,25 @@ function build(canvas){
         return Math.max(p.x,object.x+10)<Math.min(p.x+142,object.x+10+l) && Math.max(p.y,object.y+10)<Math.min(p.y+244,object.y+10+h);
     }
 
-    canvas.changeScene("zsz_door_scene");
+    //canvas.changeScene("zsz_door_scene");
 }
 
 var res;
 
 function init(canvas){
     res=new Resource(cfg); //加载素材
-    res.onload=()=>build(canvas); //仅测试用
+    //res.onload=()=>build(canvas); //仅测试用
+}
+
+function destroy(canvas){
+    canvas.deleteScene("zsz_door_scene");
+    canvas.deleteScene("zsz_top_scene");
+    canvas.deleteScene("zsz_right_scene");
+    canvas.deleteScene("zsz_left_scene");
+    console.log("des zsz");
 }
 
 export default{
-    init,build
+    init,build,destroy,
+    setOnload: (ol)=>res.onload=ol
 };

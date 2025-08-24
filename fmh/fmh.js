@@ -109,7 +109,7 @@ var cfg=[
 ]
 
 function build(canvas){
-    console.log("build");
+    console.log("build fmh");
     canvas.createNewScene("fmh_door_scene",res.getResource("fmh_door_bg"));
     canvas.createNewScene("fmh_top_scene",res.getResource("fmh_top_bg"));
     canvas.createNewScene("fmh_left_scene",res.getResource("fmh_left_bg"));
@@ -202,6 +202,7 @@ function build(canvas){
         res.getResource("bgm").play();
         fmh_door_scene_figure.setTransparentAlpha(1);
         fmh_door_scene_figure.setClickable(true);
+        //FIXME slide problem.
         fmh_door_scene_figure.slideTo(550,577,0.2);
         showTalking(fmh_door_scene_figure_late,fmh_door_scene_figure_talking1);
     },()=>{});
@@ -209,16 +210,25 @@ function build(canvas){
 
     var fmh_right_scene_light=new Button(canvas.scene("fmh_right_scene"),0,0,0,0,11,res.getResource("fmh_light"),null,null,()=>{},()=>{});
 
-    canvas.changeScene("fmh_door_scene");
+    //canvas.changeScene("fmh_door_scene");
 }
 
 var res;
 
 function init(canvas){
     res=new Resource(cfg); //加载素材
-    res.onload=()=>build(canvas); //仅测试用
+    //res.onload=()=>build(canvas); //仅测试用
+}
+
+function destroy(canvas){
+    canvas.deleteScene("fmh_door_scene");
+    canvas.deleteScene("fmh_top_scene");
+    canvas.deleteScene("fmh_right_scene");
+    canvas.deleteScene("fmh_left_scene");
+    console.log("des fmh");
 }
 
 export default{
-    init,build
+    init,build,destroy,
+    setOnload: (ol)=>res.onload=ol
 };

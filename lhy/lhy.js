@@ -217,7 +217,7 @@ function isIn(p,lx,ly,l,h){ //是否在检测框内
 }
 
 function build(canvas){
-    console.log("build");
+    console.log("build lhy");
     canvas.createNewScene("lhy_door_scene",res.getResource("lhy_door_bg"));
     canvas.createNewScene("lhy_top_scene",res.getResource("lhy_top_bg"));
     canvas.createNewScene("lhy_left_scene",res.getResource("lhy_left_bg"));
@@ -504,16 +504,25 @@ function build(canvas){
     lhy_top_scene_button.setClickable(true);
     lhy_top_scene_button.setTransparentAlpha(1);
 
-    canvas.changeScene("lhy_door_scene");
+    //canvas.changeScene("lhy_door_scene");
 }
 
 var res;
 
 function init(canvas){
     res=new Resource(cfg); //加载素材
-    res.onload=()=>build(canvas); //仅测试用
+    //res.onload=()=>build(canvas); //仅测试用
+}
+
+function destroy(canvas){
+    canvas.deleteScene("lhy_door_scene");
+    canvas.deleteScene("lhy_top_scene");
+    canvas.deleteScene("lhy_right_scene");
+    canvas.deleteScene("lhy_left_scene");
+    console.log("des lhy");
 }
 
 export default{
-    init,build
+    init,build,destroy,
+    setOnload: (ol)=>res.onload=ol
 };

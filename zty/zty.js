@@ -138,7 +138,7 @@ var cfg=[
 ]
 
 function build(canvas){
-    console.log("build");
+    console.log("build zty");
     canvas.createNewScene("zty_door_scene",res.getResource("zty_door_bg"));
     canvas.createNewScene("zty_top_scene",res.getResource("zty_top_bg"));
     canvas.createNewScene("zty_left_scene",res.getResource("zty_left_bg"));
@@ -267,16 +267,25 @@ function build(canvas){
         }
     },()=>{},350,372);
 
-    canvas.changeScene("zty_door_scene");
+    //canvas.changeScene("zty_door_scene");
 }
 
 var res;
 
 function init(canvas){
     res=new Resource(cfg); //加载素材
-    res.onload=()=>build(canvas); //仅测试用
+    //res.onload=()=>build(canvas); //仅测试用
+}
+
+function destroy(canvas){
+    canvas.deleteScene("zty_door_scene");
+    canvas.deleteScene("zty_top_scene");
+    canvas.deleteScene("zty_right_scene");
+    canvas.deleteScene("zty_left_scene");
+    console.log("des zty");
 }
 
 export default{
-    init,build
+    init,build,destroy,
+    setOnload: (ol)=>res.onload=ol
 };
