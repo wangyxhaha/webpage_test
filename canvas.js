@@ -27,7 +27,7 @@ class Canvas{
         this.canvas.height=this.logicalHeight;
         this.canvas.width=this.logicalWidth;
         this.ratio=height/width; //计算canvas的长宽比（高比宽）
-        this.sceneArray=new Array();
+        this.sceneArray={};
         this.sceneArray["main"]=new CanvasScene(canvasid,height,width,null);
         this.nowScene="main";
         this.canvas.addEventListener("pointermove",this.mouseMoveCallBack.bind(this)) //设置对鼠标移动的监听
@@ -54,7 +54,7 @@ class Canvas{
         throw `${name} isn't existed.`;
     }
     createNewScene(name,background){
-        if (name in this.sceneArray){
+        if (this.sceneArray[name]!=null){
             throw `${name} is already existed.`;
         }
         // this.sceneArray["scene2"]=new CanvasScene(canvasid,height,width,hitori);
@@ -84,6 +84,9 @@ class Canvas{
     }
     touchEndCallBack(evt){
         this.sceneArray[this.nowScene].touchEndCallBack(evt);
+    }
+    deleteScene(name){
+        this.sceneArray[name]=null;
     }
 }
 
