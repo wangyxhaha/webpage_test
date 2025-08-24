@@ -269,6 +269,7 @@ function build(canvas){
         xyj_game_scene.to(0);
         clearInterval(showNotice);
         xyj_left_scene_try_button.setTransparentAlpha(0);
+        xyj_left_scene_try_button.setIgnoreClickEvent(true);
         xyj_left_scene_try_button.setClickable(false);
         xyj_left_scene_notice.setTransparentAlpha(1);
         showNotice=setInterval(()=>{
