@@ -255,12 +255,13 @@ function build(canvas){
 
     var point,final;
     var wingame=false;
-    var xyj_left_scene_notice=new Text(canvas.scene("xyj_left_scene"),35,480,23);
+    var xyj_left_scene_notice=new Text(canvas.scene("xyj_left_scene"),35,480,1);
     xyj_left_scene_notice.setFillColor("Red");
     xyj_left_scene_notice.setFont("黑体");
     xyj_left_scene_notice.setFontHeight(40);
     xyj_left_scene_notice.setTransparentAlpha(0);
     xyj_left_scene_notice.value="任务：将棋子挪到对应虚线位置上并吃掉黑方的将";
+    //xyj_left_scene_notice.setIgnoreClickEvent(true);
 
     var showNotice;
 
