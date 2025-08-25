@@ -1,6 +1,14 @@
 {
     "value": [
         {
+            "dir": "guide",
+            "ans": "mygo"
+        },
+        {
+            "dir": "hy",
+            "ans": "韩奕"
+        },
+        {
             "dir": "lzan",
             "ans": "李张安娜"
         },
