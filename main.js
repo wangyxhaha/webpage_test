@@ -5,6 +5,7 @@ import Canvas from "./canvas.js";
 import Button from "./button.js";
 import Animation from "./animation.js";
 import Input from "./input.js";
+import MyAudio from "./audio.js";
 import "./buttonPlugin.js";
 import "./spritePlugin.js";
 
@@ -55,10 +56,59 @@ var menuResInfor=[
         name: "exit2",
         type: "image",
         value: "./menu/退出2.png"
+    },
+    {
+        name: "loading1",
+        type: "image",
+        value: "./menu/loading1.png"
+    },
+    {
+        name: "loading2",
+        type: "image",
+        value: "./menu/loading2.png"
+    },
+    {
+        name: "victory",
+        type: "image",
+        value: "./menu/victory.png"
+    },
+    // {
+    //     name: "victory",
+    //     type: "image",
+    //     value: "./menu/victory.png"
+    // },
+    {
+        name: "open_door1",
+        type: "image",
+        value: "./menu/开门1.jpg"
+    },
+    {
+        name: "open_door2",
+        type: "image",
+        value: "./menu/开门2.jpg"
+    },
+    {
+        name: "open_door3",
+        type: "image",
+        value: "./menu/开门3.jpg"
+    },
+    {
+        name: "open_door4",
+        type: "image",
+        value: "./menu/开门4.jpg"
+    },
+    {
+        name: "open_door_sound",
+        type: "audio",
+        value: "./menu/开门音效.mp3"
     }
 ];
 
 var menuRes=new Resource(menuResInfor);
+
+var victory_open_door;
+var victory_scene_resolve;
+
 menuRes.onload=async()=>{
     levelList=(await fetch("./levelList.json").then(responce=>responce.json()).catch(()=>{throw "关卡信息炸了"})).value;
     for (let i=0;i<levelList.length;i++){
@@ -105,10 +155,21 @@ menuRes.onload=async()=>{
             interval: 200
         }
     ]);
+    let loadingAnimation=new Animation([
+        {
+            image: menuRes.getResource("loading1"),
+            interval: 200
+        },
+        {
+            image: menuRes.getResource("loading2"),
+            interval: 200
+        }
+    ])
     doorAnimation.start();
     newGameAnimation.start();
     continueAnimation.start();
     exitAnimation.start();
+    loadingAnimation.start();
     canvas.createNewScene("menu",menuRes.getResource("menu_bg"));
     let menu_door=new Button(canvas.scene("menu"),10,0,0,0,0,doorAnimation,null,null,()=>{},()=>{});
     let menu_new_game=new Button(canvas.scene("menu"),0,150,237,56,1,newGameAnimation,null,null,()=>{},()=>{
@@ -158,6 +219,34 @@ menuRes.onload=async()=>{
         }
         
     },349,546);
+
+    canvas.createNewScene("victory_scene");
+
+    victory_open_door=new Animation([
+        {
+            image: menuRes.getResource("open_door1"),
+            interval: 1000
+        },
+        {
+            image: menuRes.getResource("open_door2"),
+            interval: 75
+        },
+        {
+            image: menuRes.getResource("open_door3"),
+            interval: 75
+        },
+        {
+            image: menuRes.getResource("open_door4"),
+            interval: 75
+        }
+    ]);
+
+    var victory_scene_img=new Button(canvas.scene("victory_scene"),0,0,935,935,1,victory_open_door,null,null,()=>{},()=>{
+        if (victory_scene_resolve!=null) victory_scene_resolve();
+    });
+
+    canvas.createNewScene("loading_scene",loadingAnimation);
+
     canvas.changeScene("menu");
 }
 
@@ -167,23 +256,24 @@ var nowLevel;
 
 async function loadLevel(){
     if (nowLevel===null) return;
-    if (!levelList[nowLevel].resReady){
-        levelList[nowLevel].resource=await import(`./${levelList[nowLevel].dir}/${levelList[nowLevel].dir}.js`);
-        levelList[nowLevel].resource.default.init();
+    const _nowLevel=nowLevel;
+    if (!levelList[_nowLevel].resReady){
+        levelList[_nowLevel].resource=await import(`./${levelList[_nowLevel].dir}/${levelList[_nowLevel].dir}.js`);
+        levelList[_nowLevel].resource.default.init();
         let stop=false;
-        levelList[nowLevel].resource.default.setOnload(()=>stop=true);
+        levelList[_nowLevel].resource.default.setOnload(()=>stop=true);
         await until(()=>stop);
-        // levelList[nowLevel].resource.default.build(canvas);
-        levelList[nowLevel].resReady=true;
+        // levelList[_nowLevel].resource.default.build(canvas);
+        levelList[_nowLevel].resReady=true;
     }
-    if (nowLevel+1<levelList.length && !levelList[nowLevel+1].resReady){
-        levelList[nowLevel+1].resource=await import(`./${levelList[nowLevel+1].dir}/${levelList[nowLevel+1].dir}.js`);
-        levelList[nowLevel+1].resource.default.init();
+    if (_nowLevel+1<levelList.length && !levelList[_nowLevel+1].resReady){
+        levelList[_nowLevel+1].resource=await import(`./${levelList[_nowLevel+1].dir}/${levelList[_nowLevel+1].dir}.js`);
+        levelList[_nowLevel+1].resource.default.init();
         let stop=false;
-        levelList[nowLevel+1].resource.default.setOnload(()=>stop=true);
+        levelList[_nowLevel+1].resource.default.setOnload(()=>stop=true);
         await until(()=>stop);
-        // levelList[nowLevel+1].resource.default.build(canvas);
-        levelList[nowLevel+1].resReady=true;
+        // levelList[_nowLevel+1].resource.default.build(canvas);
+        levelList[_nowLevel+1].resReady=true;
     }
     setTimeout(loadLevel,10);
 }
@@ -207,19 +297,45 @@ async function until(requirement){
 
 var inputElement=document.getElementById("gameInput");
 
+function dataURLToImage(data){
+    return new Promise(resolve=>{
+        let img=new Image();
+        img.src=data;
+        img.onload=resolve(img);
+    });
+}
+
 async function controlLevel(){
     console.log("cl");
+    canvas.changeScene("loading_scene");
     await until(()=>levelList[nowLevel].resReady);
+
     if (localStorage.getItem("save")!=null){
         localStorage.removeItem("save");
     }
     localStorage.setItem("save",String(nowLevel));
+
+    console.log(levelList[nowLevel].resReady,nowLevel,levelList[nowLevel].resource.default);
+
     levelList[nowLevel].resource.default.build(canvas);
     canvas.changeScene(`${levelList[nowLevel].dir}_door_scene`);
     await until(()=>inputElement.value===levelList[nowLevel].ans);
-    canvas.changeScene("main");
+
     inputElement.value="";
     inputElement.blur();
+
+    // let vimg_dataurl=document.getElementById("gameCanvas").toDataURL("image/png");
+    // let vimg=await dataURLToImage(vimg_dataurl);
+    // canvas.scene("victory_scene").setBackground(vimg);
+    victory_open_door.reset();
+    victory_open_door.start();
+    menuRes.getResource("open_door_sound").play();
+    setTimeout(()=>victory_open_door.pause(),1225);
+    victory_scene_resolve=null;
+    canvas.changeScene("victory_scene");
+    await until(()=>victory_open_door.nowFrame()===3);
+    await new Promise(resolve=>victory_scene_resolve=resolve);
+
     levelList[nowLevel].resource.default.destroy(canvas);
     if (nowLevel<levelList.length-1){
         nowLevel++;
