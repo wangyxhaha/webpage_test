@@ -86,6 +86,10 @@ class Canvas{
         this.sceneArray[this.nowScene].touchEndCallBack(evt);
     }
     deleteScene(name){
+        console.log("delete",name);
+        this.sceneArray[name].objectToDraw=null;
+        this.sceneArray[name].listeners=null;
+        this.sceneArray[name].clickFocusPoint=null;
         this.sceneArray[name]=null;
     }
 }
@@ -105,12 +109,6 @@ export class CanvasScene{ //不同场景（可以方便切换）
         // this.canvasContext.fillRect(10,10,this.logicalWidth-20,this.logicalHeight-20);
         this.objectToDraw=new Array(); //包含{layer(图层，越大越靠前),object(需要绘制的对象的this)}
         this.listeners=new Array();
-        // this.mouseMoveCallBackArray=new Array();
-        // this.mouseDownCallBackArray=new Array();
-        // this.mouseUpCallBackArray=new Array();
-        // this.touchMoveCallBackArray=new Array();
-        // this.touchStartCallBackArray=new Array();
-        // this.touchEndCallBackArray=new Array();
         this.clickFocusPoint=null; //可点击元素的焦点，null为无焦点（存在焦点时只对焦点元素进行判定）
     }
     setBackground(img){
