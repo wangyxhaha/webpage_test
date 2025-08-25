@@ -5,6 +5,7 @@ import Canvas from "./canvas.js";
 import Button from "./button.js";
 import Animation from "./animation.js";
 import Input from "./input.js";
+import MyAudio from "./audio.js";
 import "./buttonPlugin.js";
 import "./spritePlugin.js";
 
@@ -70,10 +71,44 @@ var menuResInfor=[
         name: "victory",
         type: "image",
         value: "./menu/victory.png"
+    },
+    // {
+    //     name: "victory",
+    //     type: "image",
+    //     value: "./menu/victory.png"
+    // },
+    {
+        name: "open_door1",
+        type: "image",
+        value: "./menu/开门1.jpg"
+    },
+    {
+        name: "open_door2",
+        type: "image",
+        value: "./menu/开门2.jpg"
+    },
+    {
+        name: "open_door3",
+        type: "image",
+        value: "./menu/开门3.jpg"
+    },
+    {
+        name: "open_door4",
+        type: "image",
+        value: "./menu/开门4.jpg"
+    },
+    {
+        name: "open_door_sound",
+        type: "audio",
+        value: "./menu/开门音效.mp3"
     }
 ];
 
 var menuRes=new Resource(menuResInfor);
+
+var victory_open_door;
+var victory_scene_resolve;
+
 menuRes.onload=async()=>{
     levelList=(await fetch("./levelList.json").then(responce=>responce.json()).catch(()=>{throw "关卡信息炸了"})).value;
     for (let i=0;i<levelList.length;i++){
@@ -186,8 +221,28 @@ menuRes.onload=async()=>{
     },349,546);
 
     canvas.createNewScene("victory_scene");
-    let victory_scene_img=new Button(canvas.scene("victory_scene"),0,0,935,935,1,menuRes.getResource("victory"),null,null,()=>{},()=>{
-        victory_scene_resolve();
+
+    victory_open_door=new Animation([
+        {
+            image: menuRes.getResource("open_door1"),
+            interval: 1000
+        },
+        {
+            image: menuRes.getResource("open_door2"),
+            interval: 75
+        },
+        {
+            image: menuRes.getResource("open_door3"),
+            interval: 75
+        },
+        {
+            image: menuRes.getResource("open_door4"),
+            interval: 75
+        }
+    ]);
+
+    var victory_scene_img=new Button(canvas.scene("victory_scene"),0,0,935,935,1,victory_open_door,null,null,()=>{},()=>{
+        if (victory_scene_resolve!=null) victory_scene_resolve();
     });
 
     canvas.createNewScene("loading_scene",loadingAnimation);
@@ -242,8 +297,6 @@ async function until(requirement){
 
 var inputElement=document.getElementById("gameInput");
 
-var victory_scene_resolve;
-
 function dataURLToImage(data){
     return new Promise(resolve=>{
         let img=new Image();
@@ -271,10 +324,16 @@ async function controlLevel(){
     inputElement.value="";
     inputElement.blur();
 
-    let vimg_dataurl=document.getElementById("gameCanvas").toDataURL("image/png");
-    let vimg=await dataURLToImage(vimg_dataurl);
-    canvas.scene("victory_scene").setBackground(vimg);
+    // let vimg_dataurl=document.getElementById("gameCanvas").toDataURL("image/png");
+    // let vimg=await dataURLToImage(vimg_dataurl);
+    // canvas.scene("victory_scene").setBackground(vimg);
+    victory_open_door.reset();
+    victory_open_door.start();
+    menuRes.getResource("open_door_sound").play();
+    setTimeout(()=>victory_open_door.pause(),1225);
+    victory_scene_resolve=null;
     canvas.changeScene("victory_scene");
+    await until(()=>victory_open_door.nowFrame()===3);
     await new Promise(resolve=>victory_scene_resolve=resolve);
 
     levelList[nowLevel].resource.default.destroy(canvas);
