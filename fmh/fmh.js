@@ -148,8 +148,8 @@ function build(canvas){
     function showTalking(img_show,img_ori){
         img_ori.setTransparentAlpha(0);
         img_ori.setPosition(0,100);
-        img_show.setTransparentAlpha(1);
-        img_show.slideTo(0,0,0.3);
+        //img_show.setTransparentAlpha(1);
+        img_show.floatUp(0,0,300);
     }
 
     var cnt=1;
@@ -203,7 +203,7 @@ function build(canvas){
         fmh_door_scene_figure.setTransparentAlpha(1);
         fmh_door_scene_figure.setClickable(true);
         //FIXME slide problem.
-        fmh_door_scene_figure.slideTo(550,577,0.2);
+        fmh_door_scene_figure.moveTo(550,577,300);
         showTalking(fmh_door_scene_figure_late,fmh_door_scene_figure_talking1);
     },()=>{});
     fmh_door_scene_clock.setClickable(true);
