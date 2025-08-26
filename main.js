@@ -101,6 +101,31 @@ var menuResInfor=[
         name: "open_door_sound",
         type: "audio",
         value: "./menu/开门音效.mp3"
+    },
+    {
+        name: "bgm_menu",
+        type: "audio",
+        value: "./menu/莫愁乡.mp3"
+    },
+    {
+        name: "bgm_boy",
+        type: "audio",
+        value: "./menu/bgm-钢琴.mp3"
+    },
+    {
+        name: "bgm_girl",
+        type: "audio",
+        value: "./menu/bgm-弦乐.mp3"
+    },
+    {
+        name: "start1",
+        type: "image",
+        value: "./menu/start1.png"
+    },
+    {
+        name: "start2",
+        type: "image",
+        value: "./menu/start2.png"
     }
 ];
 
@@ -247,7 +272,27 @@ menuRes.onload=async()=>{
 
     canvas.createNewScene("loading_scene",loadingAnimation);
 
-    canvas.changeScene("menu");
+
+    canvas.createNewScene("start_scene");
+    let start_animation=new Animation([
+        {
+            image: menuRes.getResource("start1"),
+            interval: 200
+        },
+        {
+            image: menuRes.getResource("start2"),
+            interval: 200
+        }
+    ]);
+    start_animation.start();
+
+    let start_scene_item=new Button(canvas.scene("start_scene"),0,0,935,935,0,start_animation,null,null,()=>{},()=>{
+        canvas.changeScene("menu")
+        MyAudio.resume();
+        MyAudio.play_bgm(menuRes.getResource("bgm_menu"));
+    });
+
+    canvas.changeScene("start_scene");
 }
 
 //异步加载关卡资源
@@ -315,6 +360,8 @@ async function controlLevel(){
     }
     localStorage.setItem("save",String(nowLevel));
 
+    MyAudio.play_bgm(menuRes.getResource(`bgm_${levelList[nowLevel].bgm}`));
+
     console.log(levelList[nowLevel].resReady,nowLevel,levelList[nowLevel].resource.default);
 
     levelList[nowLevel].resource.default.build(canvas);
@@ -329,12 +376,13 @@ async function controlLevel(){
     // canvas.scene("victory_scene").setBackground(vimg);
     victory_open_door.reset();
     victory_open_door.start();
-    menuRes.getResource("open_door_sound").play();
+    menuRes.getResource("open_door_sound").play(0,"mute_bgm");
     setTimeout(()=>victory_open_door.pause(),1225);
     victory_scene_resolve=null;
     canvas.changeScene("victory_scene");
     await until(()=>victory_open_door.nowFrame()===3);
     await new Promise(resolve=>victory_scene_resolve=resolve);
+    menuRes.getResource("open_door_sound").stop();
 
     levelList[nowLevel].resource.default.destroy(canvas);
     if (nowLevel<levelList.length-1){

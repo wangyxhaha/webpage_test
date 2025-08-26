@@ -2,79 +2,93 @@
     "value": [
         {
             "dir": "guide",
-            "ans": "mygo"
+            "ans": "mygo",
+            "bgm": "menu"
         },
         {
             "dir": "lzan",
-            "ans": "李张安娜"
+            "ans": "李张安娜",
+            "bgm": "girl"
         },
         {
             "dir": "qsy",
-            "ans": "乔思源"
+            "ans": "乔思源",
+            "bgm": "boy"
         },
         {
             "dir": "zws",
-            "ans": "张吾騻"
+            "ans": "张吾騻",
+            "bgm": "girl"
         },
         {
             "dir": "zsz",
-            "ans": "周士桢"
+            "ans": "周士桢",
+            "bgm": "boy"
         },
         {
             "dir": "gy",
-            "ans": "高源"
+            "ans": "高源",
+            "bgm": "boy"
         },
         {
             "dir": "xsy",
-            "ans": "薛斯羽"
+            "ans": "薛斯羽",
+            "bgm": "girl"
         },
         {
             "dir": "fmh",
-            "ans": "范敏弘"
+            "ans": "范敏弘",
+            "bgm": "boy"
         },
         {
             "dir": "wyx",
-            "ans": "王宇轩"
+            "ans": "王宇轩",
+            "bgm": "boy"
         },
         {
             "dir": "dat",
-            "ans": "董艾彤"
+            "ans": "董艾彤",
+            "bgm": "girl"
         },
         {
             "dir": "zyy",
-            "ans": "张业尧"
+            "ans": "张业尧",
+            "bgm": "boy"
         },
         {
             "dir": "hy",
-            "ans": "韩奕"
+            "ans": "韩奕",
+            "bgm": "girl"
         },
         {
             "dir": "lhy",
-            "ans": "李浩宇"
-        },
-        {
-            "dir": "tqg",
-            "ans": "唐钦格"
+            "ans": "李浩宇",
+            "bgm": "boy"
         },
         {
             "dir": "thw",
-            "ans": "田汉文"
+            "ans": "田汉文",
+            "bgm": "boy"
         },
         {
             "dir": "nmy",
-            "ans": "牛牧原"
+            "ans": "牛牧原",
+            "bgm": "girl"
         },
         {
             "dir": "zty",
-            "ans": "张天佑"
+            "ans": "张天佑",
+            "bgm": "boy"
         },
         {
             "dir": "xyj",
-            "ans": "许砚钧"
+            "ans": "许砚钧",
+            "bgm": "boy"
         },
         {
             "dir": "lsh",
-            "ans": "刘殊豪"
+            "ans": "刘殊豪",
+            "bgm": "boy"
         }
     ]
 }
