@@ -51,10 +51,11 @@ class MyAudio/*!!!!!*/{
             let loop=()=>{
                 console.log(MyAudio.bgm_mute_cnt,MyAudio.bgm_mute_cnt_pre);
                 if (MyAudio.bgm_mute_cnt===0 && MyAudio.bgm_mute_cnt_pre!=0){
+                    MyAudio.bgm_gain_node.gain.cancelScheduledValues(MyAudio.audioContext.currentTime);
                     MyAudio.bgm_gain_node.gain.setValueCurveAtTime([0,1],MyAudio.audioContext.currentTime,1);
                 }
                 else if (MyAudio.bgm_mute_cnt!=0 && MyAudio.bgm_mute_cnt_pre===0){
-                    console.log("!");
+                    MyAudio.bgm_gain_node.gain.cancelScheduledValues(MyAudio.audioContext.currentTime);
                     MyAudio.bgm_gain_node.gain.setValueCurveAtTime([1,0],MyAudio.audioContext.currentTime,1);
                 }
                 MyAudio.bgm_mute_cnt_pre=MyAudio.bgm_mute_cnt;
