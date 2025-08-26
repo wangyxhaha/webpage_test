@@ -358,7 +358,7 @@ var res;
 
 function init(canvas){
     res=new Resource(cfg); //加载素材
-    res.onload=()=>build(canvas); //仅测试用
+    // res.onload=()=>build(canvas); //仅测试用
 }
 
 function stopAllMusic(){
@@ -374,7 +374,16 @@ function stopAllMusic(){
     res.getResource("451").stop();
 }
 
+function destroy(canvas){
+    canvas.deleteScene("nmy_door_scene");
+    canvas.deleteScene("nmy_top_scene");
+    canvas.deleteScene("nmy_right_scene");
+    canvas.deleteScene("nmy_left_scene");
+    console.log("des nmy");
+}
+
 export default{
-    init,build
+    init,build,destroy,
+    setOnload: (ol)=>res.onload=ol
 };
 

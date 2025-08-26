@@ -138,7 +138,7 @@ var cfg=[
 ]
 
 function build(canvas){
-    console.log("build");
+    console.log("build zty");
     canvas.createNewScene("zty_door_scene",res.getResource("zty_door_bg"));
     canvas.createNewScene("zty_top_scene",res.getResource("zty_top_bg"));
     canvas.createNewScene("zty_left_scene",res.getResource("zty_left_bg"));
@@ -181,7 +181,9 @@ function build(canvas){
     zty_door_scene_figure_talking.setClickable(false);
 
     var zty_door_secene_figure=new Button(canvas.scene("zty_door_scene"),436,397,394,465,11,res.getResource("figure"),null,null,()=>{
-        zty_door_scene_figure_talking.setTransparentAlpha(1);
+        //zty_door_scene_figure_talking.setTransparentAlpha(1);
+        zty_door_scene_figure_talking.floatUp(0,0,300);
+        zty_door_secene_figure.setClickable(false);
         zty_door_scene_pants_talking.setTransparentAlpha(0);
     },()=>{});
 
@@ -194,7 +196,7 @@ function build(canvas){
 
     var zty_door_scene_pants=new Button(canvas.scene("zty_door_scene"),570,717,219,117,21,res.getResource("pants"),null,null,()=>{
         zty_door_scene_figure_talking.setTransparentAlpha(0);
-        zty_door_scene_pants_talking.setTransparentAlpha(1);
+        zty_door_scene_pants_talking.floatUp(0,0,300);
         zty_door_scene_pants.setClickable(false);
         zty_door_scene_pants.setTransparentAlpha(0);
         zty_door_secene_figure.setClickable(false);
@@ -236,12 +238,12 @@ function build(canvas){
             zty_answer_box_fake_button.setClickable(true);            
         }
         switch(id){
-            case 1:zty_right_scene_poster1.slideTo(0,0,0.5);break;
-            case 2:zty_right_scene_poster2.slideTo(0,0,0.5);break;
-            case 3:zty_right_scene_poster3.slideTo(0,0,0.5);break;
-            case 4:zty_right_scene_poster4.slideTo(0,0,0.5);break;
-            case 5:zty_right_scene_poster5.slideTo(0,0,0.5);break;
-            case 6:zty_right_scene_poster6.slideTo(0,0,0.5);break;
+            case 1:zty_right_scene_poster1.floatUp(0,0,300);break;
+            case 2:zty_right_scene_poster2.floatUp(0,0,300);break;
+            case 3:zty_right_scene_poster3.floatUp(0,0,300);break;
+            case 4:zty_right_scene_poster4.floatUp(0,0,300);break;
+            case 5:zty_right_scene_poster5.floatUp(0,0,300);break;
+            case 6:zty_right_scene_poster6.floatUp(0,0,300);break;
         }
         cnt_right++;
     }
@@ -265,16 +267,25 @@ function build(canvas){
         }
     },()=>{},350,372);
 
-    canvas.changeScene("zty_door_scene");
+    //canvas.changeScene("zty_door_scene");
 }
 
 var res;
 
 function init(canvas){
     res=new Resource(cfg); //加载素材
-    res.onload=()=>build(canvas); //仅测试用
+    //res.onload=()=>build(canvas); //仅测试用
+}
+
+function destroy(canvas){
+    canvas.deleteScene("zty_door_scene");
+    canvas.deleteScene("zty_top_scene");
+    canvas.deleteScene("zty_right_scene");
+    canvas.deleteScene("zty_left_scene");
+    console.log("des zty");
 }
 
 export default{
-    init,build
+    init,build,destroy,
+    setOnload: (ol)=>res.onload=ol
 };

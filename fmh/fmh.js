@@ -7,6 +7,7 @@ import Button from "../button.js";
 import Animation from "../animation.js";
 import Input from "../input.js";
 import "../buttonPlugin.js";
+import "../spritePlugin.js";
 import Music from "../music.js";
 
 var cfg=[
@@ -108,7 +109,7 @@ var cfg=[
 ]
 
 function build(canvas){
-    console.log("build");
+    console.log("build fmh");
     canvas.createNewScene("fmh_door_scene",res.getResource("fmh_door_bg"));
     canvas.createNewScene("fmh_top_scene",res.getResource("fmh_top_bg"));
     canvas.createNewScene("fmh_left_scene",res.getResource("fmh_left_bg"));
@@ -144,31 +145,36 @@ function build(canvas){
     fmh_answer_box_fake_disable_button.setClickable(false);
     fmh_answer_box_fake_disable_button.setIgnoreClickEvent(true);
 
+    function showTalking(img_show,img_ori){
+        img_ori.setTransparentAlpha(0);
+        img_ori.setPosition(0,100);
+        //img_show.setTransparentAlpha(1);
+        img_show.floatUp(0,0,300);
+    }
+
     var cnt=1;
-    var fmh_door_scene_figure_late=new Button(canvas.scene("fmh_door_scene"),0,0,0,0,11,res.getResource("late"),null,null,()=>{},()=>{});
+    var fmh_door_scene_figure_late=new Button(canvas.scene("fmh_door_scene"),0,100,0,0,12,res.getResource("late"),null,null,()=>{},()=>{});
     fmh_door_scene_figure_late.setTransparentAlpha(0);
-    var fmh_door_scene_figure_talking1=new Button(canvas.scene("fmh_door_scene"),0,0,0,0,11,res.getResource("talking1"),null,null,()=>{},()=>{});
+    var fmh_door_scene_figure_talking1=new Button(canvas.scene("fmh_door_scene"),0,100,0,0,12,res.getResource("talking1"),null,null,()=>{},()=>{});
     fmh_door_scene_figure_talking1.setTransparentAlpha(0);
-    var fmh_door_scene_figure_talking2=new Button(canvas.scene("fmh_door_scene"),0,0,0,0,11,res.getResource("talking2"),null,null,()=>{},()=>{});
+    var fmh_door_scene_figure_talking2=new Button(canvas.scene("fmh_door_scene"),0,100,0,0,12,res.getResource("talking2"),null,null,()=>{},()=>{});
     fmh_door_scene_figure_talking2.setTransparentAlpha(0);
-    var fmh_door_scene_figure_talking3=new Button(canvas.scene("fmh_door_scene"),0,0,0,0,11,res.getResource("talking3"),null,null,()=>{},()=>{});
+    var fmh_door_scene_figure_talking3=new Button(canvas.scene("fmh_door_scene"),0,100,0,0,12,res.getResource("talking3"),null,null,()=>{},()=>{});
     fmh_door_scene_figure_talking3.setTransparentAlpha(0);
+
     var fmh_door_scene_figure=new Button(canvas.scene("fmh_door_scene"),940,577,298,344,11,res.getResource("fmh_figure"),null,null,()=>{
         cnt++;
         if(cnt==4) cnt=1;
         fmh_door_scene_figure_late.setTransparentAlpha(0);
         switch(cnt){
             case 1:
-                fmh_door_scene_figure_talking1.setTransparentAlpha(1);
-                fmh_door_scene_figure_talking3.setTransparentAlpha(0);
+                showTalking(fmh_door_scene_figure_talking1,fmh_door_scene_figure_talking3);
                 break;
             case 2:
-                fmh_door_scene_figure_talking2.setTransparentAlpha(1);
-                fmh_door_scene_figure_talking1.setTransparentAlpha(0);
+                showTalking(fmh_door_scene_figure_talking2,fmh_door_scene_figure_talking1);
                 break;
             case 3:
-                fmh_door_scene_figure_talking3.setTransparentAlpha(1);
-                fmh_door_scene_figure_talking2.setTransparentAlpha(0);
+                showTalking(fmh_door_scene_figure_talking3,fmh_door_scene_figure_talking2);
                 break;
         }
     },()=>{});
@@ -196,23 +202,33 @@ function build(canvas){
         res.getResource("bgm").play();
         fmh_door_scene_figure.setTransparentAlpha(1);
         fmh_door_scene_figure.setClickable(true);
-        fmh_door_scene_figure.slideTo(550,577,0.2);
-        fmh_door_scene_figure_late.setTransparentAlpha(1);
+        //FIXME slide problem.
+        fmh_door_scene_figure.moveTo(550,577,300);
+        showTalking(fmh_door_scene_figure_late,fmh_door_scene_figure_talking1);
     },()=>{});
     fmh_door_scene_clock.setClickable(true);
 
     var fmh_right_scene_light=new Button(canvas.scene("fmh_right_scene"),0,0,0,0,11,res.getResource("fmh_light"),null,null,()=>{},()=>{});
 
-    canvas.changeScene("fmh_door_scene");
+    //canvas.changeScene("fmh_door_scene");
 }
 
 var res;
 
 function init(canvas){
     res=new Resource(cfg); //加载素材
-    res.onload=()=>build(canvas); //仅测试用
+    //res.onload=()=>build(canvas); //仅测试用
+}
+
+function destroy(canvas){
+    canvas.deleteScene("fmh_door_scene");
+    canvas.deleteScene("fmh_top_scene");
+    canvas.deleteScene("fmh_right_scene");
+    canvas.deleteScene("fmh_left_scene");
+    console.log("des fmh");
 }
 
 export default{
-    init,build
+    init,build,destroy,
+    setOnload: (ol)=>res.onload=ol
 };
