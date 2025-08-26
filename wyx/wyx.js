@@ -215,6 +215,16 @@ var cfg=[ //所需素材的信息
         name: "Consolas",
         type: "font",
         value: "./wyx/data/consola.ttf"
+    },
+    {
+        name: "wyx_figure",
+        type: "image",
+        value: "./wyx/data/wyx_figure.png"
+    },
+    {
+        name: "saying1",
+        type: "image",
+        value: "./wyx/data/王宇轩1.png"
     }
 ]
 
@@ -284,6 +294,26 @@ function build(canvas){
     });
     wyx_answer_box_fake_disable_button.setClickable(false);
     wyx_answer_box_fake_disable_button.setIgnoreClickEvent(true);
+
+
+    var sayingRunning=false;
+    var sayingList=[
+        new Button(canvas.scene("wyx_door_scene"),0,0,0,0,2,res.getResource("saying1"),null,null,()=>{},()=>{})
+    ];
+    var nowSaying=-1;
+    for (let i=0;i<sayingList.length;i++){
+        sayingList[i].setClickable(false);
+        sayingList[i].setTransparentAlpha(0);
+    }
+    var wyx_door_scene_figure=new Button(canvas.scene("wyx_door_scene"),0,0,344,543,1,res.getResource("wyx_figure"),null,null,()=>{},()=>{
+        if (sayingRunning) return;
+        console.log("!");
+        sayingRunning=true;
+        nowSaying=(nowSaying+1)%sayingList.length;
+        sayingList[nowSaying].floatUp(0,0,300);
+        setTimeout(()=>sayingList[nowSaying].setTransparentAlpha(0),2000);
+        setTimeout(()=>sayingRunning=false,2100);
+    },519,310);
 
     var wyx_easter_egg_resolve;
     var wyx_easter_egg_fake_button=new Button(canvas.scene("wyx_easter_egg"),0,0,935,935,10,null,null,null,()=>{},()=>{

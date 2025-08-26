@@ -132,6 +132,16 @@ var cfg=[ //所需素材的信息
         name: "aishark",
         type: "image",
         value: "./qsy/data/耐克鲨鱼.png"
+    },
+    {
+        name: "saying1",
+        type: "image",
+        value: "./qsy/data/乔思源1.png"
+    },
+    {
+        name: "qsy_figure",
+        type: "image",
+        value: "./qsy/data/qsy_figure.png"
     }
 ]
 
@@ -171,6 +181,25 @@ function build(canvas){
     });
     qsy_answer_box_fake_disable_button.setClickable(false);
     qsy_answer_box_fake_disable_button.setIgnoreClickEvent(true);
+
+    var sayingRunning=false;
+    var sayingList=[
+        new Button(canvas.scene("qsy_door_scene"),0,0,0,0,2,res.getResource("saying1"),null,null,()=>{},()=>{})
+    ];
+    var nowSaying=-1;
+    for (let i=0;i<sayingList.length;i++){
+        sayingList[i].setClickable(false);
+        sayingList[i].setTransparentAlpha(0);
+    }
+    var qsy_door_scene_figure=new Button(canvas.scene("qsy_door_scene"),0,0,502,264,1,res.getResource("qsy_figure"),null,null,()=>{},()=>{
+        if (sayingRunning) return;
+        console.log("!");
+        sayingRunning=true;
+        nowSaying=(nowSaying+1)%sayingList.length;
+        sayingList[nowSaying].floatUp(0,0,300);
+        setTimeout(()=>sayingList[nowSaying].setTransparentAlpha(0),2000);
+        setTimeout(()=>sayingRunning=false,2100);
+    },331,647);
 
     var qsy_left_scene_stick=new Button(canvas.scene("qsy_left_scene"),779,46,76,231,11,res.getResource("stick"),null,null,()=>{},()=>check());
     var qsy_left_scene_tomas=new Button(canvas.scene("qsy_left_scene"),268,130,197,202,12,res.getResource("tomas"),null,null,()=>{},()=>check());

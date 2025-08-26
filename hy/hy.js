@@ -109,6 +109,11 @@ var cfg=[ //所需素材的信息
         name: "BOOKOS",
         type: "font",
         value: "./hy/data/BOOKOS.TTF"
+    },
+    {
+        name: "hy_figure",
+        type: "image",
+        value: "./hy/data/hy_figure.png"
     }
 ]
 
@@ -161,6 +166,23 @@ function build(canvas){
     });
     hy_answer_box_fake_disable_button.setClickable(false);
     hy_answer_box_fake_disable_button.setIgnoreClickEvent(true);
+
+    var sayingRunning=false;
+    var sayingList=[];
+    var nowSaying=-1;
+    for (let i=0;i<sayingList.length;i++){
+        sayingList[i].setClickable(false);
+        sayingList[i].setTransparentAlpha(0);
+    }
+    var hy_door_scene_figure=new Button(canvas.scene("hy_door_scene"),0,0,245,424,2,res.getResource("hy_figure"),null,null,()=>{},()=>{
+        // if (sayingRunning) return;
+        // console.log("!");
+        // sayingRunning=true;
+        // nowSaying=(nowSaying+1)%sayingList.length;
+        // sayingList[nowSaying].floatUp(0,0,300);
+        // setTimeout(()=>sayingList[nowSaying].setTransparentAlpha(0),2000);
+        // setTimeout(()=>sayingRunning=false,2100);
+    },591,463);
 
     var hy_left_scene_blocks=[];
     for (let i=0;i<5;i++){
