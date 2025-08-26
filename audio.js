@@ -49,7 +49,6 @@ class MyAudio/*!!!!!*/{
             MyAudio.bgm_gain_node.disconnect();
             MyAudio.bgm_src.disconnect();
             let loop=()=>{
-                console.log(MyAudio.bgm_mute_cnt,MyAudio.bgm_mute_cnt_pre);
                 if (MyAudio.bgm_mute_cnt===0 && MyAudio.bgm_mute_cnt_pre!=0){
                     MyAudio.bgm_gain_node.gain.cancelScheduledValues(MyAudio.audioContext.currentTime);
                     MyAudio.bgm_gain_node.gain.setValueCurveAtTime([0,1],MyAudio.audioContext.currentTime,1);
