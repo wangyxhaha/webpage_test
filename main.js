@@ -135,6 +135,8 @@ var victory_open_door;
 var victory_scene_resolve;
 
 menuRes.onload=async()=>{
+    let loading_sign=document.getElementById("loading");
+    loading_sign.parentElement.removeChild(loading_sign);
     levelList=(await fetch("./levelList.json").then(responce=>responce.json()).catch(()=>{throw "关卡信息炸了"})).value;
     for (let i=0;i<levelList.length;i++){
         levelList[i].resReady=false;
