@@ -211,14 +211,14 @@ function build(canvas){
 
     var fmh_right_scene_light=new Button(canvas.scene("fmh_right_scene"),0,0,0,0,11,res.getResource("fmh_light"),null,null,()=>{},()=>{});
 
-    canvas.changeScene("fmh_door_scene");
+    //canvas.changeScene("fmh_door_scene");
 }
 
 var res;
 
 function init(canvas){
     res=new Resource(cfg); //加载素材
-    res.onload=()=>build(canvas); //仅测试用
+    //res.onload=()=>build(canvas); //仅测试用
 }
 
 function destroy(canvas){
