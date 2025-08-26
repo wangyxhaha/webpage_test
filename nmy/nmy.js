@@ -265,15 +265,15 @@ function build(canvas){
     //149 795 266 848
     //84 764 313 850
 
-    var nmy_right_scene_record1=new Button(canvas.scene("nmy_right_scene"),0,0,304,304,-1,res.getResource("record1"),null,null,()=>{},()=>{stopAllMusic();res.getResource("xuededubai").play();},315,303);
+    var nmy_right_scene_record1=new Button(canvas.scene("nmy_right_scene"),0,0,304,304,-1,res.getResource("record1"),null,null,()=>{},()=>{stopAllMusic();res.getResource("xuededubai").play(0,"mute_bgm");},315,303);
     // nmy_right_scene_record1.setClickable(false);
-    var nmy_right_scene_record2=new Button(canvas.scene("nmy_right_scene"),0,0,254,254,-1,res.getResource("record2"),null,null,()=>{},()=>{stopAllMusic();res.getResource("youxing").play();},625,55);
+    var nmy_right_scene_record2=new Button(canvas.scene("nmy_right_scene"),0,0,254,254,-1,res.getResource("record2"),null,null,()=>{},()=>{stopAllMusic();res.getResource("youxing").play(0,"mute_bgm");},625,55);
     // nmy_right_scene_record2.setClickable(false);
-    var nmy_right_scene_record3=new Button(canvas.scene("nmy_right_scene"),0,0,253,246,-1,res.getResource("record3"),null,null,()=>{},()=>{stopAllMusic();res.getResource("youyicheng").play();},56,617);
+    var nmy_right_scene_record3=new Button(canvas.scene("nmy_right_scene"),0,0,253,246,-1,res.getResource("record3"),null,null,()=>{},()=>{stopAllMusic();res.getResource("youyicheng").play(0,"mute_bgm");},56,617);
     // nmy_right_scene_record3.setClickable(false);
-    var nmy_right_scene_record4=new Button(canvas.scene("nmy_right_scene"),0,0,245,245,-1,res.getResource("record4"),null,null,()=>{},()=>{stopAllMusic();res.getResource("huarenju").play();},629,610);
+    var nmy_right_scene_record4=new Button(canvas.scene("nmy_right_scene"),0,0,245,245,-1,res.getResource("record4"),null,null,()=>{},()=>{stopAllMusic();res.getResource("huarenju").play(0,"mute_bgm");},629,610);
     // nmy_right_scene_record4.setClickable(false);
-    var nmy_right_scene_record5=new Button(canvas.scene("nmy_right_scene"),0,0,246,246,-1,res.getResource("record5"),null,null,()=>{},()=>{stopAllMusic();res.getResource("chunnibang").play();},55,62);
+    var nmy_right_scene_record5=new Button(canvas.scene("nmy_right_scene"),0,0,246,246,-1,res.getResource("record5"),null,null,()=>{},()=>{stopAllMusic();res.getResource("chunnibang").play(0,"mute_bgm");},55,62);
     // nmy_right_scene_record5.setClickable(false);
 
     var flag=[false,false,false,false,false];
@@ -287,7 +287,7 @@ function build(canvas){
 
     var nmy_right_scene_yorushika1=new Button(canvas.scene("nmy_right_scene"),402,217,112,76,11,res.getResource("yorushika1"),null,null,()=>{},()=>{
         stopAllMusic();
-        res.getResource("451").play();
+        res.getResource("451").play(0,"mute_bgm");
         nmy_right_scene_yorushika1.stayIn();
         flag[0]=nmy_right_scene_yorushika1.isCoincide(nmy_right_scene_record1);
         if (!flag[0]) nmy_right_scene_yorushika1.shakeHorizontally();
@@ -296,7 +296,7 @@ function build(canvas){
     nmy_right_scene_yorushika1.setDraggable(true);
     var nmy_right_scene_yorushika2=new Button(canvas.scene("nmy_right_scene"),769,448,112,76,12,res.getResource("yorushika2"),null,null,()=>{},()=>{
         stopAllMusic();
-        res.getResource("chunnibang_niu").play();
+        res.getResource("chunnibang_niu").play(0,"mute_bgm");
         nmy_right_scene_yorushika2.stayIn();
         flag[1]=nmy_right_scene_yorushika2.isCoincide(nmy_right_scene_record5);
         if (!flag[1]) nmy_right_scene_yorushika2.shakeHorizontally();
@@ -305,7 +305,7 @@ function build(canvas){
     nmy_right_scene_yorushika2.setDraggable(true);
     var nmy_right_scene_yorushika3=new Button(canvas.scene("nmy_right_scene"),632,449,112,76,13,res.getResource("yorushika3"),null,null,()=>{},()=>{
         stopAllMusic();
-        res.getResource("youyicheng_niu").play();
+        res.getResource("youyicheng_niu").play(0,"mute_bgm");
         nmy_right_scene_yorushika3.stayIn();
         flag[2]=nmy_right_scene_yorushika3.isCoincide(nmy_right_scene_record3);
         if (!flag[2]) nmy_right_scene_yorushika3.shakeHorizontally();
@@ -314,7 +314,7 @@ function build(canvas){
     nmy_right_scene_yorushika3.setDraggable(true);
     var nmy_right_scene_yorushika4=new Button(canvas.scene("nmy_right_scene"),186,444,112,76,14,res.getResource("yorushika4"),null,null,()=>{},()=>{
         stopAllMusic();
-        res.getResource("huarenju_niu").play();
+        res.getResource("huarenju_niu").play(0,"mute_bgm");
         nmy_right_scene_yorushika4.stayIn();
         flag[3]=nmy_right_scene_yorushika4.isCoincide(nmy_right_scene_record4);
         if (!flag[3]) nmy_right_scene_yorushika4.shakeHorizontally();
@@ -323,7 +323,7 @@ function build(canvas){
     nmy_right_scene_yorushika4.setDraggable(true);
     var nmy_right_scene_yorushika5=new Button(canvas.scene("nmy_right_scene"),41,447,112,76,15,res.getResource("yorushika5"),null,null,()=>{},()=>{
         stopAllMusic();
-        res.getResource("youxing_niu").play();
+        res.getResource("youxing_niu").play(0,"mute_bgm");
         nmy_right_scene_yorushika5.stayIn();
         flag[4]=nmy_right_scene_yorushika5.isCoincide(nmy_right_scene_record2);
         if (!flag[4]) nmy_right_scene_yorushika5.shakeHorizontally();
@@ -347,7 +347,7 @@ function build(canvas){
     },329,456);
     
     var nmy_left_scene_soyo_fake_button=new Button(canvas.scene("nmy_left_scene"),0,0,263,147,2,null,null,null,()=>{},()=>{
-        res.getResource("soyo_saying").play();
+        res.getResource("soyo_saying").play(0,"mute_bgm");
     },95,284);
 
     canvas.changeScene("nmy_door_scene");
