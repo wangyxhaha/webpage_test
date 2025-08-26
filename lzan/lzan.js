@@ -18,12 +18,12 @@ var cfg=[ //所需素材的信息
         name: "lzan_top",
         type: "image",
         value: "./lzan/data/安娜顶.jpg"
-    }/*,
+    },
     {
         name: "lzan_figure",
         type: "image",
-        value: "./lzan/data/安娜形象.png"
-    }*/,
+        value: "./lzan/data/lzan_figure.png"
+    },
     {
         name: "lzan_right_bg",
         type: "image",
@@ -176,6 +176,23 @@ function build(canvas){
     });
     lzan_answer_box_fake_disable_button.setClickable(false);
     lzan_answer_box_fake_disable_button.setIgnoreClickEvent(true);
+
+    var sayingRunning=false;
+    var sayingList=[];
+    var nowSaying=-1;
+    for (let i=0;i<sayingList.length;i++){
+        sayingList[i].setClickable(false);
+        sayingList[i].setTransparentAlpha(0);
+    }
+    var lzan_door_scene_figure=new Button(canvas.scene("lzan_door_scene"),0,0,245,424,1,res.getResource("lzan_figure"),null,null,()=>{},()=>{
+        // if (sayingRunning) return;
+        // console.log("!");
+        // sayingRunning=true;
+        // nowSaying=(nowSaying+1)%sayingList.length;
+        // sayingList[nowSaying].floatUp(0,0,300);
+        // setTimeout(()=>sayingList[nowSaying].setTransparentAlpha(0),2000);
+        // setTimeout(()=>sayingRunning=false,2100);
+    },591,463);
 
     var boxes=[];
     for (let i=1;i<=5;i++) boxes.push(new Animation([
