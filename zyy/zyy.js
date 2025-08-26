@@ -203,9 +203,18 @@ var res;
 
 function init(canvas){
     res=new Resource(cfg); //加载素材
-    res.onload=()=>build(canvas); //仅测试用
+    // res.onload=()=>build(canvas); //仅测试用
+}
+
+function destroy(canvas){
+    canvas.deleteScene("zyy_door_scene");
+    canvas.deleteScene("zyy_top_scene");
+    canvas.deleteScene("zyy_right_scene");
+    canvas.deleteScene("zyy_left_scene");
+    console.log("des zyy");
 }
 
 export default{
-    init,build
+    init,build,destroy,
+    setOnload: (ol)=>res.onload=ol
 };
