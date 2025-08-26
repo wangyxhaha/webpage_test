@@ -179,9 +179,9 @@ function build(canvas){
         zyy_left_scene_screen[nowScreen].setTransparentAlpha(1);
         res.getResource("mochouxiang_audio").stop();
         res.getResource("fushishanxia_audio").stop();
-        if (nowScreen==2) res.getResource("mochouxiang_audio").play();
+        if (nowScreen==2) res.getResource("mochouxiang_audio").play(0,"mute_bgm");
         if (nowScreen==5){
-            res.getResource("fushishanxia_audio").play();
+            res.getResource("fushishanxia_audio").play(0,"mute_bgm");
             zyy_door_scene_lock.setTransparentAlpha(0);
             zyy_answer_box_fake_button.setClickable(true);
         }
