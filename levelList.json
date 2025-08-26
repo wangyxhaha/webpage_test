@@ -5,20 +5,8 @@
             "ans": "mygo"
         },
         {
-            "dir": "hy",
-            "ans": "韩奕"
-        },
-        {
             "dir": "lzan",
             "ans": "李张安娜"
-        },
-        {
-            "dir": "dat",
-            "ans": "董艾彤"
-        },
-        {
-            "dir": "xsy",
-            "ans": "薛斯羽"
         },
         {
             "dir": "qsy",
@@ -29,56 +17,68 @@
             "ans": "张吾騻"
         },
         {
-            "dir": "byz",
-            "ans": "白羽智"
-        },
-        {
-            "dir": "fmh",
-            "ans": "范敏弘"
+            "dir": "zsz",
+            "ans": "周士桢"
         },
         {
             "dir": "gy",
             "ans": "高源"
         },
         {
-            "dir": "zyy",
-            "ans": "张业尧"
+            "dir": "xsy",
+            "ans": "薛斯羽"
         },
         {
-            "dir": "lhy",
-            "ans": "李浩宇"
-        },
-        {
-            "dir": "lsh",
-            "ans": "刘殊豪"
-        },
-        {
-            "dir": "tqg",
-            "ans": "唐钦格"
+            "dir": "fmh",
+            "ans": "范敏弘"
         },
         {
             "dir": "wyx",
             "ans": "王宇轩"
         },
         {
-            "dir": "xyj",
-            "ans": "许砚钧"
+            "dir": "dat",
+            "ans": "董艾彤"
         },
         {
-            "dir": "zsz",
-            "ans": "周士桢"
+            "dir": "zyy",
+            "ans": "张业尧"
         },
         {
-            "dir": "nmy",
-            "ans": "牛牧原"
+            "dir": "hy",
+            "ans": "韩奕"
+        },
+        {
+            "dir": "lhy",
+            "ans": "李浩宇"
+        },
+        {
+            "dir": "tqg",
+            "ans": "唐钦格"
         },
         {
             "dir": "thw",
             "ans": "田汉文"
         },
         {
+            "dir": "nmy",
+            "ans": "牛牧原"
+        },
+        {
             "dir": "zty",
             "ans": "张天佑"
+        },
+        {
+            "dir": "xyj",
+            "ans": "许砚钧"
+        },
+        {
+            "dir": "lsh",
+            "ans": "刘殊豪"
         }
+//      {
+//          "dir": "byz",
+//          "ans": "白羽智"
+//      }     
     ]
 }
