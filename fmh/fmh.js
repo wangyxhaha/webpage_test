@@ -200,7 +200,7 @@ function build(canvas){
         fmh_door_scene_clock.setClickable(false);
         fmh_door_scene_lock.setTransparentAlpha(0);
         fmh_answer_box_fake_button.setClickable(true);
-        res.getResource("bgm").play();
+        res.getResource("bgm").play(0,"mute_bgm");
         fmh_door_scene_figure.setTransparentAlpha(1);
         fmh_door_scene_figure.setClickable(true);
         //FIXME slide problem.

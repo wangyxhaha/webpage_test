@@ -505,7 +505,7 @@ function build(canvas){
     //上场景音乐模块
 
     var lhy_top_scene_button=new Button(canvas.scene("lhy_top_scene"),0,412,935,135,11,res.getResource("qinxian"),null,null,()=>{
-        res.getResource("bgm").play();
+        res.getResource("bgm").play(0,"mute_bgm");
         lhy_top_scene_button.setClickable(false);
     },()=>{});
     lhy_top_scene_button.setClickable(true);
