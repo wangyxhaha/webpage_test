@@ -183,11 +183,12 @@ function build(canvas){
     var zty_door_secene_figure=new Button(canvas.scene("zty_door_scene"),436,397,394,465,11,res.getResource("figure"),null,null,()=>{
         //zty_door_scene_figure_talking.setTransparentAlpha(1);
         zty_door_scene_figure_talking.floatUp(0,0,300);
-        zty_door_secene_figure.setClickable(false);
+        setTimeout(()=>zty_door_scene_figure_talking.setTransparentAlpha(0),2000);
+        //zty_door_secene_figure.setClickable(false);
         zty_door_scene_pants_talking.setTransparentAlpha(0);
     },()=>{});
 
-    var zty_door_scene_pants_talking=new Button(canvas.scene("zty_door_scene"),0,100,0,0,21,res.getResource("pants_talking"),null,null,()=>{},()=>{});
+    var zty_door_scene_pants_talking=new Button(canvas.scene("zty_door_scene"),0,100,0,0,22,res.getResource("pants_talking"),null,null,()=>{},()=>{});
     zty_door_scene_pants_talking.setClickable(false);
     zty_door_scene_pants_talking.setTransparentAlpha(0);
 
@@ -196,15 +197,16 @@ function build(canvas){
 
     var zty_door_scene_pants=new Button(canvas.scene("zty_door_scene"),570,717,219,117,21,res.getResource("pants"),null,null,()=>{
         zty_door_scene_figure_talking.setTransparentAlpha(0);
-        zty_door_scene_pants_talking.floatUp(0,0,300);
+        zty_door_scene_tuoku.setTransparentAlpha(0.8);
         zty_door_scene_pants.setClickable(false);
         zty_door_scene_pants.setTransparentAlpha(0);
         zty_door_secene_figure.setClickable(false);
-        setTimeout(()=>{zty_door_scene_tuoku.setTransparentAlpha(0.8);},200);
+        setTimeout(()=>{zty_door_scene_pants_talking.floatUp(0,0,300);},500);
         setTimeout(()=>{
+            zty_door_scene_pants_talking.setTransparentAlpha(0);
             zty_door_scene_tuoku.setTransparentAlpha(0);
             zty_door_secene_figure.setClickable(true);
-        },1200);
+        },1500);
     },()=>{});
     var zty_door_scene_yaling=new Button(canvas.scene("zty_door_scene"),0,0,0,0,11,res.getResource("yaling"),null,null,()=>{},()=>{});
 
