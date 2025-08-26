@@ -207,6 +207,8 @@ function init(canvas){
 }
 
 function destroy(canvas){
+    res.getResource("mochouxiang_audio").stop();
+    res.getResource("fushishanxia_audio").stop();
     canvas.deleteScene("zyy_door_scene");
     canvas.deleteScene("zyy_top_scene");
     canvas.deleteScene("zyy_right_scene");
