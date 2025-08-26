@@ -150,6 +150,7 @@ function build(canvas){
         img_ori.setPosition(0,100);
         //img_show.setTransparentAlpha(1);
         img_show.floatUp(0,0,300);
+        setTimeout(()=>img_show.setTransparentAlpha(0),2000);
     }
 
     var cnt=1;
@@ -199,7 +200,7 @@ function build(canvas){
         fmh_door_scene_clock.setClickable(false);
         fmh_door_scene_lock.setTransparentAlpha(0);
         fmh_answer_box_fake_button.setClickable(true);
-        res.getResource("bgm").play();
+        res.getResource("bgm").play(0,"mute_bgm");
         fmh_door_scene_figure.setTransparentAlpha(1);
         fmh_door_scene_figure.setClickable(true);
         //FIXME slide problem.

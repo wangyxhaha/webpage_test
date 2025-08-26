@@ -287,6 +287,7 @@ function build(canvas){
             lhy_right_scene_daoxian1.setTransparentAlpha(0);
             lhy_right_scene_daoxian1.setDraggable(false);
             lhy_right_scene_daoxian1.setClickable(false);
+            lhy_right_scene_daoxian1.setIgnoreClickEvent(true);
             right_check();
         }
     });
@@ -302,6 +303,7 @@ function build(canvas){
             lhy_right_scene_daoxian2.setTransparentAlpha(0);
             lhy_right_scene_daoxian2.setDraggable(false);
             lhy_right_scene_daoxian2.setClickable(false);
+            lhy_right_scene_daoxian2.setIgnoreClickEvent(true);
             right_check();
         }
     });
@@ -317,6 +319,7 @@ function build(canvas){
             lhy_right_scene_dianyuan.setTransparentAlpha(0);
             lhy_right_scene_dianyuan.setDraggable(false);
             lhy_right_scene_dianyuan.setClickable(false);
+            lhy_right_scene_dianyuan.setIgnoreClickEvent(true);
             right_check();
         }
     });
@@ -332,6 +335,7 @@ function build(canvas){
             lhy_right_scene_dianzu.setTransparentAlpha(0);
             lhy_right_scene_dianzu.setDraggable(false);
             lhy_right_scene_dianzu.setClickable(false);
+            lhy_right_scene_dianzu.setIgnoreClickEvent(true);
             right_check();
         }
     });
@@ -347,6 +351,7 @@ function build(canvas){
             lhy_right_scene_heibi.setTransparentAlpha(0);
             lhy_right_scene_heibi.setDraggable(false);
             lhy_right_scene_heibi.setClickable(false);
+            lhy_right_scene_heibi.setIgnoreClickEvent(true);
             right_check();
         }
     });
@@ -362,6 +367,7 @@ function build(canvas){
             lhy_right_scene_hongbi.setTransparentAlpha(0);
             lhy_right_scene_hongbi.setDraggable(false);
             lhy_right_scene_hongbi.setClickable(false);
+            lhy_right_scene_hongbi.setIgnoreClickEvent(true);
             right_check();
         }
     });
@@ -377,6 +383,7 @@ function build(canvas){
             lhy_right_scene_huabian.setTransparentAlpha(0);
             lhy_right_scene_huabian.setDraggable(false);
             lhy_right_scene_huabian.setClickable(false);
+            lhy_right_scene_huabian.setIgnoreClickEvent(true);
             right_check();
         }
     });
@@ -498,7 +505,7 @@ function build(canvas){
     //上场景音乐模块
 
     var lhy_top_scene_button=new Button(canvas.scene("lhy_top_scene"),0,412,935,135,11,res.getResource("qinxian"),null,null,()=>{
-        res.getResource("bgm").play();
+        res.getResource("bgm").play(0,"mute_bgm");
         lhy_top_scene_button.setClickable(false);
     },()=>{});
     lhy_top_scene_button.setClickable(true);
