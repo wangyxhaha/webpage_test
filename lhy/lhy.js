@@ -209,6 +209,21 @@ var cfg=[
         name: "bgm",
         type: "audio",
         value: "./lhy/data/bgm.mp3"
+    },
+    {
+        name: "saying1",
+        type: "image",
+        value: "./lhy/data/lhy_saying1.png"
+    },
+    {
+        name: "saying2",
+        type: "image",
+        value: "./lhy/data/lhy_saying2.png"
+    },
+    {
+        name: "saying3",
+        type: "image",
+        value: "./lhy/data/lhy_saying3.png"
     }
 ]
 
@@ -258,6 +273,26 @@ function build(canvas){
     
     var lhy_door_scene_figure=new Button(canvas.scene("lhy_door_scene"),0,0,0,0,1,res.getResource("lhy_figure"),null,null,()=>{},()=>{});
     lhy_door_scene_figure.setClickable(false);
+
+    var sayingRunning=false;
+    var sayingList=[
+        new Button(canvas.scene("lhy_door_scene"),0,0,0,0,2,res.getResource("saying1"),null,null,()=>{},()=>{}),
+        new Button(canvas.scene("lhy_door_scene"),0,0,0,0,2,res.getResource("saying2"),null,null,()=>{},()=>{}),
+        new Button(canvas.scene("lhy_door_scene"),0,0,0,0,2,res.getResource("saying3"),null,null,()=>{},()=>{})
+    ];
+    var nowSaying=-1;
+    for (let i=0;i<sayingList.length;i++){
+        sayingList[i].setClickable(false);
+        sayingList[i].setTransparentAlpha(0);
+    }
+    var lhy_door_scene_figure=new Button(canvas.scene("lhy_door_scene"),0,0,269,312,1,res.getResource("lhy_figure"),null,null,()=>{},()=>{
+        if (sayingRunning) return;
+        sayingRunning=true;
+        nowSaying=(nowSaying+1)%sayingList.length;
+        sayingList[nowSaying].floatUp(0,0,300);
+        setTimeout(()=>sayingList[nowSaying].setTransparentAlpha(0),2000);
+        setTimeout(()=>sayingRunning=false,2100);
+    },607,525);
 
     //右场景拖动模块
     var right_cnt=0;

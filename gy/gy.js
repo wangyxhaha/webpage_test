@@ -78,6 +78,21 @@ var cfg=[ //所需素材的信息
         name: "genshin",
         type: "image",
         value: "./gy/data/高原原神启动.png"
+    },
+    {
+        name: "gy_figure",
+        type: "image",
+        value: "./gy/data/gy_figure.png"
+    },
+    {
+        name: "saying1",
+        type: "image",
+        value: "./gy/data/gy_saying1.png"
+    },
+    {
+        name: "saying2",
+        type: "image",
+        value: "./gy/data/gy_saying2.png"
     }
 ]
 
@@ -129,6 +144,25 @@ function build(canvas){
     });
     gy_answer_box_fake_disable_button.setClickable(false);
     gy_answer_box_fake_disable_button.setIgnoreClickEvent(true);
+
+    var sayingRunning=false;
+    var sayingList=[
+        new Button(canvas.scene("gy_door_scene"),0,0,0,0,2,res.getResource("saying1"),null,null,()=>{},()=>{}),
+        new Button(canvas.scene("gy_door_scene"),0,0,0,0,2,res.getResource("saying2"),null,null,()=>{},()=>{})
+    ];
+    var nowSaying=-1;
+    for (let i=0;i<sayingList.length;i++){
+        sayingList[i].setClickable(false);
+        sayingList[i].setTransparentAlpha(0);
+    }
+    var gy_door_scene_figure=new Button(canvas.scene("gy_door_scene"),0,0,269,312,1,res.getResource("gy_figure"),null,null,()=>{},()=>{
+        if (sayingRunning) return;
+        sayingRunning=true;
+        nowSaying=(nowSaying+1)%sayingList.length;
+        sayingList[nowSaying].floatUp(0,0,300);
+        setTimeout(()=>sayingList[nowSaying].setTransparentAlpha(0),2000);
+        setTimeout(()=>sayingRunning=false,2100);
+    },607,525);
 
     var gy_hit_rocket_animation=new Animation([
         {
